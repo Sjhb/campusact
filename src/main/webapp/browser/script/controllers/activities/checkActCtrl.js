@@ -13,8 +13,8 @@
         $scope.search = function() {
             activitiesResource.activities_waiting.save($scope.searchparam, function(res) {
                 for (var i = 0; i <res.data.length; i++) {
-                    res.data[i].photo="manager/images/actphoto/"+res.data[i].photo+".jpg";
-                    res.data[i].organization.icon="manager/images/icon/"+ res.data[i].organization.icon+".jpg";
+                    res.data[i].photo="browser/images/actphoto/"+res.data[i].photo+".jpg";
+                    res.data[i].organization.icon="browser/images/icon/"+ res.data[i].organization.icon+".jpg";
                 };
                 $scope.activities=res.data;
                 $scope.paginationConf.totalItems = res.page.totalNum;
@@ -63,7 +63,7 @@
         //详情
         $scope.showDetail=function(activity){
             $uibModal.open({
-                templateUrl:'manager/views/checkAct/checkDetail.html',
+                templateUrl:'browser/views/checkAct/checkDetail.html',
                 controller:'actDetailCtrl',
                 size:'lg',
                 resolve:{
@@ -76,7 +76,7 @@
         //拒绝提醒
         $scope.reject=function(activityid) {
         	$uibModal.open({
-                templateUrl:'manager/views/checkAct/reject.html',
+                templateUrl:'browser/views/checkAct/reject.html',
                 controller:'rejectCtrl',
                 size:'sm',
                 resolve:{

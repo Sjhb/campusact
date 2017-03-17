@@ -8,7 +8,7 @@
 	        $scope.activitiesScroll =activitiesScrollService;
 			$scope.showDetail=function (activity) {
 				$uibModal.open({ 
-					templateUrl:'manager/views/allAct/actDetail.html',
+					templateUrl:'browser/views/allAct/actDetail.html',
 					controller:'actDetailCtrl',
 					size:'lg',
 					resolve:{

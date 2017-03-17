@@ -13,7 +13,7 @@
     <param-value>classpath:spring-mybatis.xml</param-value>
   </context-param>
   <welcome-file-list>
-    <welcome-file>manager/views/main.html</welcome-file>
+    <welcome-file>browser/views/main.html</welcome-file>
   </welcome-file-list>
   <context-param>
     <param-name>webAppRootKey</param-name>

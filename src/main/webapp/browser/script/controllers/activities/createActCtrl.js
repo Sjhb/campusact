@@ -40,7 +40,7 @@
        }
        $scope.showMessage=function (message) {
            $uibModal.open({
-               templateUrl:'manager/views/createAct/message.html',
+               templateUrl:'browser/views/createAct/message.html',
                controller:'createmessageCtrl',
                size:'sm',
                resolve:{

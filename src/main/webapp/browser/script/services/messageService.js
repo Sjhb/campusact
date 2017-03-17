@@ -5,7 +5,7 @@
         angular.module("activities").factory('messageService',['$uibModal',function($uibModal){
             return function (message) {
                 $uibModal.open({
-                        templateUrl: 'manager/views/message.html',
+                        templateUrl: 'browser/views/message.html',
                         controller: 'messageCtrl',
                         size: 'lg',
                         resolve: {

@@ -7,7 +7,7 @@
     function navCtrl(permission,$scope,$uibModal) {
        $scope.showModal=function () {//打开模态
            $uibModal.open({
-                   templateUrl : 'manager/views/user/login.html',  //指向上面创建的视图
+                   templateUrl : 'browser/views/user/login.html',  //指向上面创建的视图
                    controller : 'loginCtrl',// 初始化模态范围
                    resolve : {
                       scope : function(){

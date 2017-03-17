@@ -13,7 +13,7 @@
 				view=route;
 				url = '/' + route;
 				config = {
-					templateUrl: 'manager/views/' + view + '.html'
+					templateUrl: 'browser/views/' + view + '.html'
 				};
 				$routeProvider.when(url, config);
 			}else{
@@ -21,7 +21,7 @@
 				var permission=route.substring(l+1);
 				url = '/' + view;
 				config = {
-					templateUrl: 'manager/views/' + view + '.html'
+					templateUrl: 'browser/views/' + view + '.html'
 				};
 				var role={
 					permission:permission
@@ -35,9 +35,9 @@
 		});
 
 		$routeProvider.when('/', {
-			templateUrl: 'manager/views/allAct/allAct.html'
+			templateUrl: 'browser/views/allAct/allAct.html'
 		}).when('/404', {
-		    templateUrl: 'manager/views/error.html'
+		    templateUrl: 'browser/views/error.html'
 		}).
 		otherwise({
 		    redirectTo: '/404'
