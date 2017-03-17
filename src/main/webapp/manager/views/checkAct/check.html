@@ -1,0 +1,33 @@
+<div style="display: flex; justify-content: center;" data-ng-controller='checkActCtrl'>
+    <div style="width: 900px; background-color: white; height: 1000px ;text-align: center;    box-shadow: 0px 1px 1px 0px rgba(0,0,102,0.1);">
+        <div style="height: 40px"></div>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>活动名称</th>
+                <th>举办方</th>
+                <th>举办地点</th>
+                <th>举办时间</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-repeat="activity in activities">
+                <td>{{activity.name}}</td>
+                <td>{{activity.organization.name}}</td>
+                <td>{{activity.address}}</td>
+                <td>{{activity.stime}}</td>
+                <td>
+                    <div>
+                        <button class="btn btn-info" style="margin-right: 5px;" data-ng-click="showDetail(activity)">详情</button>
+                        <button class="btn btn-success" style="margin-right: 5px;" data-ng-click="permit(activity.id)">通过</button>
+                        <button class="btn btn-warning" data-ng-click="reject(activity.id)">不通过</button>
+                    </div>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+       <div style="padding-right: 20px;"><paging conf="paginationConf"></paging></div> 
+    </div>
+</div>

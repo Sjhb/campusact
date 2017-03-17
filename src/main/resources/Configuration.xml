@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias alias="User" type="model.User" />
+
+		<typeAlias alias="MiUserInfo" type="model.MiUserInfo"/>
+		<typeAlias alias="LoginUser" type="model.LoginUser"/>
+		<typeAlias alias="Activities" type="vo.Activities"/>
+
+		<typeAlias alias="SqlAdmin" type="model.SqlAdmin" />
+		<typeAlias alias="SqlStudent" type="model.SqlStudent"/>
+		<typeAlias alias="SqlOrganization" type="model.SqlOrganization"/>
+		<typeAlias alias="SqlActivities"  type="model.SqlActivities"/>
+	</typeAliases>
+
+</configuration> 

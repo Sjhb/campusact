@@ -1,0 +1,24 @@
+<div class="modal-header">
+    <h3 class="modal-title">活动详情</h3>
+</div>
+<div class="modal-body">
+    <div id="act_head" class="trade">
+        <img class="icon" src={{activity.organization.icon}} >
+        <h2>{{activity.organization.name}}</h2>
+    </div>
+
+    <div id="act_nav" class="trade" style="flex-direction: column;">
+        <h3>{{activity.name}}</h3>
+        <div><h4>报名时间:{{activity.signtime}}--{{activity.endsigntime}}</h4></div>
+        <div><h4>活动时间:{{activity.stime}}--{{activity.etime}}</h4></div>
+    </div>
+
+    <div id="act_deltail" class="trade" style="flex-direction: column;">
+        <p>{{activity.detail}}</p>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="ok()">
+        确认
+    </button>
+</div>

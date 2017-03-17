@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>活动管理中心</title>
+<link rel="stylesheet" type="text/css" href="manager/assets/css/bootstrap.css">
+<link rel="stylesheet" type="text/css"	href="manager/style/main.css">
+<link rel="stylesheet" type="text/css"	href="manager/style/media.css">
+<link rel="stylesheet" type="text/css"	href="manager/assets/css/bootstrap-datetimepicker.min.css"> 
+
+</head>
+<body data-ng-app="activities">
+	<section data-ng-include=" 'manager/views/nav.html' " id="nav"
+		 class=""></section>
+	<container>
+		<div id="content" class="container" style="margin-top: 60px;" data-ng-class="">
+			<!-- <section data-ng-view class=""></section> -->
+		</div>
+		<ng-view></ng-view>
+	</container>
+<script type="text/javascript" src="manager/assets/js/jquery-3.1.1.js"></script>
+<script type="text/javascript" src="manager/script/underscore-min.js"></script>
+<script type="text/javascript" src="manager/script/angular.min.js"></script>
+<script type="text/javascript" src="manager/script/angular-cookies.js"></script>
+<script type="text/javascript" src="manager/script/angular-resource.js"></script>
+<script type="text/javascript" src="manager/script/app.module.js"></script>
+<script type="text/javascript" src="manager/script/core/constants.js"></script>
+<script type="text/javascript" src="manager/script/directive/directive.js"></script>
+<script type="text/javascript" src="manager/assets/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="manager/assets/js/bootstrap.js"></script>
+<script type="text/javascript" src="manager/assets/js/ui-bootstrap.min.js"></script>
+<script type="text/javascript" src="manager/assets/js/ui-bootstrap-tpls.min.js"></script>
+<!-- 滑动加载 -->
+<script type="text/javascript" src="manager/script/ng-infinite-scroll.min.js"></script>
+<script type="text/javascript" src="manager/script/angular-route.min.js"></script>
+<script type="text/javascript" src="manager/script/angular-animate.min.js"></script>
+<script type="text/javascript" src="manager/script/core/config.js"></script>
+
+	<!--data-picker-->
+<script type="text/javascript" src="manager/assets/js/moment-with-locales.min.js"></script>
+<script type="text/javascript" src="manager/assets/js/bootstrap-datetimepicker.min.js"></script>
+
+<!-- core -->
+<script type="text/javascript" src="manager/script/services/activitiesResource.js"></script>
+
+<!-- service -->
+<script type="text/javascript" src="manager/script/services/activities/activitiesService.js"></script>
+<script type="text/javascript" src="manager/script/services/permission/permission.js"></script>
+	<script type="text/javascript" src="manager/script/services/messageService.js"></script>
+
+<!-- controller -->
+<script type="text/javascript" src="manager/script/controllers/activities/activitiesCtrl.js"></script>
+	<script type="text/javascript" src="manager/script/controllers/user/loginCtrl.js"></script>
+	<script type="text/javascript" src="manager/script/controllers/nav/navCtrl.js"></script>
+	<script type="text/javascript" src="manager/script/controllers/activities/actDetailCtrl.js"></script>
+	<script type="text/javascript" src="manager/script/controllers/activities/createActCtrl.js"></script>
+		<script type="text/javascript" src="manager/script/controllers/activities/checkActCtrl.js"></script>
+		<script type="text/javascript" src="manager/script/controllers/registe/registeCtrl.js"></script>
+	<script type="text/javascript" src="manager/script/controllers/messageCtrl.js"></script>
+</body>
+</html>

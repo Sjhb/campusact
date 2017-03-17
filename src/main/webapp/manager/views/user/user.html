@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>用户</title>
+<link rel="stylesheet" type="text/css"	href="../../assets/css/bootstrap-theme.css">
+<link rel="stylesheet" type="text/css"	href="../../assets/css/bootstrap-theme.min.css">
+<link rel="stylesheet" type="text/css"	href="../../assets/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css"	href="../../assets/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="../../style/user.css">
+</head>
+<body data-ng-app="user">
+	<div data-ng-controller="userCtrl">
+
+		<div>
+			<table class="table">
+			<thead>
+				<th>编号</th>
+				<th>头像编号</th>
+				<th>姓名</th>
+			</thead>
+				<tbody>
+				<tr data-ng-repeat="user in userinfo">
+					<td>{{user.id}}</td>
+					<td>{{user.icon}}</td>
+					<td>{{user.name}}</td>
+					<td>{{user.role}}</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+		<div>
+			<input type="button" value="搜索" class="btn btn-success"
+				data-ng-click="search()">
+
+		</div>
+		<paging conf="paginationConf"></paging>
+	</div>
+
+
+	<script type="text/javascript" src="../../script/angular.min.js"></script>
+	<script type="text/javascript" src="../../script/angular-cookies.js"></script>
+	<script type="text/javascript" src="../../script/angular-resource.js"></script>
+	<script type="text/javascript" src="../../script/module.js"></script>
+	<script type="text/javascript" src="../../script/core/constants1.js"></script>
+	<script type="text/javascript"		src="../../script/directive/directive.js"></script>
+
+
+	<script type="text/javascript"
+		src="../../script/services/sign/userService.js"></script>
+	<script type="text/javascript"
+		src="../../script/controllers/user/userCtrl.js"></script>
+</body>
+</html>

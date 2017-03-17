@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qike.common.Sqlinter.SqlOrganizationOperation">
+<!-- 查询组织 -->
+	<select id="selectSqlOrganization" parameterType="MiUserInfo"	resultMap="resultListSqlOrganization">
+		select
+		`o-id`,`o-icon`,`o-name`,`o-phone`,`o-mail`,`o-detail`,`o-address`,`p-role` from organization where
+		`o-id`=#{userid} and `o-password`=#{password}
+	</select>
+	<resultMap type="SqlOrganization" id="resultListSqlOrganization">
+		<id column="o-id" property="id" />
+		<result column="o-icon" property="icon" /> 
+		<result column="o-name" property="name" />
+		<result column="o-phone" property="phone" />
+		<result column="o-mail" property="mail" />
+		<result column="o-detail" property="detail" />
+		<result column="o-address" property="address" />
+		<result column="p-role" property="role" />
+	</resultMap>
+</mapper>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qike.common.inter.ActivitiesOperation">
+
+	<!-- 根据id查找活动 -->
+	<select id="getActivitiesById" parameterType="Activities"
+		resultMap="resultListActivities">
+		select
+		activities.`ac-id`,activities.`ac-name`,activities.`ac-photo`,organization.`o-name`,activities.`ac-stime`,activities.`ac-etime`,activities.`ac-detail`,activities.`ac-sponsor`,activities.`st-state`
+		from activities,organization where
+		organization.`o-id`=activities.`o-id` and activities.`ac-id`=#{id}
+	</select>
+	
+<!-- 获取所有的通过的活动 -->
+	<select id="getPassedActivities" parameterType="Activities"
+		resultMap="resultListActivities">
+		select
+		activities.`ac-id`,activities.`ac-name`,activities.`ac-photo`,organization.`o-name`,organization.`o-icon`,activities.`ac-stime`,activities.`ac-etime`,activities.`ac-signtime`,activities.`ac-endsigntime`,activities.`ac-detail`,activities.`ac-sponser`,activities.`st-state`
+		,activities.`ac-signtime`,activities.`ac-endsigntime`	from activities,organization where
+		organization.`o-id`=activities.`o-id` and activities.`st-state`=20 order by activities.`ac-stime`
+	</select>
+	<!-- 获取所有等待审核的活动 -->
+	<select id="getWaitingActivities" parameterType="Activities"
+		resultMap="resultListActivities">
+		select
+		activities.`ac-id`,activities.`ac-name`,activities.`ac-address`,activities.`ac-photo`,organization.`o-name`,organization.`o-icon`,activities.`ac-stime`,activities.`ac-etime`,activities.`ac-signtime`,activities.`ac-endsigntime`,activities.`ac-detail`,activities.`ac-sponser`,activities.`st-state`
+		,activities.`ac-signtime`,activities.`st-state`,activities.`ac-endsigntime`	from activities,organization where
+		organization.`o-id`=activities.`o-id` and activities.`st-state`=10 order by activities.`ac-stime`
+	</select>
+<!-- 插入活动 -->
+	<insert id="createActivities" parameterType="SqlActivities" useGeneratedKeys="true"
+		keyProperty="id">
+		insert into activities(`ac-name`,`o-id`,`ac-signtime`,`ac-endsigntime`,`ac-stime`,`ac-etime`,`ac-detail`,`ac-photo`,`ac-sponser`,`st-state`,`ac-engage`)
+		values (#{name},#{o_id},#{signtime},#{endsigntime},#{stime},#{etime},#{detail},#{photo},#{sponser},10,'[]')
+		</insert>
+		
+<!-- 读取所有活动数目 -->	
+	<select id="getActivitiesClomn"  parameterType="Activities" resultType="int">
+	select count(*) from activities
+	</select>
+
+	<resultMap type="Activities" id="resultListActivities">
+		<id column="ac-id" property="id" /><!-- cloumn为数据库中的属性 property为映射类中的属性 -->
+		<result column="ac-name" property="name" />
+		<result column="ac-photo" property="photo" />
+		<result column="ac-stime" property="stime" />
+		<result column="ac-etime" property="etime" />
+		<result column="ac-detail" property="detail" />
+		<result column="ac-sponsor" property="sponsor" />
+		<result column="st-state" property="state" />
+		<result column="ac-signtime" property="signtime"/>
+		<result column="ac-endsigntime" property="endsigntime"/>
+		<result column="ac-address" property="address"/>
+		<association property="organization" javaType="SqlOrganization"
+			resultMap="resultListOrganization"></association>
+	</resultMap>
+	<resultMap type="SqlOrganization" id="resultListOrganization">
+		<id column="o-id" property="id" />
+		<result column="o-icon" property="icon" />
+		<result column="o-name" property="name" />
+		<result column="o-password" property="password" />
+		<result column="o-phone" property="phone" />
+		<result column="o-mail" property="mail" />
+		<result column="o-detail" property="detail" />
+		<result column="o-address" property="address" />
+		<result column="p-role" property="role" />
+	</resultMap>
+</mapper>

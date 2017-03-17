@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<button onclick="test('some')">test</button>
+</body>
+<script type="text/javascript" src="script/underscore-min.js"></script>
+<script type="text/javascript">
+	var test = function (ok) {
+		if (_.some(['some'],function(item){
+		if(_.isString(item)){
+			return item===ok;
+		}
+	})){alert("Ok")}else
+			alert('bu Ok');
+	};
+</script>
+</html>

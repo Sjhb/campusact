@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop.xsd
+    http://www.springframework.org/schema/util 
+    http://www.springframework.org/schema/util/spring-util.xsd">
+	<!-- 自动扫描 -->
+	<context:component-scan base-package="java" />
+
+	<!--本示例采用DBCP连接池，应预先把DBCP的jar包复制到工程的lib目录下。 -->
+	<context:property-placeholder location="classpath:constant.properties" />
+
+
+	<context:component-scan base-package="controller">
+		<context:exclude-filter expression="org.springframework.stereotype.Controller"
+			type="annotation" />
+	</context:component-scan>
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close" p:driverClassName="${mysql.driverClassName}" p:url="${mysql.url}"
+		p:username="${mysql.username}" p:password="${mysql.password}" p:maxActive="${mysql.maxActive}"
+		p:maxIdle="${mysql.maxIdle}">
+	</bean>
+
+
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!--dataSource属性指定要用到的连接池 -->
+		<property name="dataSource" ref="dataSource" />
+		<!--configLocation属性指定mybatis的核心配置文件 -->
+		<property name="configLocation" value="classpath:Configuration.xml" />
+		<property name="plugins">
+			<array>
+				<bean class="com.github.pagehelper.PageHelper">
+					<property name="properties">
+						<value>
+							dialect=mysql
+							offsetAsPageNum=true
+							rowBoundsWithCount=true
+						</value>
+					</property>
+				</bean>
+			</array>
+		</property>
+		<!-- 所有配置的mapper文件 -->
+		<property name="mapperLocations" value="classpath*:sqlMapper/**.xml,classpath*:mapper/**.xml" ></property>
+	</bean>
+
+	<!-- DAO接口所在包名，Spring会自动查找其下的类 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="sqlinter,inter" />
+	</bean>
+
+
+	<bean id="sysTransactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="transactionTemplate"
+		class="org.springframework.transaction.support.TransactionTemplate">
+		<property name="transactionManager" ref="sysTransactionManager" />
+	</bean>
+	<tx:annotation-driven transaction-manager="sysTransactionManager" />
+
+
+</beans>
