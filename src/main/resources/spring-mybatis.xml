@@ -27,9 +27,9 @@
 	</context:component-scan>
 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-		destroy-method="close" p:driverClassName="${mysql.driverClassName}" p:url="${mysql.url}"
-		p:username="${mysql.username}" p:password="${mysql.password}" p:maxActive="${mysql.maxActive}"
-		p:maxIdle="${mysql.maxIdle}">
+		  destroy-method="close" p:driverClassName="${mysql.driverClassName}" p:url="${mysql.url}"
+		  p:username="${mysql.username}" p:password="${mysql.password}" p:maxActive="${mysql.maxActive}"
+		  p:maxIdle="${mysql.maxIdle}">
 	</bean>
 
 
