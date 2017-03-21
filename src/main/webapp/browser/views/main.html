@@ -1,24 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>活动管理中心</title>
-<link rel="stylesheet" type="text/css" href="browser/assets/css/bootstrap.css">
-<link rel="stylesheet" type="text/css"	href="browser/style/main.css">
-<link rel="stylesheet" type="text/css"	href="browser/style/media.css">
-<link rel="stylesheet" type="text/css"	href="browser/assets/css/bootstrap-datetimepicker.min.css">
+    <meta charset="UTF-8">
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
+    <title>活动管理中心</title>
+    <link rel="stylesheet" type="text/css" href="browser/assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="browser/style/main.css">
+    <link rel="stylesheet" type="text/css" href="browser/style/media.css">
+    <link rel="stylesheet" type="text/css" href="browser/assets/css/bootstrap-datetimepicker.min.css">
 
 </head>
 <body data-ng-app="activities">
-	<section data-ng-include=" 'browser/views/nav.html' " id="nav"
-		 class=""></section>
-	<container>
-		<div id="content" class="container" style="margin-top: 60px;" data-ng-class="">
-			<!-- <section data-ng-view class=""></section> -->
-		</div>
-		<ng-view></ng-view>
-	</container>
+<section data-ng-include=" 'browser/views/nav.html' " id="nav"
+         class=""></section>
+<container>
+    <div id="content" class="container" style="margin-top: 60px;" data-ng-class="">
+        <!-- <section data-ng-view class=""></section> -->
+    </div>
+    <ng-view></ng-view>
+</container>
 <script type="text/javascript" src="browser/assets/js/jquery-3.1.1.js"></script>
+<script type="text/javascript" src="browser/assets/js/jquery.form.js"></script>
 <script type="text/javascript" src="browser/script/underscore-min.js"></script>
 <script type="text/javascript" src="browser/script/angular.min.js"></script>
 <script type="text/javascript" src="browser/script/angular-cookies.js"></script>
@@ -36,7 +39,7 @@
 <script type="text/javascript" src="browser/script/angular-animate.min.js"></script>
 <script type="text/javascript" src="browser/script/core/config.js"></script>
 
-	<!--data-picker-->
+<!--data-picker-->
 <script type="text/javascript" src="browser/assets/js/moment-with-locales.min.js"></script>
 <script type="text/javascript" src="browser/assets/js/bootstrap-datetimepicker.min.js"></script>
 
@@ -46,16 +49,16 @@
 <!-- service -->
 <script type="text/javascript" src="browser/script/services/activities/activitiesService.js"></script>
 <script type="text/javascript" src="browser/script/services/permission/permission.js"></script>
-	<script type="text/javascript" src="browser/script/services/messageService.js"></script>
+<script type="text/javascript" src="browser/script/services/messageService.js"></script>
 
 <!-- controller -->
 <script type="text/javascript" src="browser/script/controllers/activities/activitiesCtrl.js"></script>
-	<script type="text/javascript" src="browser/script/controllers/user/loginCtrl.js"></script>
-	<script type="text/javascript" src="browser/script/controllers/nav/navCtrl.js"></script>
-	<script type="text/javascript" src="browser/script/controllers/activities/actDetailCtrl.js"></script>
-	<script type="text/javascript" src="browser/script/controllers/activities/createActCtrl.js"></script>
-		<script type="text/javascript" src="browser/script/controllers/activities/checkActCtrl.js"></script>
-		<script type="text/javascript" src="browser/script/controllers/registe/registeCtrl.js"></script>
-	<script type="text/javascript" src="browser/script/controllers/messageCtrl.js"></script>
+<script type="text/javascript" src="browser/script/controllers/user/loginCtrl.js"></script>
+<script type="text/javascript" src="browser/script/controllers/nav/navCtrl.js"></script>
+<script type="text/javascript" src="browser/script/controllers/activities/actDetailCtrl.js"></script>
+<script type="text/javascript" src="browser/script/controllers/activities/createActCtrl.js"></script>
+<script type="text/javascript" src="browser/script/controllers/activities/checkActCtrl.js"></script>
+<script type="text/javascript" src="browser/script/controllers/registe/registeCtrl.js"></script>
+<script type="text/javascript" src="browser/script/controllers/messageCtrl.js"></script>
 </body>
 </html>
