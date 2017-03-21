@@ -2,17 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.qike.common.Sqlinter.SqlAdminOperation">
-<!-- 查询管理员 -->
+<mapper namespace="Sqlinter.SqlAdminOperation">
+<!-- 管理员登陆 -->
 	<select id="selectSqlAdmin" parameterType="MiUserInfo" resultMap="resultListSqlAdmin">
-		select `a-id`,`a-icon`,`a-name`,`p-role` from admin where `a-id`=#{userid} and
-		`a-password`=#{password}
+		select id,icon,name from admin where id=#{userid} and
+		password=#{password}
 	</select>
 	<resultMap type="SqlAdmin" id="resultListSqlAdmin">
-		<id column="a-id" property="id" />
-		<result column="a-icon" property="icon" />
-		<result column="a-name" property="name" />
-		<result column="p-role" property="role" />
-		
+		<id column="id" property="userid" />
+		<result column="icon" property="icon" />
+		<result column="name" property="name" />
 	</resultMap>
 </mapper>

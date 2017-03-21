@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Sqlinter.SqlActivityOperation">
+ <!-- 根据id查找活动 SqlActivity -->
+	<select id="getSqlActivityById" parameterType="SqlActivity" resultMap="resultListSqlActivity">
+		select
+		id,name,photo,organizationId,signtime,endSignTime,detail,sponsor,stateId,address
+		from activity where activity.id=#{id}
+	</select>
+	
+	<resultMap type="SqlActivity" id="resultListSqlActivity">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="organization" property="organizationId" />
+		<result column="photo" property="photo" />
+		<result column="startTime" property="sartTime" />
+		<result column="endTime" property="endTime" />
+		<result column="detail" property="detail" />
+		<result column="sponsor" property="sponsor" />
+		<result column="stateId" property="stateId" />
+		<result column="signTime" property="signTime"/>
+		<result column="endSignTime" property="endSignTime"/>
+		<result column="address" property="address"/>
+	</resultMap>
+<!-- 添加活动 -->
+	<insert id="createActivity" parameterType="SqlActivity" useGeneratedKeys="true"
+		keyProperty="id">
+		insert into activity(name,organization,signTime,endSignTime,startTime,endTime,detail,photo,sponser,stateId,engage,address)
+		values (#{name},#{o_id},#{signtime},#{endsigntime},#{stime},#{etime},#{detail},#{photo},#{sponsor},10,'[]',#{address})
+		</insert>
+<!-- 参加活动 -->
+	<update id="engageActivity">
+	 update activitiy set engage=JSON_MERGE(engage,#{student_id,jdbcType=VARCHAR}) where id=#{activity_id,jdbcType=BIGINT}
+	</update>
+<!-- 退出已经参加的活动 -->
+	<update id="cancelEngage">
+		update activity set engage=replace(engage,#{student_id,jdbcType=VARCHAR},'')where id=#{activity_id,jdbcType=BIGINT}
+	</update>
+<!-- 删除活动 -->
+	<delete id="deleteActivity" parameterType="SqlActivity">
+	delete from activity where id=#{id}
+	</delete>
+	<!-- 审批活动 -->
+	<update id="checkActivity">
+	update activity set stateId=#{state} where id=#{id}
+	</update>
+</mapper>

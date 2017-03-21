@@ -2,19 +2,19 @@ package model;
 
 public class SqlOrganization {
 	//| 编号   | 组织头像   | 名称          | 电话       | 邮箱      | 详情     | 地址        | 角色     |
-	private int id;
+	private long id;
 	private String icon;
-	private String  name;
-	private String  detail;
+	private String name;
+	private String detail;
 	private String phone;
 	private String mail;
 	private String address;
-	private String role;
+	private int role;
 	private Integer pageNum;
-	public int getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public String getIcon() {
@@ -53,10 +53,10 @@ public class SqlOrganization {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public String getRole() {
+	public int getRole() {
 		return role;
 	}
-	public void setRole(String role) {
+	public void setRole(int role) {
 		this.role = role;
 	}
 	public Integer getPageNum() {

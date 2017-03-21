@@ -7,9 +7,9 @@ public class SqlStudent {
 			private String sex;
 			private String phone;
 			private String major;
-			private String classes; 
+			private String classes;
 			private String college; 
-			private String role;
+			private int role;
 			private Integer pageNum;
 			public long getId() {
 				return id;
@@ -59,10 +59,10 @@ public class SqlStudent {
 			public void setCollege(String college) {
 				this.college = college;
 			}
-			public String getRole() {
+			public int getRole() {
 				return role;
 			}
-			public void setRole(String role) {
+			public void setRole(int role) {
 				this.role = role;
 			}
 			public Integer getPageNum() {

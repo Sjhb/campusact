@@ -1,33 +1,39 @@
-package model;
+package vo;
 
-public class SqlActivities {
-	private int id;// 活动编号
+
+import model.SqlOrganization;
+import model.SqlState;
+
+public class Activity {
+	private String id;// 活动编号
 	private String name;// 活动名称
 	private String photo;// 活动照片
-	private int o_id;// 组织者
+	private SqlOrganization organization;// 组织者
 	private String stime;// 开始时间
 	private String etime;// 结束时间
 	private String detail;// 活动介绍
 	private String sponsor;// 赞助商
-	private String state;// 审核状态
 	private String signtime;// 报名开始时间
 	private String endsigntime;// 报名结束时间
 	private String address;//地址
-	private Integer pageNum;
-
-	public int getId() {
-		return id;
-	}
-
+	private SqlState state;
 	public String getAddress() {
 		return address;
 	}
+
 
 	public void setAddress(String address) {
 		this.address = address;
 	}
 
-	public void setId(int id) {
+	private Integer pageNum;
+
+	public String getId() {
+		return id;
+	}
+
+
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -39,16 +45,8 @@ public class SqlActivities {
 		this.name = name;
 	}
 
-
 	public String getStime() {
 		return stime;
-	}
-	public int getO_id() {
-		return o_id;
-	}
-
-	public void setO_id(int o_id) {
-		this.o_id = o_id;
 	}
 
 	public void setStime(String stime) {
@@ -79,14 +77,6 @@ public class SqlActivities {
 		this.sponsor = sponsor;
 	}
 
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
 	public Integer getPageNum() {
 		return pageNum;
 	}
@@ -103,15 +93,25 @@ public class SqlActivities {
 		this.photo = photo;
 	}
 
-	
+	public SqlOrganization getOrganization() {
+		return organization;
+	}
+
+
+	public void setOrganization(SqlOrganization organization) {
+		this.organization = organization;
+	}
+
 
 	public String getSigntime() {
 		return signtime;
 	}
 
+
 	public void setSigntime(String signtime) {
 		this.signtime = signtime;
 	}
+
 
 	public String getEndsigntime() {
 		return endsigntime;
@@ -120,5 +120,8 @@ public class SqlActivities {
 	public void setEndsigntime(String endsigntime) {
 		this.endsigntime = endsigntime;
 	}
-	
+
+	public void setState(SqlState state) {
+		this.state = state;
+	}
 }

@@ -1,16 +1,16 @@
 package model;
 
 public class SqlAdmin {
-		private int id;//| 工号   | 头像     | 姓名   | 角色     |  
+		private long id;//| 工号   | 头像     | 姓名   | 角色     |
 		private String icon; 
 		private String name; 
-		private String role;
+		private int role;
 		private Integer pageNum;
 		
-		public int getId() {
+		public long getId() {
 			return id;
 		}
-		public void setId(int id) {
+		public void setId(long id) {
 			this.id = id;
 		}
 		public String getIcon() {
@@ -25,10 +25,10 @@ public class SqlAdmin {
 		public void setName(String name) {
 			this.name = name;
 		}
-		public String getRole() {
+		public int getRole() {
 			return role;
 		}
-		public void setRole(String role) {
+		public void setRole(int role) {
 			this.role = role;
 		}
 		public Integer getPageNum() {

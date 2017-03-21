@@ -25,7 +25,6 @@ import service.UserService;
 public class UserController extends BaseController {
 	@Autowired
 	protected UserService userservice;
-	@PreAuthorize("hasRole('USER')")
 	@RequestMapping("login")
 	@ResponseBody
 	/*

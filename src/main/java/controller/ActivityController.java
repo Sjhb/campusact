@@ -6,7 +6,7 @@ import base.BaseController;
 import base.BaseModel;
 import constant.Constants;
 import model.LoginUser;
-import model.SqlActivities;
+import model.SqlActivity;
 import model.SqlOrganization;
 import model.SqlStudent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,52 +17,52 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
-import service.ActivitiesService;
-import vo.Activities;
+import service.ActivityService;
+import vo.Activity;
 
 @Controller
-@RequestMapping("activities")
-public class ActivitiesController extends BaseController {
+@RequestMapping("activity")
+public class ActivityController extends BaseController {
 	@Autowired
-	protected ActivitiesService activitiesService;
+	protected ActivityService activityService;
 	
 	//查看全部审核通过的活动
 	@RequestMapping("getall")
 	@ResponseBody
-	public BaseModel<List<Activities>> getAct(){
+	public BaseModel<List<Activity>> getAct(){
 		JSONObject jsonObject = this.convertRequestBody();
-		Activities searchact= JSON.toJavaObject(jsonObject,Activities.class);
+		Activity searchact= JSON.toJavaObject(jsonObject, Activity.class);
 		
-		BaseModel<List<Activities>> model = new BaseModel<>();
-			List<Activities> allAactivities=null;
-			allAactivities= activitiesService.getPassedActivities(searchact);
-			model.setData(allAactivities);
-			model.setPage(new PageInfo<Activities>(allAactivities));		
+		BaseModel<List<Activity>> model = new BaseModel<>();
+			List<Activity> allAactivity=null;
+			allAactivity= activityService.getPassedActivity(searchact);
+			model.setData(allAactivity);
+			model.setPage(new PageInfo<Activity>(allAactivity));
 		return model;
 	}
 	//查看待审核通过的活动
 		@RequestMapping("checkall")
 		@ResponseBody
-		public 	BaseModel<List<Activities>> checkAll(){
+		public 	BaseModel<List<Activity>> checkAll(){
 			JSONObject jsonObject = this.convertRequestBody();
-			Activities searchact= JSON.toJavaObject(jsonObject,Activities.class);
+			Activity searchact= JSON.toJavaObject(jsonObject, Activity.class);
 			
-			BaseModel<List<Activities>> model = new BaseModel<>();
-				List<Activities> allAactivities=null;
-				allAactivities= activitiesService.getWaitingActivities(searchact);
-				model.setData(allAactivities);
-				model.setPage(new PageInfo<Activities>(allAactivities));		
+			BaseModel<List<Activity>> model = new BaseModel<>();
+				List<Activity> allAactivity=null;
+				allAactivity= activityService.getWaitingActivity(searchact);
+				model.setData(allAactivity);
+				model.setPage(new PageInfo<Activity>(allAactivity));
 			return model;
 		}
 	//审批活动
 	@RequestMapping("checkact")
 	@ResponseBody
-	public 	BaseModel<SqlActivities> checkAct(){
+	public 	BaseModel<SqlActivity> checkAct(){
 		JSONObject jsonObject = this.convertRequestBody();
 		LoginUser userinfo=(LoginUser)this.getApplicationInfo("user");
-	
-		SqlActivities activitiesCheck=JSON.toJavaObject(jsonObject,SqlActivities.class);
-		BaseModel<SqlActivities> model = new BaseModel<>();
+
+		SqlActivity activityCheck=JSON.toJavaObject(jsonObject,SqlActivity.class);
+		BaseModel<SqlActivity> model = new BaseModel<>();
 		if(userinfo==null){
 			model.setStatus(Constants.FAIL_INVALID_USER);
 			model.setMessage("用户名无效");
@@ -70,7 +70,7 @@ public class ActivitiesController extends BaseController {
 			model.setStatus(Constants.FAIL_INVALID_AUTH);
 			model.setMessage("用户无权审批");
 		}else{
-			if(activitiesService.checkActivities(activitiesCheck)){model.setStatus(Constants.SUCCESS);};
+			if(activityService.checkActivity(activityCheck)){model.setStatus(Constants.SUCCESS);};
 			model.setMessage("活动状态更改成功");
 		}
 		return model;
@@ -78,21 +78,23 @@ public class ActivitiesController extends BaseController {
 	//创建活动
 	@RequestMapping("createact")
 	@ResponseBody
-	public 	BaseModel<List<SqlActivities>> createAct(){
+	public 	BaseModel<List<SqlActivity>> createAct(){
 		JSONObject jsonObject = this.convertRequestBody();
-		SqlActivities activities= JSON.toJavaObject(jsonObject,SqlActivities.class);
+		SqlActivity activity= JSON.toJavaObject(jsonObject,SqlActivity.class);
 		SqlOrganization userinfo=(SqlOrganization)this.getApplicationInfo("user");
-		BaseModel<List<SqlActivities>> model = new BaseModel<>();
+		BaseModel<List<SqlActivity>> model = new BaseModel<>();
 		
 		if(userinfo==null){
 			model.setStatus(Constants.FAIL_INVALID_USER);
 			model.setMessage("用户名无效");
-		}else if(!userinfo.getRole().equals("organization")){
+		}
+		/*else if(!userinfo.getRole().equals("organization")){
 			model.setStatus(Constants.FAIL_INVALID_AUTH);
 			model.setMessage("用户名无权创建活动");
-		}else{
-			activities.setO_id(userinfo.getId());
-			if(activitiesService.createActivities(activities)){	model.setStatus(Constants.SUCCESS);};
+		}*/
+		else{
+			activity.setOrganizationId(userinfo.getId());
+			if(activityService.createActivity(activity)){	model.setStatus(Constants.SUCCESS);};
 			model.setMessage("活动创建成功");
 		}
 		return model;
@@ -100,11 +102,11 @@ public class ActivitiesController extends BaseController {
 	//修改活动
 	@RequestMapping("updateact")
 	@ResponseBody
-	public BaseModel<List<SqlActivities>> updateAct(){
+	public BaseModel<List<SqlActivity>> updateAct(){
 		JSONObject jsonObject = this.convertRequestBody();
-		SqlActivities activities= JSON.toJavaObject(jsonObject,SqlActivities.class);
+		SqlActivity activity= JSON.toJavaObject(jsonObject,SqlActivity.class);
 		LoginUser userinfo=(LoginUser)this.getApplicationInfo("user");
-		BaseModel<List<SqlActivities>> model = new BaseModel<>();
+		BaseModel<List<SqlActivity>> model = new BaseModel<>();
 		
 		if(userinfo==null){
 			model.setStatus(Constants.FAIL_INVALID_USER);
@@ -113,7 +115,7 @@ public class ActivitiesController extends BaseController {
 			model.setStatus(Constants.FAIL_INVALID_AUTH);
 			model.setMessage("用户名无权修改活动");
 		}else{
-			if(activitiesService.createActivities(activities)){	model.setStatus(Constants.SUCCESS);};
+			if(activityService.createActivity(activity)){	model.setStatus(Constants.SUCCESS);};
 			model.setMessage("活动修改成功");
 		}
 		return model;
@@ -121,12 +123,12 @@ public class ActivitiesController extends BaseController {
 	//参加活动//取得活动id，加入student的id
 	@RequestMapping("engageinact")
 	@ResponseBody
-	public 	BaseModel<SqlActivities> engageinAct(){
+	public 	BaseModel<SqlActivity> engageinAct(){
 		JSONObject jsonObject = this.convertRequestBody();
-		SqlActivities getAct=JSON.toJavaObject(jsonObject,SqlActivities.class);
+		SqlActivity getAct=JSON.toJavaObject(jsonObject,SqlActivity.class);
 		SqlStudent getStu=(SqlStudent)this.getApplicationInfo("user");
-		BaseModel<SqlActivities> model = new BaseModel<>();
-		if(!activitiesService.engageActivities(getStu, getAct))
+		BaseModel<SqlActivity> model = new BaseModel<>();
+		if(!activityService.engageActivity(getStu, getAct))
 			{
 			model.setMessage("操作失败");
 			model.setStatus(Constants.FAIL_BUSINESS_ERROR);
@@ -136,12 +138,12 @@ public class ActivitiesController extends BaseController {
 	//取消参加活动
 	@RequestMapping("cancelEngage")
 	@ResponseBody
-	public BaseModel<SqlActivities> cancelEngage(){
+	public BaseModel<SqlActivity> cancelEngage(){
 		JSONObject jsonObject=this.convertRequestBody();
-		SqlActivities getAct=JSON.toJavaObject(jsonObject, SqlActivities.class);
+		SqlActivity getAct=JSON.toJavaObject(jsonObject, SqlActivity.class);
 		SqlStudent getStu=(SqlStudent)this.getApplicationInfo("user");
-		BaseModel<SqlActivities> model=new BaseModel<>();
-		if(!activitiesService.cancelEngage(getStu,getAct))
+		BaseModel<SqlActivity> model=new BaseModel<>();
+		if(!activityService.cancelEngage(getStu,getAct))
 		{
 			model.setMessage("操作失败");
 			model.setStatus(Constants.FAIL_BUSINESS_ERROR);
@@ -151,13 +153,13 @@ public class ActivitiesController extends BaseController {
 	//删除活动
 	@RequestMapping("deleteAct")
 	@ResponseBody
-	public BaseModel<SqlActivities> deleteAct(){
+	public BaseModel<SqlActivity> deleteAct(){
 		JSONObject jsonobject=this.convertRequestBody();
-		SqlActivities getAct=JSON.toJavaObject(jsonobject, SqlActivities.class);
+		SqlActivity getAct=JSON.toJavaObject(jsonobject, SqlActivity.class);
 		String role=(String)this.getApplicationInfo("role");
-		BaseModel<SqlActivities> model=new BaseModel<>();
+		BaseModel<SqlActivity> model=new BaseModel<>();
 		if(role!=null&&role.equals("admin")){
-			if(!activitiesService.deleteActivities(getAct))
+			if(!activityService.deleteActivity(getAct))
 			{
 				model.setMessage("未删除指定的活动");
 				model.setStatus(Constants.FAIL_BUSINESS_ERROR);
