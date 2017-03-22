@@ -2,36 +2,24 @@
     <h3 class="modal-title">登陆</h3>
 </div>
 <div class="modal-body">
-    <!--<form class="main" id="login-form" action="/user/login" method="post">-->
-    <div class="trade">
-        <label class="row-4 trade-label">角色:</label>
-        <div class="row-4">
-            <select class="trade-input" style="padding: 0px 12px;  height: 25px;" data-ng-model="user.role"
-                    ng-change="changed()">
-                <option value="student" selected="selected">学生</option>
-                <option>机构</option>
-                <option>管理员</option>
-            </select>
-        </div>
-    </div>
     <div class="trade">
         <label class="row-4 trade-label">用户:</label>
         <div class="row-4">
-            <input class="trade-input" id="userid" data-ng-model="user.userid" class="row-6" ng-change="changed()"
-                   placeholder="输入您的编号" type="number">
+            <input class="trade-input" id="username" data-ng-model="user.username" class="row-6" ng-change="changed()"
+                   placeholder="输入您的编号" type="text">
         </div>
     </div>
     <div class="trade">
         <label class="row-4 trade-label">密码:</label>
         <div class="row-4">
-            <input class="trade-input" id="userpsw" data-ng-model="user.password" class="row-6"
+            <input class="trade-input" id="password" data-ng-model="user.password" class="row-6"
                    ng-change="changed()" placeholder="输入您的密码" type="password">
         </div>
     </div>
     <div style="text-align: center;height: 22px;" class="">
         <label style="color: red; font-size: 15px;    font-weight: 500;">{{worning}}</label>
     </div>
-    <!--</form>-->
+
 </div>
 <div class="modal-footer">
     <button class="btn btn-primary" ng-click="login()">

@@ -4,17 +4,15 @@
 (function() {
     angular.module('activities').controller('loginCtrl',['permission','activitiesResource','$scope','$uibModalInstance',loginCtrl]);
     function loginCtrl(permission,activitiesResource,$scope,$uibModalInstance) {
+
         $scope.user={
-            role:'',
             password:'',
-            userid:''
+            username:''
         }
         $scope.worning='';
         $scope.changed=function () {
             $scope.worning='';
         }
-        var token = $("meta[name='_csrf']").attr("content");
-        var header = $("meta[name='_csrf_header']").attr("content");
         $(document).ajaxSend(function(e, xhr, options) {
             xhr.setRequestHeader(header, token);
         });

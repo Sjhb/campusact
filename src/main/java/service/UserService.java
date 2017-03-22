@@ -2,17 +2,15 @@ package service;
 
 import java.util.List;
 
-import model.MiUserInfo;
-import model.SqlAdmin;
-import model.SqlOrganization;
-import model.SqlStudent;
+import model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
-import sqlinter.SqlAdminOperation;
-import sqlinter.SqlOrganizationOperation;
-import sqlinter.SqlStudentOperation;
+import sqlInters.SqlAdminOperation;
+import sqlInters.SqlLoginOperation;
+import sqlInters.SqlOrganizationOperation;
+import sqlInters.SqlStudentOperation;
 
 @Service
 public class UserService {
@@ -23,9 +21,19 @@ public class UserService {
 	private SqlOrganizationOperation sqlOrganizationOperation;
 	@Autowired
 	private SqlStudentOperation sqlStudentOperation;
+	@Autowired
+	private SqlLoginOperation sqlLoginOperation;
 	/*
 	 * 用户登陆
 	 */
+	public MiUserInfo userLogin(MiUserInfo user){
+		List<MiUserInfo> users= sqlLoginOperation.selectLoginUser(user);
+		if(users.size()==0){
+			return null;
+		}
+		return  users.get(0);
+	}
+
 	//管理员
 	public SqlAdmin AdminLogin(MiUserInfo user){
 		List<SqlAdmin> admins=sqlAdminOperation.selectSqlAdmin(user);

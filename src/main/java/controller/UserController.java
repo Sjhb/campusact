@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import base.BaseController;
@@ -10,7 +11,6 @@ import model.SqlAdmin;
 import model.SqlOrganization;
 import model.SqlStudent;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,11 +20,23 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import service.UserService;
 
+import javax.servlet.http.HttpServletResponse;
+
 @Controller
 @RequestMapping("user")
 public class UserController extends BaseController {
 	@Autowired
 	protected UserService userservice;
+
+	@RequestMapping("test")
+	@ResponseBody
+	public   void test(){
+		MiUserInfo mi=new MiUserInfo();
+		mi.setUserid(100000000000L);
+		mi.setPassword("100000000000");
+		userservice.userLogin(mi);
+	}
+
 	@RequestMapping("login")
 	@ResponseBody
 	/*
@@ -46,32 +58,6 @@ public class UserController extends BaseController {
 				user.setPassword("");
 				user.setName(student.getName());
 				user.setIcon(student.getIcon());
-			}
-		}else if(user.getRole().equals("机构")){
-			SqlOrganization organization= userservice.OrganizationLogin(user);
-			if (organization==null) {
-				model.setMessage("用户名或者密码不正确");
-				model.setStatus(Constants.FAIL_INVALID_USER);
-				return model;
-			}else {
-				setApplicationInfo("role","organization");
-				setApplicationInfo("user", organization);
-				user.setPassword("");
-				user.setName(organization.getName());
-				user.setIcon(organization.getIcon());
-			}
-		}else {
-			SqlAdmin admin= userservice.AdminLogin(user);
-			if (admin==null) {
-				model.setMessage("用户名或者密码不正确");
-				model.setStatus(Constants.FAIL_INVALID_USER);
-				return model;
-			}else {
-				setApplicationInfo("role","admin");
-				setApplicationInfo("user", admin);
-				user.setPassword("");
-				user.setName(admin.getName());
-				user.setIcon(admin.getIcon());
 			}
 		}
 		model.setData(user);

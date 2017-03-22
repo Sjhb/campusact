@@ -2,6 +2,7 @@
  * 
  */
 (function() {
+	// 登陆用户身份，可以用来判定显示内容
 angular.module('activities').factory('permission',function($rootScope){
 	var permissions;
 	return{

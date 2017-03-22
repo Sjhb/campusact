@@ -2,14 +2,14 @@ package service;
 
 import java.util.List;
 
-import inter.ActivityOperation;
 import model.SqlActivity;
 import model.SqlStudent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
-import sqlinter.SqlActivityOperation;
+import sqlInters.ActivityOperation;
+import sqlInters.SqlActivityOperation;
 import vo.Activity;
 
 @Service

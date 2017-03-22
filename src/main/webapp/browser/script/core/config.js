@@ -4,6 +4,9 @@
 (function(){
 	angular.module('activities').config(function($routeProvider,$httpProvider,$locationProvider){
 		$httpProvider.defaults.withCredentials = true;//跨域
+        // //注册csrf的token
+        // $httpProvider.interceptors.push('csrfInterceptor');
+        //本地路由
 		var views=['allAct/allAct','a','b','createAct/create,organization','checkAct/check,admin','registe/registe'];
 		var setRoutes = function(route) {
 		    var l = route.indexOf(",");

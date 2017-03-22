@@ -2,6 +2,7 @@
  * 活动加载组件
  */
 (function(){
+	// 首页滑动加载活动
 	angular.module("activities").factory('activitiesScrollService',['env','activitiesResource',function(env,activitiesResource){
 		 var activitiesScroll={
 			        	busy:false,

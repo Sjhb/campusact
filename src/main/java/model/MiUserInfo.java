@@ -44,4 +44,16 @@ public class MiUserInfo {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public MiUserInfo() {
+	}
+
+	public MiUserInfo(String role, long userid, String name, String password, String icon, Integer pageNum) {
+		this.role = role;
+		this.userid = userid;
+		this.name = name;
+		this.password = password;
+		this.icon = icon;
+		this.pageNum = pageNum;
+	}
 }

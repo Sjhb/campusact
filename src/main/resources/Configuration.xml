@@ -17,6 +17,7 @@
 		<typeAlias alias="SqlStudent" type="model.SqlStudent"/>
 		<typeAlias alias="SqlOrganization" type="model.SqlOrganization"/>
 		<typeAlias alias="SqlActivity"  type="model.SqlActivity"/>
+		<typeAlias alias="SqlLogin" type="model.SqlLogin"/>
 	</typeAliases>
 
 </configuration> 
