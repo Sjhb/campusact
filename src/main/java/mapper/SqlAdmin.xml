@@ -2,14 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="Sqlinter.SqlAdminOperation">
+<mapper namespace="sqlInters.SqlAdminOperation">
 <!-- 管理员登陆 -->
 	<select id="selectSqlAdmin" parameterType="MiUserInfo" resultMap="resultListSqlAdmin">
-		select id,icon,name from admin where id=#{userid} and
-		password=#{password}
+		select id,icon,name from administor where id=#{id}
 	</select>
 	<resultMap type="SqlAdmin" id="resultListSqlAdmin">
-		<id column="id" property="userid" />
+		<id column="id" property="id" />
 		<result column="icon" property="icon" />
 		<result column="name" property="name" />
 	</resultMap>

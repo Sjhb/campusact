@@ -5,16 +5,16 @@ import model.SqlOrganization;
 import model.SqlState;
 
 public class Activity {
-	private String id;// 活动编号
+	private Long id;// 活动编号
 	private String name;// 活动名称
 	private String photo;// 活动照片
 	private SqlOrganization organization;// 组织者
-	private String stime;// 开始时间
-	private String etime;// 结束时间
+	private String startTime;// 开始时间
+	private String endTime;// 结束时间
 	private String detail;// 活动介绍
 	private String sponsor;// 赞助商
-	private String signtime;// 报名开始时间
-	private String endsigntime;// 报名结束时间
+	private String signTime;// 报名开始时间
+	private String endSignTime;// 报名结束时间
 	private String address;//地址
 	private SqlState state;
 	public String getAddress() {
@@ -28,12 +28,12 @@ public class Activity {
 
 	private Integer pageNum;
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -46,20 +46,49 @@ public class Activity {
 	}
 
 	public String getStime() {
-		return stime;
+		return startTime;
 	}
 
 	public void setStime(String stime) {
-		this.stime = stime;
+		this.startTime = stime;
 	}
 
-	public String getEtime() {
-		return etime;
+	public String getStartTime() {
+		return startTime;
 	}
 
-	public void setEtime(String etime) {
-		this.etime = etime;
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
 	}
+
+	public String getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
+	}
+
+	public String getSignTime() {
+		return signTime;
+	}
+
+	public void setSignTime(String signTime) {
+		this.signTime = signTime;
+	}
+
+	public String getEndSignTime() {
+		return endSignTime;
+	}
+
+	public void setEndSignTime(String endSignTime) {
+		this.endSignTime = endSignTime;
+	}
+
+	public SqlState getState() {
+		return state;
+	}
+
 
 	public String getDetail() {
 		return detail;
@@ -100,25 +129,6 @@ public class Activity {
 
 	public void setOrganization(SqlOrganization organization) {
 		this.organization = organization;
-	}
-
-
-	public String getSigntime() {
-		return signtime;
-	}
-
-
-	public void setSigntime(String signtime) {
-		this.signtime = signtime;
-	}
-
-
-	public String getEndsigntime() {
-		return endsigntime;
-	}
-
-	public void setEndsigntime(String endsigntime) {
-		this.endsigntime = endsigntime;
 	}
 
 	public void setState(SqlState state) {

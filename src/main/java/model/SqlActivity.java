@@ -1,7 +1,7 @@
 package model;
 
 public class SqlActivity {
-	private int id;// 活动编号
+	private Long id;// 活动编号
 	private String name;// 活动名称
 	private String photo;// 活动照片
 	private long organizationId;// 组织者
@@ -15,7 +15,7 @@ public class SqlActivity {
 	private String address;//地址
 	private Integer pageNum;
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
@@ -27,7 +27,7 @@ public class SqlActivity {
 		this.address = address;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

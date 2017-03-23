@@ -2,12 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="Sqlinter.SqlOrganizationOperation">
+<mapper namespace="sqlInters.SqlOrganizationOperation">
 <!-- 查询组织 -->
 	<select id="selectSqlOrganization" parameterType="MiUserInfo"	resultMap="resultListSqlOrganization">
 		select
 		id,icon,name,phone,mail,detail,address from organization where
-		id=#{userid} and password=#{password}
+		id=#{id}
 	</select>
 	<resultMap type="SqlOrganization" id="resultListSqlOrganization">
 		<id column="id" property="id" />

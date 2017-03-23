@@ -2,8 +2,8 @@ package model;
 
 //登陆传回信息
 public class MiUserInfo {
-	private String role;
-	private long userid;
+	private SqlRole role;
+	private Long id;
 	private String name;
 	private String password;
 	private String icon;
@@ -14,17 +14,11 @@ public class MiUserInfo {
 	public void setIcon(String icon) {
 		this.icon = icon;
 	}
-	public String getRole() {
-		return role;
+	public long getId() {
+		return id;
 	}
-	public void setRole(String role) {
-		this.role = role;
-	}
-	public long getUserid() {
-		return userid;
-	}
-	public void setUserid(long userid) {
-		this.userid = userid;
+	public void setId(long userid) {
+		this.id = userid;
 	}
 	public String getPassword() {
 		return password;
@@ -44,13 +38,16 @@ public class MiUserInfo {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public MiUserInfo() {
+	public SqlRole getRole() {
+		return role;
 	}
-
-	public MiUserInfo(String role, long userid, String name, String password, String icon, Integer pageNum) {
+	public void setRole(SqlRole role) {
 		this.role = role;
-		this.userid = userid;
+	}
+	public MiUserInfo() { }
+	public MiUserInfo(SqlRole role, long userid, String name, String password, String icon, Integer pageNum) {
+		this.role = role;
+		this.id = userid;
 		this.name = name;
 		this.password = password;
 		this.icon = icon;

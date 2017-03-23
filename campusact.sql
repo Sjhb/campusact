@@ -78,7 +78,7 @@ CREATE TABLE `administor` (
 
 LOCK TABLES `administor` WRITE;
 /*!40000 ALTER TABLE `administor` DISABLE KEYS */;
-INSERT INTO `administor` VALUES (100000000000,'1000000000001.jpg','王汉祥','10000000000',20);
+INSERT INTO `administor` VALUES (100000000000,'1000000000001.jpg','王汉祥','100000000000',20);
 /*!40000 ALTER TABLE `administor` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -192,7 +192,7 @@ CREATE TABLE `login` (
 
 LOCK TABLES `login` WRITE;
 /*!40000 ALTER TABLE `login` DISABLE KEYS */;
-INSERT INTO `login` VALUES (201301010101,'100001',10),(100000000000,'10000000000',20),(300000000001,'30000000000',30),(201301010101,'201301010101',10);
+INSERT INTO `login` VALUES (201301010101,'100001',10),(100000000000,'100000000000',20),(300000000001,'300000000000',30),(201301010101,'201301010101',10);
 /*!40000 ALTER TABLE `login` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -225,7 +225,7 @@ CREATE TABLE `organization` (
 
 LOCK TABLES `organization` WRITE;
 /*!40000 ALTER TABLE `organization` DISABLE KEYS */;
-INSERT INTO `organization` VALUES (300000000001,'300000000001.jpg','教科体育部','30000000000','15868149250','jktybu@163.com','教育技术与科技学院体育部，一群活力四射的青年','家和东苑十幢架空层教科办公室',30);
+INSERT INTO `organization` VALUES (300000000001,'300000000001.jpg','教科体育部','300000000000','15868149250','jktybu@163.com','教育技术与科技学院体育部，一群活力四射的青年','家和东苑十幢架空层教科办公室',30);
 /*!40000 ALTER TABLE `organization` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -310,7 +310,7 @@ CREATE TABLE `role` (
 
 LOCK TABLES `role` WRITE;
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
-INSERT INTO `role` VALUES (10,'学生',NULL),(20,'管理员',NULL),(30,'组织',NULL);
+INSERT INTO `role` VALUES (10,'student',NULL),(20,'admin',NULL),(30,'organization',NULL);
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -439,4 +439,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-03-22 17:48:22
+-- Dump completed on 2017-03-23 17:43:50

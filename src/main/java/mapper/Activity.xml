@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="sqlinter.ActivityOperation">
+<mapper namespace="sqlInters.ActivityOperation">
 
 	<!-- 根据id查找活动 -->
 	<select id="getActivityById" parameterType="Activity"
@@ -14,30 +14,31 @@
 	</select>
 	
 <!-- 获取所有的通过的活动 -->
-	<select id="getPassedActivity" parameterType="Activity"
-		resultMap="resultListActivity">
+	<select id="getPassedActivity" 		resultMap="resultListActivity">
 		select
 		activity.id,activity.name,activity.photo,organization.name,organization.icon,activity.startTime,activity.endTime,activity.signTime,activity.endSignTime,activity.detail,activity.sponser,state.stateId
 		,activity.signTime,activity.endSignTime,activity.engage	from activity,organization where
 		organization.id=activity.organizationId and activity.stateId=state.state and state.stateId=20 order by activity.startTime
 	</select>
 	<!-- 获取所有等待审核的活动 -->
-	<select id="getWaitingActivity" parameterType="Activity"
-		resultMap="resultListActivity">
+	<select id="getWaitingActivity" 		resultMap="resultListActivity">
 		select
 		activity.id,activity.name,activity.address,activity.photo,organization.name,organization.icon,activity.startTime,activity.endTime,activity.signTime,activity.endSignTime,activity.detail,activity.sponser,activity.stateId
 		,activity.signTime,activity.stateId,activity.endSignTime	from activity,organization where
-		organization.id=activity.id and activity.stateId=10 order by activity.startTime
+		organization.id=activity.organizationId and activity.stateId=10 order by activity.startTime
 	</select>
 <!-- 插入活动 -->
 	<insert id="createActivity" parameterType="SqlActivity" useGeneratedKeys="true"
 		keyProperty="id">
 		insert into activity(name,id,signTime,endSignTime,startTime,endTime,detail,photo,sponser,stateId,engage)
-		values (#{name},#{o_id},#{signTime},#{endSignTime},#{startTime},#{endTime},#{detail},#{photo},#{sponser},10,'[]')
+		values (#{name},#{organizationId},#{signTime},#{endSignTime},#{startTime},#{endTime},#{detail},#{photo},#{sponser},10,'[]')
 		</insert>
-		
+		<!--更改活动-->
+	<update id="changeActivity">
+
+	</update>
 <!-- 读取所有活动数目 -->	
-	<select id="getActivityClomn"  parameterType="Activity" resultType="int">
+	<select id="getActivityCloumn"  parameterType="Activity" resultType="int">
 	select count(*) from activity
 	</select>
 
@@ -49,7 +50,6 @@
 		<result column="endTime" property="endTime" />
 		<result column="detail" property="detail" />
 		<result column="sponsor" property="sponsor" />
-		<result column="stateId" property="state" />
 		<result column="signTime" property="signTime"/>
 		<result column="endSignTime" property="endSignTime"/>
 		<result column="address" property="address"/>
@@ -57,7 +57,7 @@
 			resultMap="resultListOrganization"></association>
 		<association property="state" javaType="SqlState" resultMap="resultListState" />
 	</resultMap>
-	<resultMap type="SqlOrganization" id="resultListOrganization">
+	<resultMap type="SqlOrganization" id ="resultListOrganization">
 		<id column="id" property="id" />
 		<result column="icon" property="icon" />
 		<result column="name" property="name" />
@@ -68,7 +68,7 @@
 		<result column="address" property="address" />
 		<result column="p-role" property="role" />
 	</resultMap>
-	<resultMap id="resultListState" type="SqlState">
+	<resultMap   type="SqlState" id="resultListState">
 		<id column="state" property="state"/>
 		<id column="detail" property="detail"/>
 	</resultMap>

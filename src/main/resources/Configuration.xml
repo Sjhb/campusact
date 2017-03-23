@@ -4,11 +4,12 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
-		<typeAlias alias="User" type="model.User" />
+		<typeAlias alias="User" type="vo.User" />
 
 		<typeAlias alias="MiUserInfo" type="model.MiUserInfo"/>
 		<typeAlias alias="LoginUser" type="model.LoginUser"/>
 		<typeAlias alias="Activity" type="vo.Activity"/>
+		<typeAlias alias="VoStudent" type="vo.VoStudent"/>
 
 		<typeAlias alias="SqlBehave" type="model.SqlBehave"/>
 		<typeAlias alias="SqlRole" type="model.SqlRole"/>
@@ -18,6 +19,8 @@
 		<typeAlias alias="SqlOrganization" type="model.SqlOrganization"/>
 		<typeAlias alias="SqlActivity"  type="model.SqlActivity"/>
 		<typeAlias alias="SqlLogin" type="model.SqlLogin"/>
+
+
 	</typeAliases>
 
 </configuration> 

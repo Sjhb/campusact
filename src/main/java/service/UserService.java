@@ -7,10 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
-import sqlInters.SqlAdminOperation;
-import sqlInters.SqlLoginOperation;
-import sqlInters.SqlOrganizationOperation;
-import sqlInters.SqlStudentOperation;
+import sqlInters.*;
+import constant.field;
+import vo.VoAdmin;
+import vo.VoOrganization;
+import vo.VoStudent;
+
+import static constant.field.ADMINISTOR;
+import static constant.field.ORGANIZATION;
+import static constant.field.STUDENT;
 
 @Service
 public class UserService {
@@ -22,40 +27,53 @@ public class UserService {
 	@Autowired
 	private SqlStudentOperation sqlStudentOperation;
 	@Autowired
-	private SqlLoginOperation sqlLoginOperation;
+    private UserOperation userOperation;
 	/*
-	 * 用户登陆
+	 * 用户登陆,并查询详细信息
 	 */
-	public MiUserInfo userLogin(MiUserInfo user){
-		List<MiUserInfo> users= sqlLoginOperation.selectLoginUser(user);
+	public Object userLogin(MiUserInfo miUserInfo){
+		List<MiUserInfo> users=userOperation.userLogin(miUserInfo);
 		if(users.size()==0){
 			return null;
 		}
-		return  users.get(0);
+		MiUserInfo user=users.get(0);
+        switch (user.getRole().getDetail()){
+            case STUDENT:
+            	VoStudent student=getStudentInfo(user);
+            	student.setRole(user.getRole());
+				return student;
+            case ADMINISTOR:
+            	VoAdmin admin=getAdminInfo(user);
+				admin.setRole(user.getRole());
+				return admin;
+            case ORGANIZATION:
+            	VoOrganization organization=getOrganizationInfo(user);
+				organization.setRole(user.getRole());
+				return organization;
+            default:return null;
+        }
 	}
-
 	//管理员
-	public SqlAdmin AdminLogin(MiUserInfo user){
+	public VoAdmin getAdminInfo(MiUserInfo user){
 		List<SqlAdmin> admins=sqlAdminOperation.selectSqlAdmin(user);
 		if (admins.size()==0) {
 			return null;
 		}
 		SqlAdmin result=admins.get(0);
-		SqlAdmin admin=new SqlAdmin();
+		VoAdmin admin=new VoAdmin();
 		admin.setId(result.getId());
 		admin.setIcon(result.getIcon());
 		admin.setName(result.getName());
-		admin.setRole(result.getRole());
 		return admin;
 	}
 	//组织
-	public SqlOrganization OrganizationLogin(MiUserInfo user){
+	public VoOrganization getOrganizationInfo(MiUserInfo user){
 		List<SqlOrganization> organizations=sqlOrganizationOperation.selectSqlOrganization(user);
 		if (organizations==null||!(organizations.size()>0)) {
 			return null;
 		}
 		SqlOrganization result=organizations.get(0);
-		SqlOrganization organization=new SqlOrganization();
+		VoOrganization organization=new VoOrganization();
 		organization.setId(result.getId());
 		organization.setName(result.getName());
 		organization.setIcon(result.getIcon());
@@ -63,17 +81,16 @@ public class UserService {
 		organization.setMail(result.getMail());
 		organization.setDetail(result.getDetail());
 		organization.setAddress(result.getAddress());
-		organization.setRole(result.getRole());
 		return organization;
 	}
-	//学生
-	public SqlStudent StudentLogin(MiUserInfo user ){
-		List<SqlStudent> students=sqlStudentOperation.selectSqlStudent(user.getUserid(),user.getPassword());
+	//根据学生id查询详细信息
+	public VoStudent getStudentInfo(MiUserInfo user ){
+		List<SqlStudent> students=sqlStudentOperation.selectSqlStudent(user.getId());
 		if (!(students.size()>0)) {
 			return null;
 		}
 		SqlStudent result=students.get(0);
-		SqlStudent student=new SqlStudent();
+		VoStudent student=new VoStudent();
 		student.setId(result.getId());
 		student.setIcon(result.getIcon());
 		student.setName(result.getName());
@@ -82,7 +99,6 @@ public class UserService {
 		student.setMajor(result.getMajor());
 		student.setClasses(result.getClasses());
 		student.setCollege(result.getCollege());
-		student.setRole(result.getRole());
 		return student;
 	}
 //修改用户信息

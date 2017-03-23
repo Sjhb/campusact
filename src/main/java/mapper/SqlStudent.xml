@@ -2,13 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="Sqlinter.SqlStudentOperation">
-<!-- 查询学生 -->
+<mapper namespace="sqlInters.SqlStudentOperation">
+<!-- 查询学生  根据id-->
 	<select id="selectSqlStudent"  resultMap="resultListSqlStudent">
 		select
 		id,icon,name,sex,phone,major,class,college from
-		student where id=#{userid,jdbcType=BIGINT} and password=#{password,jdbcType=VARCHAR}
+		student where id=#{id,jdbcType=BIGINT}
 	</select>
+
 	<update id="alterStudent" parameterType="SqlStudent" >
 		update student 
 	</update>
