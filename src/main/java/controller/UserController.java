@@ -22,10 +22,6 @@ import service.UserService;
 
 import javax.servlet.http.HttpServletResponse;
 
-import static constant.field.ADMINISTOR;
-import static constant.field.ORGANIZATION;
-import static constant.field.STUDENT;
-
 @Controller
 @RequestMapping("user")
 public class UserController extends BaseController {

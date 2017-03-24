@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sqlInters.SqlLoginOperation">
+    <!-- 用户登陆 -->
+    <select id="selectLoginUser" parameterType="MiUserInfo" resultMap="resultListMiUserInfo">
+        select login.id,login.role from login where login.id=#{id} and
+        login.password=#{password}
+    </select>
+    <resultMap type="SqlLogin" id="resultListMiUserInfo">
+        <id column="id" property="id" />
+        <result column="role" property="role" />
+    </resultMap>
+</mapper>

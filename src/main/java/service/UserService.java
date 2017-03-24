@@ -13,11 +13,7 @@ import vo.VoAdmin;
 import vo.VoOrganization;
 import vo.VoStudent;
 
-import static constant.field.ADMINISTOR;
-import static constant.field.ORGANIZATION;
-import static constant.field.STUDENT;
-
-@Service
+  @Service
 public class UserService {
 
 	@Autowired
@@ -38,15 +34,15 @@ public class UserService {
 		}
 		MiUserInfo user=users.get(0);
         switch (user.getRole().getDetail()){
-            case STUDENT:
+            case field.STUDENT:
             	VoStudent student=getStudentInfo(user);
             	student.setRole(user.getRole());
 				return student;
-            case ADMINISTOR:
+            case field.ADMINISTOR:
             	VoAdmin admin=getAdminInfo(user);
 				admin.setRole(user.getRole());
 				return admin;
-            case ORGANIZATION:
+            case field.ORGANIZATION:
             	VoOrganization organization=getOrganizationInfo(user);
 				organization.setRole(user.getRole());
 				return organization;

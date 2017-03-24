@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sqlInters.UserOperation">
+    <!--用户登陆-->
+    <select id="userLogin" parameterType="MiUserInfo" resultMap="MiUserInfo">
+        select login.id,role.detail,role.behaves from login,role where role.roleId=login.role and login.id=#{id} and login.password=#{password}
+    </select>
+    <resultMap id="MiUserInfo" type="MiUserInfo">
+        <id column="id" property="id"/>
+        <association property="role" javaType="SqlRole" resultMap="Role" />
+    </resultMap>
+    <resultMap id="Role" type="SqlRole">
+        <id column="roleId" property="roleId"/>
+        <result column="detail" property="detail"/>
+        <result column="behaves" property="behaves"/>
+    </resultMap>
+
+    <!--查询用户详细信息-->
+
+</mapper>
+
+
+
