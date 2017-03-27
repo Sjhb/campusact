@@ -18,8 +18,8 @@
 			        		
 			        		activitiesResource.activities_all.save(this.pageNum,function(res){
 						    	for (var i = 0; i <res.data.length; i++) {
-						    		res.data[i].photo="browser/images/actphoto/"+res.data[i].photo+".jpg";
-                                    res.data[i].organization.icon="browser/images/icon/"+ res.data[i].organization.icon+".jpg";
+						    		// res.data[i].photo="browser/images/actphoto/"+res.data[i].photo+".jpg";
+                                    // res.data[i].organization.icon="browser/images/icon/"+ res.data[i].organization.icon+".jpg";
 							        this.items.push(res.data[i]);
 							      };
 						    	this.pageNum.pageNum++;
