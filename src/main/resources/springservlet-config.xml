@@ -77,6 +77,14 @@
             </list>
         </property>
     </bean>
-
-
+<!--读取properties文件，可以多文件读取-->
+    <bean id="propertiesReader"
+          class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="locations">
+            <list>
+                <value>classpath:IO.properties</value>
+                <!--<value>classpath:MORE.properties</value>-->
+            </list>
+        </property>
+    </bean>
 </beans>

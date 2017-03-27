@@ -11,6 +11,7 @@ import model.SqlAdmin;
 import model.SqlOrganization;
 import model.SqlStudent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,14 +29,14 @@ public class UserController extends BaseController {
     @Autowired
     protected UserService userservice;
 
+    @Value("#{propertiesReader['ACTIVITY_IMG']}")
+    private String ACTIVITY_IMG;
     @RequestMapping("test")
     @ResponseBody
-    public void test() {
-        MiUserInfo mi = new MiUserInfo();
-        mi.setId(100000000000L);
-        mi.setPassword("10000000000");
-        Object test = userservice.userLogin(mi);
-        System.out.print(test);
+    public void test(HttpServletResponse response) throws IOException {
+        response.setHeader("Content-Type","image/jpeg");//设置响应的媒体类型，这样浏览器会识别出响应的是图片
+        byte[] image=this.getPicture(ACTIVITY_IMG+ "/4.JPG");
+        response.getOutputStream().write(image);
     }
 
     @RequestMapping("login")

@@ -1,6 +1,6 @@
 package base;
 
-import java.io.BufferedReader;
+import java.io.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -19,7 +19,7 @@ public class BaseController {
 	public void setReqAndRes(HttpServletRequest request, HttpServletResponse Response) {
 		this.session = request.getSession();
 	}
-
+//前端传回数据转json对象
 	protected JSONObject convertRequestBody() {
 		String param = null;
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
@@ -89,5 +89,19 @@ public class BaseController {
 
 		return userRole;
 	}
-
+	//IO操作
+//	读取图片
+	protected byte[] getPicture(String filename) throws IOException {
+		File file2 = new File(filename);
+		FileInputStream fis = new FileInputStream(file2);
+		byte[] buf = new byte[(int) file2.length()];
+		fis.read(buf);
+		fis.close();
+		return  buf;
+	}
+//	读取文档
+	protected  byte[] getDocument(String filename){
+		byte[] document=null;
+		return document;
+	}
 }
