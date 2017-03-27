@@ -6,14 +6,18 @@ import java.util.List;
 import base.BaseController;
 import base.BaseModel;
 import constant.Constants;
+import constant.field;
 import model.MiUserInfo;
 import model.SqlAdmin;
 import model.SqlOrganization;
 import model.SqlStudent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
@@ -28,21 +32,27 @@ import javax.servlet.http.HttpServletResponse;
 public class UserController extends BaseController {
     @Autowired
     protected UserService userservice;
+//设置文件读取路径
+    @Value("#{propertiesReader['ORGANIZATION_ICON']}")
+    private String ORGANIZATION_ICON;
+    @Value("#{propertiesReader['STUDENT_ICON']}")
+    private String STUDENT_ICON;
+    @Value("#{propertiesReader['ADMINISTOR_ICON']}")
+    private String ADMINISTOR_ICON;
 
-    @Value("#{propertiesReader['ACTIVITY_IMG']}")
-    private String ACTIVITY_IMG;
+
     @RequestMapping("test")
     @ResponseBody
     public void test(HttpServletResponse response) throws IOException {
-        response.setHeader("Content-Type","image/jpeg");//设置响应的媒体类型，这样浏览器会识别出响应的是图片
-        byte[] image=this.getPicture(ACTIVITY_IMG+ "/4.JPG");
+        response.setHeader("Content-Type", "image/jpeg");//设置响应的媒体类型，这样浏览器会识别出响应的是图片
+        byte[] image = this.getPicture(ORGANIZATION_ICON + "/4.JPG");
         response.getOutputStream().write(image);
     }
 
     @RequestMapping("login")
     @ResponseBody
     /*
-	 * 用户登陆
+     * 用户登陆
 	 */
     public BaseModel<MiUserInfo> login() {
         BaseModel<MiUserInfo> model = new BaseModel<>();
@@ -54,12 +64,12 @@ public class UserController extends BaseController {
             model.setStatus(Constants.FAIL_INVALID_USER);
             return model;
         }
-            setApplicationInfo("role", loginuser.getRole().getDetail());
-            setApplicationInfo("user", loginuser);
-            user.setRole(loginuser.getRole());
-            user.setPassword("");
-            user.setName(loginuser.getName());
-            user.setIcon(loginuser.getIcon());
+        setApplicationInfo("role", loginuser.getRole().getDetail());
+        setApplicationInfo("user", loginuser);
+        user.setRole(loginuser.getRole());
+        user.setPassword("");
+        user.setName(loginuser.getName());
+        user.setIcon(loginuser.getIcon());
         model.setData(user);
         model.setMessage("登陆成功");
         return model;
@@ -74,7 +84,7 @@ public class UserController extends BaseController {
         BaseModel<MiUserInfo> model = new BaseModel<>();
 
         String role = (String) getApplicationInfo("role");
-		/*String id=(String)((Object)getApplicationInfo("user").getId());*/
+        /*String id=(String)((Object)getApplicationInfo("user").getId());*/
         if (logoutUser.getRole().equals(role)) {
             switch (role) {
                 case "student": {
@@ -100,7 +110,6 @@ public class UserController extends BaseController {
                         setApplicationInfo("user", null);
                     }
                 }
-                ;
             }
         } else {
             model.setStatus(Constants.FAIL_BUSINESS_ERROR);
@@ -138,30 +147,36 @@ public class UserController extends BaseController {
                     model.setStatus(Constants.FAIL_BUSINESS_ERROR);
                     model.setMessage("修改失败");
                 }
-                ;
             }
-            ;
             case "admin": {
                 SqlAdmin admin = JSON.toJavaObject(Json, SqlAdmin.class);
                 if (!userservice.alterUser("admin", admin)) {
                     model.setStatus(Constants.FAIL_BUSINESS_ERROR);
                     model.setMessage("修改失败");
                 }
-                ;
             }
-            ;
             case "organization": {
                 SqlOrganization organization = JSON.toJavaObject(Json, SqlOrganization.class);
                 if (!userservice.alterUser("stdent", organization)) {
                     model.setStatus(Constants.FAIL_BUSINESS_ERROR);
                     model.setMessage("修改失败");
                 }
-                ;
             }
-            ;
         }
-        ;
         return model;
     }
-
+    //获取用户头像
+    @RequestMapping(value = "getIcon",method = RequestMethod.GET)
+    @ResponseBody
+    public  void getIcon(@RequestParam(value = "role",required = false) String role,@RequestParam(value = "icon",required = false) String filename,HttpServletResponse  response) throws IOException {
+        response.setHeader("Content-Type", "image/jpeg");//设置响应的媒体类型，这样浏览器会识别出响应的是图片
+        byte[] image;
+        switch (role){
+            case field.STUDENT:image=this.getPicture(STUDENT_ICON +filename);break;
+            case field.ADMINISTOR:image=this.getPicture(ADMINISTOR_ICON+filename);break;
+            case field.ORGANIZATION:image=this.getPicture(ORGANIZATION_ICON +filename);break;
+            default: image=null;
+        }
+        response.getOutputStream().write(image);
+    }
 }
