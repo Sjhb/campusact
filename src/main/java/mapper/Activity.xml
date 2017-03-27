@@ -1,75 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="sqlInters.ActivityOperation">
 
-	<!-- 根据id查找活动 -->
-	<select id="getActivityById" parameterType="Activity"
-		resultMap="resultListActivity">
+    <!-- 根据id查找活动 -->
+    <select id="getActivityById" parameterType="Activity"
+            resultMap="resultListActivity">
 		select
 		activity.id,activity.name,activity.photo,organization.name,activity.startTime,activity.endTime,activity.detail,activity.sponsor,state.stateId
 		from activity,organization,state where
 		organization.id=activity.organizationId and activity.id=#{id} and activity.stateId=state.state
 	</select>
-	
-<!-- 获取所有的通过的活动 -->
-	<select id="getPassedActivity" 		resultMap="resultListActivity">
+
+    <!-- 获取所有的通过的活动 -->
+    <select id="getPassedActivity" resultMap="resultListActivity">
 		select
-		activity.id,activity.name,activity.photo,organization.name,organization.icon,activity.startTime,activity.endTime,activity.signTime,activity.endSignTime,activity.detail,activity.sponser,state.stateId
-		,activity.signTime,activity.endSignTime,activity.engage	from activity,organization where
-		organization.id=activity.organizationId and activity.stateId=state.state and state.stateId=20 order by activity.startTime
+		activity.id,
+		activity.name,
+		activity.photo,
+		organization.name,
+		organization.icon,
+		activity.startTime,
+		activity.endTime,
+		activity.signTime,
+		activity.endSignTime,
+		activity.detail,
+		activity.sponsor,
+		state.detail,
+		activity.signTime,
+		activity.endSignTime,
+		activity.engage
+		from activity,organization,state
+		where	organization.id=activity.organizationId
+		and activity.stateId=state.state
+		and state.state=2000 order by activity.startTime
 	</select>
-	<!-- 获取所有等待审核的活动 -->
-	<select id="getWaitingActivity" 		resultMap="resultListActivity">
+    <!-- 获取所有等待审核的活动 -->
+    <select id="getWaitingActivity" resultMap="resultListActivity">
 		select
 		activity.id,activity.name,activity.address,activity.photo,organization.name,organization.icon,activity.startTime,activity.endTime,activity.signTime,activity.endSignTime,activity.detail,activity.sponser,activity.stateId
 		,activity.signTime,activity.stateId,activity.endSignTime	from activity,organization where
 		organization.id=activity.organizationId and activity.stateId=10 order by activity.startTime
 	</select>
-<!-- 插入活动 -->
-	<insert id="createActivity" parameterType="SqlActivity" useGeneratedKeys="true"
-		keyProperty="id">
+    <!-- 插入活动 -->
+    <insert id="createActivity" parameterType="SqlActivity" useGeneratedKeys="true"
+            keyProperty="id">
 		insert into activity(name,id,signTime,endSignTime,startTime,endTime,detail,photo,sponser,stateId,engage)
 		values (#{name},#{organizationId},#{signTime},#{endSignTime},#{startTime},#{endTime},#{detail},#{photo},#{sponser},10,'[]')
 		</insert>
-		<!--更改活动-->
-	<update id="changeActivity">
+    <!--更改活动-->
+    <update id="changeActivity">
 
-	</update>
-<!-- 读取所有活动数目 -->	
-	<select id="getActivityCloumn"  parameterType="Activity" resultType="int">
-	select count(*) from activity
-	</select>
+    </update>
+    <!-- 读取所有活动数目 -->
+    <select id="getActivityCloumn" parameterType="Activity" resultType="int">
+        select count(*) from activity
+    </select>
 
-	<resultMap type="Activity" id="resultListActivity">
-		<id column="id" property="id" /><!-- cloumn为数据库中的属性 property为映射类中的属性 -->
-		<result column="name" property="name" />
-		<result column="photo" property="photo" />
-		<result column="startTime" property="startTime" />
-		<result column="endTime" property="endTime" />
-		<result column="detail" property="detail" />
-		<result column="sponsor" property="sponsor" />
-		<result column="signTime" property="signTime"/>
-		<result column="endSignTime" property="endSignTime"/>
-		<result column="address" property="address"/>
-		<association property="organization" javaType="SqlOrganization"
-			resultMap="resultListOrganization"></association>
-		<association property="state" javaType="SqlState" resultMap="resultListState" />
-	</resultMap>
-	<resultMap type="SqlOrganization" id ="resultListOrganization">
-		<id column="id" property="id" />
-		<result column="icon" property="icon" />
-		<result column="name" property="name" />
-		<result column="password" property="password" />
-		<result column="phone" property="phone" />
-		<result column="mail" property="mail" />
-		<result column="detail" property="detail" />
-		<result column="address" property="address" />
-		<result column="p-role" property="role" />
-	</resultMap>
-	<resultMap   type="SqlState" id="resultListState">
-		<id column="state" property="state"/>
-		<id column="detail" property="detail"/>
-	</resultMap>
+    <resultMap type="Activity" id="resultListActivity">
+        <id column="id" property="id"/><!-- cloumn为数据库中的属性 property为映射类中的属性 -->
+        <result column="name" property="name"/>
+        <result column="photo" property="photo"/>
+        <result column="startTime" property="startTime"/>
+        <result column="endTime" property="endTime"/>
+        <result column="detail" property="detail"/>
+        <result column="sponsor" property="sponsor"/>
+        <result column="signTime" property="signTime"/>
+        <result column="endSignTime" property="endSignTime"/>
+        <result column="address" property="address"/>
+        <association property="organization" javaType="SqlOrganization"
+                     resultMap="resultListOrganization"></association>
+        <association property="state" javaType="SqlState" resultMap="resultListState"/>
+    </resultMap>
+    <resultMap type="SqlOrganization" id="resultListOrganization">
+        <id column="id" property="id"/>
+        <result column="icon" property="icon"/>
+        <result column="name" property="name"/>
+        <result column="password" property="password"/>
+        <result column="phone" property="phone"/>
+        <result column="mail" property="mail"/>
+        <result column="detail" property="detail"/>
+        <result column="address" property="address"/>
+        <result column="role" property="role"/>
+    </resultMap>
+    <resultMap type="SqlState" id="resultListState">
+        <id column="state" property="state"/>
+        <id column="detail" property="detail"/>
+    </resultMap>
 </mapper>
