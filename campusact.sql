@@ -41,7 +41,7 @@ CREATE TABLE `activity` (
   KEY `stateId` (`stateId`),
   CONSTRAINT `activity_ibfk_1` FOREIGN KEY (`organizationId`) REFERENCES `organization` (`id`),
   CONSTRAINT `activity_ibfk_2` FOREIGN KEY (`stateId`) REFERENCES `state` (`state`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -50,6 +50,7 @@ CREATE TABLE `activity` (
 
 LOCK TABLES `activity` WRITE;
 /*!40000 ALTER TABLE `activity` DISABLE KEYS */;
+INSERT INTO `activity` VALUES (1,'教科学院春季篮球赛',300000000001,'2017-03-27 15:00:00','2017-04-27 15:00:00','2017-05-02 13:00:00','2017-06-25 13:00:00','教科学院春季篮球赛，欢迎大家踊跃报名，对于球赛的前几名，我们有丰厚的奖品等待着你们！赶快报名吧！','basketball.jpg','篮球场','可口可乐',2000,NULL);
 /*!40000 ALTER TABLE `activity` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -334,6 +335,7 @@ CREATE TABLE `state` (
 
 LOCK TABLES `state` WRITE;
 /*!40000 ALTER TABLE `state` DISABLE KEYS */;
+INSERT INTO `state` VALUES (1000,'等待审核'),(2000,'审核通过（未举办）'),(3000,'审核不通过'),(4000,'举办完成');
 /*!40000 ALTER TABLE `state` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -439,4 +441,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-03-23 17:43:50
+-- Dump completed on 2017-03-28 17:07:10
