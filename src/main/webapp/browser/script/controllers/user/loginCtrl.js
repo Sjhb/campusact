@@ -7,15 +7,13 @@
 
         $scope.user={
             password:'',
-            username:''
+           id:''
         }
         $scope.worning='';
         $scope.changed=function () {
             $scope.worning='';
         }
-        $(document).ajaxSend(function(e, xhr, options) {
-            xhr.setRequestHeader(header, token);
-        });
+
         $scope.check={isEmpty:false,
                     check:function () {
                             this.isEmpty=false;

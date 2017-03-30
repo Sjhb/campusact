@@ -4,6 +4,9 @@ package vo;
 import model.SqlOrganization;
 import model.SqlState;
 
+import java.util.Date;
+
+
 public class Activity {
 	private Long id;// 活动编号
 	private String name;// 活动名称
@@ -14,13 +17,20 @@ public class Activity {
 	private String detail;// 活动介绍
 	private String sponsor;// 赞助商
 	private String signTime;// 报名开始时间
-	private String endSignTime;// 报名结束时间
+	private Date endSignTime;// 报名结束时间
 	private String address;//地址
 	private SqlState state;
 	public String getAddress() {
 		return address;
 	}
 
+	public String getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
 
 	public void setAddress(String address) {
 		this.address = address;
@@ -45,22 +55,6 @@ public class Activity {
 		this.name = name;
 	}
 
-	public String getStime() {
-		return startTime;
-	}
-
-	public void setStime(String stime) {
-		this.startTime = stime;
-	}
-
-	public String getStartTime() {
-		return startTime;
-	}
-
-	public void setStartTime(String startTime) {
-		this.startTime = startTime;
-	}
-
 	public String getEndTime() {
 		return endTime;
 	}
@@ -77,11 +71,11 @@ public class Activity {
 		this.signTime = signTime;
 	}
 
-	public String getEndSignTime() {
+	public Date getEndSignTime() {
 		return endSignTime;
 	}
 
-	public void setEndSignTime(String endSignTime) {
+	public void setEndSignTime(Date endSignTime) {
 		this.endSignTime = endSignTime;
 	}
 

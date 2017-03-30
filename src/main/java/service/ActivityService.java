@@ -21,8 +21,8 @@ public class ActivityService {
 	//获得所有审核通过的活动
 	public List<Activity> getPassedActivity(Activity activity){
 		PageHelper.startPage(activity.getPageNum(), 9);
-		List<Activity> activity2= activityOperation.getPassedActivity();
-		return activity2;
+		List<Activity> result= activityOperation.getPassedActivity();
+		return result;
 	}
 	//获得所有待审核的活动
 	public List<Activity> getWaitingActivity(Activity activity){

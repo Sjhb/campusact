@@ -5,7 +5,11 @@
 <mapper namespace="sqlInters.UserOperation">
     <!--用户登陆-->
     <select id="userLogin" parameterType="MiUserInfo" resultMap="MiUserInfo">
-        select login.id,role.detail,role.behaves from login,role where role.roleId=login.role and login.id=#{id} and login.password=#{password}
+        select login.id,
+        role.detail,
+        role.behaves
+        from login,role
+        where role.roleId=login.role and login.id=#{id} and login.password=#{password}
     </select>
     <resultMap id="MiUserInfo" type="MiUserInfo">
         <id column="id" property="id"/>

@@ -1,10 +1,10 @@
 	<div id="activities" data-ng-controller="activitiesCtrl" class="activities">
 			<div infinite-scroll="activitiesScroll.doScroll()" infinite-scroll-disabled="activitiesScroll.busy" infinite-scroll-distance='0' infinite-scroll-immediate-check="true" >
 				<div data-ng-repeat="activity in activitiesScroll.items" class="act-block" data-ng-click="showDetail(activity)">
-					<img  src={{activity.photo}} alt="photo not fund">
+					<img src={{activity.photo}} alt="photo not fund">
 					<p>{{activity.name}}</p>
 					<p>{{activity.organization.name}}</p>
-					<p>报名截止：{{activity.stime}}</p>
+					<p>报名截止：{{activity.endSignTime}}</p>
 				</div>
 			</div>
 	</div> 
