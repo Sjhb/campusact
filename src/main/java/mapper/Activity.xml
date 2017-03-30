@@ -19,15 +19,16 @@
 		activity.id,
 		activity.name,
 		activity.photo,
-		organization.name,
-		organization.icon,
+		organization.id o_id,
+		organization.name o_name,
+		organization.icon o_icon,
 		activity.startTime,
 		activity.endTime,
 		activity.signTime,
 		activity.endSignTime,
 		activity.detail,
 		activity.sponsor,
-		state.detail,
+		state.detail s_detail,
 		activity.signTime,
 		activity.endSignTime,
 		activity.engage
@@ -74,9 +75,9 @@
         <association property="state" javaType="SqlState" resultMap="resultListState"/>
     </resultMap>
     <resultMap type="SqlOrganization" id="resultListOrganization">
-        <id column="id" property="id"/>
-        <result column="icon" property="icon"/>
-        <result column="name" property="name"/>
+        <id column="o_id" property="id"/>
+        <result column="o_icon" property="icon"/>
+        <result column="o_name" property="name"/>
         <result column="password" property="password"/>
         <result column="phone" property="phone"/>
         <result column="mail" property="mail"/>
@@ -86,6 +87,6 @@
     </resultMap>
     <resultMap type="SqlState" id="resultListState">
         <id column="state" property="state"/>
-        <id column="detail" property="detail"/>
+        <id column="s_detail" property="detail"/>
     </resultMap>
 </mapper>
