@@ -10,7 +10,7 @@
   <display-name>campus-act</display-name>
   <context-param>
     <param-name>contextConfigLocation</param-name>
-    <param-value>classpath:springservlet-config.xml,classpath:spring-mybatis.xml</param-value>
+    <param-value>classpath*:springservlet-config.xml,classpath*:spring-mybatis.xml</param-value>
   </context-param>
   <welcome-file-list>
     <welcome-file>browser/views/main.html</welcome-file>
