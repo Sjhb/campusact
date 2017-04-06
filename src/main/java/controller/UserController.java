@@ -70,6 +70,7 @@ public class UserController extends BaseController {
         user.setPassword("");
         user.setName(loginuser.getName());
         user.setIcon(loginuser.getIcon());
+//        传回MiUserInfo对象
         model.setData(user);
         model.setMessage("登陆成功");
         return model;

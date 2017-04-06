@@ -29,8 +29,7 @@
                     if(res.status==401){
                         $scope.worning='用户名或者密码不对';
                     }else if (res.status==200){
-                        permission.setPermission(res.data.role);
-                        console.log(res.data.role);
+                        permission.setPermission(res.data.role.detail);
                         $scope.cancel();
                     }
                 });
