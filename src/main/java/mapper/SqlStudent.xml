@@ -23,4 +23,10 @@
 		<result column="class" property="classes" />
 		<result column="college" property="college" />
 	</resultMap>
+	<!--插入学生-->
+	<insert id="insertStu" parameterType="SqlStudent">
+		INSERT INTO student(id,icon,name,password,sex,phone,major,class,college)
+		VALUES (#{id},#{icon},#{name},#{password},#{sex},#{phone},#{major},#{classes},#{college})
+	</insert>
 	</mapper>
+

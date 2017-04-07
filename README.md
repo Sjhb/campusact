@@ -26,11 +26,13 @@
 <a name="接口设置"></a>
 ### 接口设置
 ####公共行为
-| 接口    |访问地址| 详情     |接收参数|返回参数|权限|
-| ------ |------ | -------- |------ | -------- |------ | 
-| PUB_LOGIN|/user/login|登陆|id(String,必需),password(String,必需)|BaseModel(data=MiUserInfo)|guest|
-| PUB_LOGOUT|/user/logout|注销|id(String,必需),password(String,必需)|BaseModel(data=MiUserInfo)|guest|
-| PUB_GET_ALL_ACTIVITY|/activity/getall|查看审核通过即将举办的活动|pageNum(int,必需)|BaseModel(data=List(Activity))|guest|
+| 接口    |访问地址| 详情     |方法|接收参数|返回参数|权限|
+| ------ |------ | -------- |------|------ | -------- |------ | 
+| PUB_LOGIN|/user/login|登陆|post|id(String,必需),password(String,必需)|BaseModel(data=MiUserInfo)|guest|
+| PUB_LOGOUT|/user/logout|注销|post|id(String,必需)|BaseModel(data=MiUserInfo)|guest|
+| PUB_GET_ALL_ACTIVITY|/activity/getall|查看审核通过即将举办的活动|post|pageNum(int,必需)|BaseModel(data=List(Activity))|guest|
+|STU_REGISTER|/student/register|学生注册|post|Sqlstudent类型(必须)|BaseModel(String)|guest|
+|ORG_REGISTER|/organization/register|组织注册|post|Sqlorganization类型(必须)|BaseModel(String)|guest|
 PUB_GET_ORGANIZED_ACTIVITY = "PUB4";//查看历史活动<br>
 PUB_GET_TARGET_ACTIVITY = "PUB5";//查看个别活动<br>
 PUB_GET_ORGANIZATION_INFO = "PUB6";//    查看组织的详细信息<br>

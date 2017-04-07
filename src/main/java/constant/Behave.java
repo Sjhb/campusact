@@ -20,6 +20,7 @@ public class Behave {
     public static final String STU_GET_ENGAGED_ACTIVITY = "STU5";//    查询活动参加历史
     public static final String STU_COMMENT = "STU6";//    评论活动
     public static final String STU_GET_ANOTHER_STUDENT = "STU7";//    查询参与相同活动的同学
+    public static final String STU_REGISTER="STU8"; /*注册*/
    //这里应当设置一定权限，不一定所有同学会愿意暴露自己的联系方式
     public static final String STU_WRITE_PERSONAL_WORDS = "STU8";//    编写个人心得
     //管理员：

@@ -2,8 +2,9 @@ package model;
 
 public class SqlStudent {
 			private long id;//| 学号   | 头像     | 姓名     | 密码         | 性别    | 电话      | 专业      | 班级      | 学院        | 角色     |
-			private String icon; 
-			private String name; 
+			private String icon;
+			private String name;
+			private String password;
 			private String sex;
 			private String phone;
 			private String major;
@@ -70,7 +71,11 @@ public class SqlStudent {
 			}
 			public void setPageNum(Integer pageNum) {
 				this.pageNum = pageNum;
-			} 
-	
-
+			}
+			public String getPassword() {
+		return password;
+	}
+			public void setPassword(String password) {
+		this.password = password;
+	}
 }

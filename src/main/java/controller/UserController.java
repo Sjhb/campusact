@@ -113,6 +113,8 @@ public class UserController extends BaseController {
                 }
             }
         } else {
+            setApplicationInfo("role", null);
+            setApplicationInfo("user", null);
             model.setStatus(Constants.FAIL_BUSINESS_ERROR);
             model.setMessage("用户信息不一致");
         }
