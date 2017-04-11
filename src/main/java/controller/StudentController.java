@@ -25,21 +25,33 @@ import java.util.Map;
 public class StudentController extends BaseController {
     @Autowired
     StudentService studentService;
+
+//    注册接口
+//    接受Sqlstudent类型对象
     @RequestMapping(value = "register", method= RequestMethod.POST)
     @ResponseBody
     public BaseModel<String> register(HttpServletRequest request){
 //        JSONObject Json=this.convertRequestBody();
         BaseModel<String> model=new BaseModel<>();
         Map<String,String[]> data=request.getParameterMap();
-        data.get("id");
-//        SqlStudent newstu=JSONObject.toJavaObject(Json,SqlStudent.class);
-//        int re=studentService.insertStu(newstu);
-//        switch (re){
-//            case 0:model.setStatus(Constants.FAIL_BUSINESS_ERROR);model.setMessage("未知错误"); break;
-//            case 1:model.setStatus(Constants.FAIL_BUSINESS_ERROR);model.setMessage("学号重复");break;
-//            case 2:break;
-//            default:break;
-//        }
+        String s=data.get("college")[0];
+        SqlStudent stu = new SqlStudent(Long.parseLong(data.get("id")[0]),"default.jpg",data.get("name")[0],data.get("password")[0],data.get("sex")[0],data.get("phone")[0],data.get("major")[0],data.get("classes")[0], data.get("college")[0]);
+        int re=studentService.insertStu(stu);
+        switch (re){
+            case 0:model.setStatus(Constants.FAIL_BUSINESS_ERROR);model.setMessage("未知错误"); break;
+            case 1:model.setStatus(Constants.FAIL_BUSINESS_ERROR);model.setMessage("学号重复");break;
+            case 2:break;
+            default:break;
+        }
         return model;
     }
+    //头像上传储存
+    @RequestMapping(value = "setIcon")
+    @ResponseBody
+    public BaseModel<String> setIcon(HttpServletRequest request){
+        BaseModel<String> model=new BaseModel<>();
+
+        return  model;
+    }
 }
+

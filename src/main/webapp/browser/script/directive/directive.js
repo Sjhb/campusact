@@ -3,9 +3,7 @@
  */
 (function () {
     var app = angular.module('directive', []);
-    app.directive(
-        'paging',
-        function () {
+    app.directive('paging',function () {
             return {
                 restrict: 'EA',
                 template: '<div style="text-align:right;">'
@@ -251,6 +249,40 @@
                 scope.$on('permissionChanged',logVisibilityBasedOnPermission);
             }
         };
-    });
+    }).directive('printImg', ['$window', function($window) {
+        var helper = {
+            support: !!($window.FileReader && $window.CanvasRenderingContext2D),
+            isFile: function(item) {
+                return angular.isObject(item) && item instanceof $window.File;
+            },
+            isImage: function(file) {
+                var type =  '|' + file.type.slice(file.type.lastIndexOf('/') + 1) + '|';
+                return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
+            }
+        };
+
+        return {
+            restrict: 'A',
+            template: '<img/>',
+            link: function(scope, element, attrs) {
+                if (!helper.support) return;
+
+                var params = scope.$eval(attrs.printImg);
+
+                if (!helper.isFile(params.file)) return;
+                if (!helper.isImage(params.file)) return;
+
+                var img= element.find('img');
+                var reader = new FileReader();
+                img.attr("class","icon_large");
+                img.attr("readonly",'readonly');
+                reader.onloadend=function (event) {
+                    img.attr('src',event.target.result);
+                }
+                reader.readAsDataURL(params.file);
+
+            }
+        };
+    }]);
 
 })();

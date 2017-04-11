@@ -78,4 +78,20 @@ public class SqlStudent {
 			public void setPassword(String password) {
 		this.password = password;
 	}
+
+	public SqlStudent() {
+	}
+
+	public SqlStudent(long id, String icon, String name, String password, String sex, String phone, String major, String classes, String college) {
+		this.id = id;
+		this.icon = icon;
+		this.name = name;
+		this.password = password;
+		this.sex = sex;
+		this.phone = phone;
+		this.major = major;
+		this.classes = classes;
+		this.college = college;
+	}
 }
+

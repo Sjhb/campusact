@@ -3,7 +3,7 @@
 		<div class="trade" style="margin-top: 20px;">
 			<label class="trade-label row-5" style="color: #9a9a9a;">完善你的个人信息</label>
 		</div>
-		<form id="stu_form" method="post" action="/student/register">
+		<form id="stu_form" method="post" action="/student/register" >
 		<div class="trade">
 			<label class="trade-label row-3">学号</label>
 			<div class="row-6">
@@ -19,8 +19,8 @@
 		<div class="trade">
 			<label class="trade-label row-3">性别</label>
 			<div class="row-6">
-				<input type="radio" name="sex" value="male" data-ng-model="stu.sex"  ng-checked="true" >男生
-				<input type="radio" name="sex" value="female" data-ng-model="stu.sex">女生
+				<input type="radio" name="sex" value="男" data-ng-model="stu.sex"  ng-checked="true" >男生
+				<input type="radio" name="sex" value="女" data-ng-model="stu.sex">女生
 			</div>
 		</div>
 		<div class="trade">
@@ -57,9 +57,10 @@
 		<div class="trade">
 			<label class="trade-label row-3">学院</label>
 			<div class="row-6">
-				<input type="text"   name="college " class="input" data-ng-model="stu.college" required>
+				<input type="text"   name="college" class="input" data-ng-model="stu.college" required>
 			</div>
 		</div>
+			<label class="trade-label row-3">{{message}}</label>
 		<div class="row-8" style="margin: 0 auto;">
 			<hr>
 		</div>

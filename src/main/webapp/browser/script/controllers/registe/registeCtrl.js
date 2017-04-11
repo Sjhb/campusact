@@ -2,14 +2,14 @@
  *
  */
 (function () {
-    angular.module('activities').controller('registeCtrl', ['$scope','permission','$location', registeCtrl]);
-    function registeCtrl($scope,permission,$location) {
+    angular.module('activities').controller('registeCtrl', ['messageService','$scope','permission','modalService',registeCtrl]);
+    function registeCtrl(messageService,$scope,permission,modalService) {
         $scope.stu = {
             // id:,
             // icon,name,password,sex,phone,major,class,college
         }
         $scope.worning=false;
-
+        $scope.messge='';
         $scope.confirm=function () {
             if($scope.stu.password!=$scope.confirmPass){
              $scope.worning=true;
@@ -19,10 +19,10 @@
             success: function (data) {
                 if(data.status==200){
                 permission.setPermission('student');
-               window.location="#/allAct/allAct"
+                modalService( 'browser/views/registe/icon.html','iconCtrl','注册成功，你可以现在设定你的头像');
                 }
                 else {
-
+                    messageService(data.message);
                 }
             },
             beforeSubmit:function () {
@@ -34,6 +34,7 @@
             },
         }
         $("#stu_form").ajaxForm(options);
+
 
     }
 })();
