@@ -18,4 +18,7 @@
 		<result column="detail" property="detail" />
 		<result column="address" property="address" />
 	</resultMap>
+	<update id="resetPass">
+		UPDATE organization SET password=123456 WHERE id=#{id}
+	</update>
 </mapper>

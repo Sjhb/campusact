@@ -7,7 +7,6 @@
 		<typeAlias alias="User" type="vo.User" />
 
 		<typeAlias alias="MiUserInfo" type="model.MiUserInfo"/>
-		<typeAlias alias="LoginUser" type="model.LoginUser"/>
 		<typeAlias alias="Activity" type="vo.Activity"/>
 		<typeAlias alias="VoStudent" type="vo.VoStudent"/>
 

@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.MiUser;
+import model.MiUserInfo;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -21,6 +21,19 @@ public class BaseController {
     public void setReqAndRes(HttpServletRequest request, HttpServletResponse Response) {
         this.session = request.getSession();
     }
+//判断是否具有权限
+    public boolean isPermmit(String role){
+        String loginRole= getUserRole();
+        if (loginRole.equals(role)){
+            return true;
+        }else return false;
+    }
+//    得到传入对象
+public Object getObject(Object object){
+    JSONObject jsonObject = convertRequestBody();
+    object= JSONObject.toJavaObject(jsonObject,object.getClass());
+    return  object;
+}
 
     //前端传回数据转json对象
     protected JSONObject convertRequestBody() {
@@ -63,32 +76,32 @@ public class BaseController {
         }
         return null;
     }
-
+//设定信息 session
     public void setApplicationInfo(String key, Object value) {
         session.setAttribute(key, value);
     }
-
+//取得信息
     protected Object getApplicationInfo(String key) {
         return session.getAttribute(key);
     }
-
+//取得用户id
     protected Long getUserInfo() {
 
-        MiUser userInfo = (MiUser) this.getApplicationInfo("user");
+        MiUserInfo userInfo = (MiUserInfo) this.getApplicationInfo("user");
 
-        return userInfo.getUserId();
+        return userInfo.getId();
     }
+//取得用户对象
+    protected MiUserInfo getLoginUser() {
 
-    protected MiUser getLoginUser() {
-
-        MiUser userInfo = (MiUser) this.getApplicationInfo("user");
+        MiUserInfo userInfo = (MiUserInfo) this.getApplicationInfo("user");
 
         return userInfo;
     }
-
+//取得用户的角色
     protected String getUserRole() {
 
-        String userRole = (String) this.getApplicationInfo("userRole");
+        String userRole = (String) this.getApplicationInfo("role");
 
         return userRole;
     }
@@ -157,7 +170,8 @@ public class BaseController {
     private static String subBytesString(byte[] b, int from, int end) {
         return new String(subBytes(b, from, end));
     }
-
+//解析前端提交的文件，返回map
+//    4.13
     protected HashMap getMultiform() throws IOException {
         HashMap<String,Map> result=new HashMap<>();
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();

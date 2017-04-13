@@ -3,7 +3,7 @@ package controller;
 import base.BaseController;
 import base.BaseModel;
 import constant.Constants;
-import constant.field;
+import constant.Field;
 import model.MiUserInfo;
 import model.SqlRole;
 import model.SqlStudent;
@@ -20,8 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
-
-import static javax.swing.TransferHandler.NONE;
 
 /**
  * Created by Manlin on 2017/4/7.
@@ -49,7 +47,7 @@ public class StudentController extends BaseController {
         switch (re){
             case 0:model.setStatus(Constants.FAIL_BUSINESS_ERROR);model.setMessage("未知错误"); break;
             case 1:model.setStatus(Constants.FAIL_BUSINESS_ERROR);model.setMessage("学号重复");break;
-            case 2:this.setApplicationInfo("role","student");this.setApplicationInfo("user",new MiUserInfo(new SqlRole(10, field.STUDENT,""),stu.getId(),stu.getName(),"default.jpg")); break;
+            case 2:this.setApplicationInfo("role","student");this.setApplicationInfo("user",new MiUserInfo(new SqlRole(10, Field.STUDENT,""),stu.getId(),stu.getName(),"default.jpg")); break;
             default:break;
         }
         return model;

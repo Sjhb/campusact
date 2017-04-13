@@ -1,5 +1,6 @@
 package service;
 
+import model.MiUser;
 import model.SqlStudent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,12 @@ public class StudentService {
         if (result>0){
             return  true;
         }
+        return  false;
+    }
+    //重置密码
+    public  boolean resetPass(MiUser user){
+        int result=sqlStudentOperation.resetPass(user);
+        if (result>0) return true;
         return  false;
     }
 }

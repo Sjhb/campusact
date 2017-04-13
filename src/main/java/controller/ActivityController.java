@@ -6,12 +6,7 @@ import java.util.List;
 import base.BaseController;
 import base.BaseModel;
 import constant.Constants;
-import constant.field;
-import model.LoginUser;
-import model.SqlActivity;
-import model.SqlOrganization;
-import model.SqlStudent;
-import org.omg.CORBA.ACTIVITY_COMPLETED;
+import model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -71,14 +66,14 @@ public class ActivityController extends BaseController {
     @ResponseBody
     public BaseModel<SqlActivity> checkAct() {
         JSONObject jsonObject = this.convertRequestBody();
-        LoginUser userinfo = (LoginUser) this.getApplicationInfo("user");
+        MiUserInfo userinfo = (MiUserInfo) this.getApplicationInfo("user");
 
         SqlActivity activityCheck = JSON.toJavaObject(jsonObject, SqlActivity.class);
         BaseModel<SqlActivity> model = new BaseModel<>();
         if (userinfo == null) {
             model.setStatus(Constants.FAIL_INVALID_USER);
             model.setMessage("用户名无效");
-        } else if (!userinfo.getRole().equals("admin")) {
+        } else if (!userinfo.getRole().getDetail().equals("admin")) {
             model.setStatus(Constants.FAIL_INVALID_AUTH);
             model.setMessage("用户无权审批");
         } else {
@@ -125,13 +120,13 @@ public class ActivityController extends BaseController {
     public BaseModel<List<SqlActivity>> updateAct() {
         JSONObject jsonObject = this.convertRequestBody();
         SqlActivity activity = JSON.toJavaObject(jsonObject, SqlActivity.class);
-        LoginUser userinfo = (LoginUser) this.getApplicationInfo("user");
+        MiUserInfo userinfo = (MiUserInfo) this.getApplicationInfo("user");
         BaseModel<List<SqlActivity>> model = new BaseModel<>();
 
         if (userinfo == null) {
             model.setStatus(Constants.FAIL_INVALID_USER);
             model.setMessage("用户名无效");
-        } else if (!userinfo.getRole().equals("organization")) {
+        } else if (!userinfo.getRole().getDetail().equals("organization")) {
             model.setStatus(Constants.FAIL_INVALID_AUTH);
             model.setMessage("用户名无权修改活动");
         } else {

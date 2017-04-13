@@ -4,7 +4,7 @@ package constant;
  * Created by wanghuan on 2017/3/23.
  */
 //统一字段名
-public class field {
+public class Field {
     //管理员
     public static final String ADMINISTOR="admin";
     //学生

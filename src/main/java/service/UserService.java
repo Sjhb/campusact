@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
 import sqlInters.*;
-import constant.field;
+import constant.Field;
 import vo.VoAdmin;
 import vo.VoOrganization;
 import vo.VoStudent;
@@ -34,15 +34,15 @@ public class UserService {
 		}
 		MiUserInfo user=users.get(0);
         switch (user.getRole().getDetail()){
-            case field.STUDENT:
+            case Field.STUDENT:
             	VoStudent student=getStudentInfo(user);
             	student.setRole(user.getRole());
 				return student;
-            case field.ADMINISTOR:
+            case Field.ADMINISTOR:
             	VoAdmin admin=getAdminInfo(user);
 				admin.setRole(user.getRole());
 				return admin;
-            case field.ORGANIZATION:
+            case Field.ORGANIZATION:
             	VoOrganization organization=getOrganizationInfo(user);
 				organization.setRole(user.getRole());
 				return organization;

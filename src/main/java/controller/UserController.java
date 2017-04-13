@@ -6,14 +6,10 @@ import java.util.List;
 import base.BaseController;
 import base.BaseModel;
 import constant.Constants;
-import constant.field;
-import model.MiUserInfo;
-import model.SqlAdmin;
-import model.SqlOrganization;
-import model.SqlStudent;
+import constant.Field;
+import model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -43,10 +39,9 @@ public class UserController extends BaseController {
 
     @RequestMapping("test")
     @ResponseBody
-    public void test(HttpServletResponse response) throws IOException {
-        response.setHeader("Content-Type", "image/jpeg");//设置响应的媒体类型，这样浏览器会识别出响应的是图片
-        byte[] image = this.getPicture(ORGANIZATION_ICON + "/4.JPG");
-        response.getOutputStream().write(image);
+    public void test() {
+        MiUser test= (MiUser) this.getObject(new MiUser());
+        test.getId();
     }
 
     @RequestMapping("login")
@@ -175,9 +170,9 @@ public class UserController extends BaseController {
         response.setHeader("Content-Type", "image/jpeg");//设置响应的媒体类型，这样浏览器会识别出响应的是图片
         byte[] image;
         switch (role){
-            case field.STUDENT:image=this.getPicture(STUDENT_ICON +filename);break;
-            case field.ADMINISTOR:image=this.getPicture(ADMINISTOR_ICON+filename);break;
-            case field.ORGANIZATION:image=this.getPicture(ORGANIZATION_ICON +filename);break;
+            case Field.STUDENT:image=this.getPicture(STUDENT_ICON +filename);break;
+            case Field.ADMINISTOR:image=this.getPicture(ADMINISTOR_ICON+filename);break;
+            case Field.ORGANIZATION:image=this.getPicture(ORGANIZATION_ICON +filename);break;
             default: image=null;
         }
         response.getOutputStream().write(image);

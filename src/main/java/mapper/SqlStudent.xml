@@ -32,5 +32,8 @@
 	<update id="alterIcon">
 		UPDATE student SET icon=#{icon,jdbcType=VARCHAR} WHERE id=#{id,jdbcType=BIGINT}
 	</update>
+	<update id="resetPass">
+		UPDATE student SET password=123456 WHERE id=#{id}
+	</update>
 	</mapper>
 
