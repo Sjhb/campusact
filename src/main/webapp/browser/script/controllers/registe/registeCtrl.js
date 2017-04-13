@@ -22,7 +22,8 @@
                 modalService( 'browser/views/registe/icon.html','iconCtrl','注册成功，你可以现在设定你的头像');
                 }
                 else {
-                    messageService(data.message);
+                    var message=data.message;
+                    messageService(message);
                 }
             },
             beforeSubmit:function () {

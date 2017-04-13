@@ -28,5 +28,9 @@
 		INSERT INTO student(id,icon,name,password,sex,phone,major,class,college)
 		VALUES (#{id},#{icon},#{name},#{password},#{sex},#{phone},#{major},#{classes},#{college})
 	</insert>
+	<!--变更学生头像-->
+	<update id="alterIcon">
+		UPDATE student SET icon=#{icon,jdbcType=VARCHAR} WHERE id=#{id,jdbcType=BIGINT}
+	</update>
 	</mapper>
 

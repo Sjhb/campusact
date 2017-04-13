@@ -10,4 +10,5 @@ public interface SqlStudentOperation {
 	public List<SqlStudent> selectSqlStudent(@Param("id") long id) ;//通过id
 	public int alterStudent(SqlStudent student);//修改学生信息
 	public int insertStu(SqlStudent sqlStudent);//插入学生
+	public int alterIcon(@Param("icon") String icon,@Param("id") long id);
 }

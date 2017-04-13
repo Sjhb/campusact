@@ -7,15 +7,12 @@
     function navCtrl(permission,$scope,$uibModal) {
        $scope.showModal=function () {//打开模态
            $uibModal.open({
-                   templateUrl : 'browser/views/registe/icon.html',  //指向上面创建的视图
-                   controller : 'iconCtrl',// 初始化模态范围
+                   templateUrl : 'browser/views/user/login.html',  //指向上面创建的视图
+                   controller : 'loginCtrl',// 初始化模态范围
                    resolve : {
                       scope : function(){
                            return $scope;
-                       },
-                        message: function () {
-                         return  "注册成功，你可以现在设定你的头像";
-                        }
+                       }
                    }
                })
            }

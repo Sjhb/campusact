@@ -4,17 +4,19 @@
 <div class="modal-body">
     <div id="act_head" class="trade">
         <h4>{{message}}</h4>
+        <h5>(大小不超过2M)</h5>
     </div>
     <div class="trade">
         <div data-ng-repeat="item in uploader.queue"  style="width: 100%">
             <div print-img="{file:item._file}"></div>
         </div>
     </div>
+    <div class="trade" ><a style="margin-left: auto;margin-right: auto;color:#ec971f " >{{state}}</a></div>
     <div class="trade">
         <a name="file" href="javascript:;" class="btn btn-success center-block" style="position: relative ">{{action}}
             <input type="file" class="file_input"  nv-file-select uploader="uploader" data-ng-click="clearItems()"/>
         </a>
-        <input type="submit" id="submiticon" value="确认"  class="btn btn-success center-block" data-ng-show="isImage">
+        <input name="icon" type="submit" id="submiticon" value="确认"  class="btn btn-success center-block" data-ng-show="isImage" data-ng-click="uploadFile()">
     </div>
 </div>
 <div class="modal-footer">

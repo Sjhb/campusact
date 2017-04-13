@@ -15,6 +15,7 @@ public class StudentService {
     @Autowired
     SqlStudentOperation sqlStudentOperation;
 
+    //插入新信息
     public int insertStu(SqlStudent stu){
 //        2：成功 1：id重复 0：其他错误
         int re=0;
@@ -28,5 +29,13 @@ public class StudentService {
             return  re;
         }
         return  re;
+    }
+//    变更头像
+    public  boolean  alterIcon(String icon,long id){
+        int result=sqlStudentOperation.alterIcon(icon,id);
+        if (result>0){
+            return  true;
+        }
+        return  false;
     }
 }

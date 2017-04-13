@@ -45,12 +45,17 @@ public class MiUserInfo {
 		this.role = role;
 	}
 	public MiUserInfo() { }
-	public MiUserInfo(SqlRole role, long userid, String name, String password, String icon, Integer pageNum) {
+	public MiUserInfo(SqlRole role, long userid, String name, String password, String icon) {
 		this.role = role;
 		this.id = userid;
 		this.name = name;
 		this.password = password;
 		this.icon = icon;
-		this.pageNum = pageNum;
+	}
+	public MiUserInfo(SqlRole role, long userid, String name, String icon) {
+		this.role = role;
+		this.id = userid;
+		this.name = name;
+		this.icon = icon;
 	}
 }
