@@ -274,7 +274,7 @@
 
                 var img= element.find('img');
                 var reader = new FileReader();
-                img.attr("class","icon_large");
+                img.attr("class","act_photo");
                 img.attr("readonly",'readonly');
                 reader.onloadend=function (event) {
                     img.attr('src',event.target.result);

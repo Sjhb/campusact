@@ -1,71 +1,83 @@
 <div style="display: flex; justify-content: center;" data-ng-controller='createActCtrl'>
-	<div style="width: 700px; background-color: white; height: 1000px ;text-align: center;">
-		<div class="trade" style="margin-top: 20px;">
-			<label class="trade-label row-5" style="color: #9a9a9a;">创建的活动必须通过审核才能发布</label>
-		</div>
-		<div class="trade">
-			<label class="trade-label row-3">活动名称</label>
-			<div class="row-6">
-				<input class="input" data-ng-model="newAct.name" data-ng-change="clear()">
-			</div>
-		</div>
-		<div class="trade">
-			<label class="trade-label row-3">活动时间</label>
-			<div class="row-6">
-				<input class="input" id="sdate" placeholder="开始时间"data-ng-model="newAct.stime" data-ng-change="clear()">
-			</div>
-		</div>
-		<div class="trade">
-			<label class="trade-label row-3"></label>
-			<div class="row-6">
-				<input class="input" id="edate" placeholder="结束时间" data-ng-model="newAct.etime" data-ng-change="clear()">
-			</div>
-		</div>
-		<div class="trade">
-			<label class="trade-label row-3">报名时间</label>
-			<div class="row-6">
-				<input class="input" id="signdate" placeholder="开始时间" data-ng-model="newAct.signtime" data-ng-change="clear()">
-			</div>
-		</div>
-		<div class="trade">
-			<label class="trade-label row-3"></label>
-			<div class="row-6">
-				<input class="input" id="endsigndate" placeholder="结束时间" data-ng-model="newAct.endsigntime" data-ng-change="clear()">
-			</div>
-		</div>
-		<div class="trade">
-			<label class="trade-label row-3">赞助商</label>
-			<div class="row-6">
-				<input class="input" placeholder="赞助商一，赞助商二，...没有填写无" data-ng-model="newAct.sponsor" data-ng-change="clear()">
-			</div>
-		</div>
-		<div class="trade">
-			<label class="trade-label row-3">地点</label>
-			<div class="row-6">
-				<input class="input" data-ng-model="newAct.address" data-ng-change="clear()">
-			</div>
-		</div>
-		<div class="trade">
-			<label class="trade-label row-3">活动介绍</label>
-			<div class="row-6">
-				<textarea class="input textarea" style="height: 300px; resize: none;" data-ng-model="newAct.detail" data-ng-change="clear()" ></textarea>
-			</div>
-		</div>
-		<div class="trade">
-			<label class="trade-label row-3">活动图片</label>
-			<div class="row-6">
-				<input class="input">
-			</div>
-		</div>
-		<div class="trade">
-			<label class="trade-label row-7" style="color: red;" >{{worning}}</label>
-		</div>
-		<div class="row-8" style="margin: 0 auto;">
-			<hr>
-		</div>
-		
-		<div style="margin: 0 auto;text-align: center;">
-			<button class="btn btn-success" style="width: 50px;" data-ng-click="submit()">提交</button>
-		</div>
-	</div>
+    <div style="width: 700px; background-color: white; height: 1000px ;text-align: center;">
+        <div class="trade" style="margin-top: 20px;">
+            <label class="trade-label row-5" style="color: #9a9a9a;">创建的活动必须通过审核才能发布</label>
+        </div>
+        <div class="trade">
+            <label class="trade-label row-3">活动名称</label>
+            <div class="row-6">
+                <input class="input" data-ng-model="newAct.name" data-ng-change="clear()">
+            </div>
+        </div>
+        <div class="trade">
+            <label class="trade-label row-3">活动时间</label>
+            <div class="row-6">
+                <input class="input" id="sdate" placeholder="开始时间" data-ng-model="newAct.startTime"
+                       data-ng-change="clear()">
+            </div>
+        </div>
+        <div class="trade">
+            <label class="trade-label row-3"></label>
+            <div class="row-6">
+                <input class="input" id="edate" placeholder="结束时间" data-ng-model="newAct.endTime"
+                       data-ng-change="clear()">
+            </div>
+        </div>
+        <div class="trade">
+            <label class="trade-label row-3">报名时间</label>
+            <div class="row-6">
+                <input class="input" id="signdate" placeholder="开始时间" data-ng-model="newAct.signTime"
+                       data-ng-change="clear()">
+            </div>
+        </div>
+        <div class="trade">
+            <label class="trade-label row-3"></label>
+            <div class="row-6">
+                <input class="input" id="endsigndate" placeholder="结束时间" data-ng-model="newAct.endSignTime"
+                       data-ng-change="clear()">
+            </div>
+        </div>
+        <div class="trade">
+            <label class="trade-label row-3">赞助商</label>
+            <div class="row-6">
+                <input class="input" placeholder="赞助商一，赞助商二，...没有填写无" data-ng-model="newAct.sponsor"
+                       data-ng-change="clear()">
+            </div>
+        </div>
+        <div class="trade">
+            <label class="trade-label row-3">地点</label>
+            <div class="row-6">
+                <input class="input" data-ng-model="newAct.address" data-ng-change="clear()">
+            </div>
+        </div>
+        <div class="trade">
+            <label class="trade-label row-3">活动介绍</label>
+            <div class="row-6">
+                <textarea class="input textarea" style="height: 300px; resize: none;" data-ng-model="newAct.detail"
+                          data-ng-change="clear()"></textarea>
+            </div>
+        </div>
+        <div class="trade">
+            <label class="trade-label row-3">活动图片</label>
+            <div class="row-6" style="position: relative;text-align: left ">
+                <div data-ng-repeat="item in uploader.queue" style="display: inline-block;padding-right: 10px;">
+                    <div print-img="{file:item._file}"></div>
+                </div>
+                <a name="file" href="javascript:;" class="btn btn-success " style="position: relative;display: block; ">选择图片
+                    <input type="file" class="file_input" style="width: 100%;height: 100%;" nv-file-select uploader="uploader" ng-disabled="limit">
+                </a>
+                <a class="btn btn-danger" style="display: block;margin-top: 5px" ng-show="removeButton" data-ng-click="removePhoto()" >移除图片</a>
+            </div>
+        </div>
+        <div class="trade">
+            <label class="trade-label row-7" style="color: red;">{{state}}</label>
+        </div>
+        <div class="row-8" style="margin: 0 auto;">
+            <hr>
+        </div>
+
+        <div style="margin: 0 auto;text-align: center;">
+            <button class="btn btn-success" style="width: 50px;" data-ng-click="submit()" data-ng-show="isSubmit">提交</button>
+        </div>
+    </div>
 </div>

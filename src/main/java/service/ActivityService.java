@@ -19,11 +19,12 @@ public class ActivityService {
 	@Autowired
 	protected ActivityOperation activityOperation;
 	@Autowired
-	protected SqlActivityOperation SqlactivityOperation;
+	protected SqlActivityOperation sqlactivityOperation;
 	//获得所有审核通过的活动
 	public List<Activity> getPassedActivity(Activity activity){
 		PageHelper.startPage(activity.getPageNum(), 9);
 		List<Activity> result= activityOperation.getPassedActivity();
+
 		return result;
 	}
 	//获得所有待审核的活动
@@ -33,18 +34,28 @@ public class ActivityService {
 		return activity2;
 	}
 	//创建活动
-	public boolean createActivity(SqlActivity activity){
-		int row=SqlactivityOperation.createActivity(activity);
-		if(row>0)
-			{
-			return true;
-			} else {
-				return false;
-			}
-	}
+	public long createActivity(SqlActivity activity){
+		long row=sqlactivityOperation.createActivity(activity);
+//        if (row>0){
+//			return sqlactivityOperation.getIdentity();
+//		}
+		return row;
+    	}
+//    	插入活动图片
+    public boolean addActPhoto(String filename,long id){
+	    int row=sqlactivityOperation.addActPhoto(filename,id);
+	    if (row>0){
+	        return true;
+        }
+        return false;
+    }
+//    修改活动
+    public boolean alterActivity(SqlActivity activity){
+	    return true;
+    }
 	//审批活动
 	public boolean checkActivity(SqlActivity activity){
-		int i=SqlactivityOperation.checkActivity(activity);
+		int i=sqlactivityOperation.checkActivity(activity);
 		if(i==0){
 			return false;
 		}
@@ -52,21 +63,21 @@ public class ActivityService {
 	}
 	//参加活动
 	public boolean engageActivity(SqlStudent student, SqlActivity activity){
-		int i=SqlactivityOperation.engageActivity(activity.getId(),Long.toString(student.getId()));
+		int i=sqlactivityOperation.engageActivity(activity.getId(),Long.toString(student.getId()));
 		if(i==0)
 		return false;
 		else return true;
 	}
 	//cancel engage in activity
 	public boolean cancelEngage(SqlStudent student,SqlActivity activity){
-		int i=SqlactivityOperation.cancelEngage(activity.getId(),(Long.toString(student.getId())+","));
+		int i=sqlactivityOperation.cancelEngage(activity.getId(),(Long.toString(student.getId())+","));
 		if(i==0)
 		return false;
 		else return true;
 	}
 	//Delete activity
 	public boolean deleteActivity(SqlActivity activity){
-		int i=SqlactivityOperation.deleteActivity(activity);
+		int i=sqlactivityOperation.deleteActivity(activity);
 		if(i==0) return false;
 		else return true;
 	}

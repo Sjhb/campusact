@@ -12,6 +12,7 @@
 				activities_waiting:$resource(env.activities_api+'activity/checkall'),
             	activities_createAct:$resource(env.activities_api+'activity/createact'),
            		activities_checkAct:$resource(env.activities_api+'activity/checkact'),
+				activities_alterActPhoto:$resource(env.activities_api+'activity/alterActPhoto'),
 
 		};
 		return resource;

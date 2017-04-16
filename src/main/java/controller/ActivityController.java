@@ -1,11 +1,15 @@
 package controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 import base.BaseController;
 import base.BaseModel;
 import constant.Constants;
+import constant.Field;
 import model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,6 +23,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import service.ActivityService;
+import service.IOService;
 import vo.Activity;
 
 import javax.servlet.http.HttpServletResponse;
@@ -26,6 +31,8 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 @RequestMapping("activity")
 public class ActivityController extends BaseController {
+    @Autowired
+    protected IOService ioService;
     @Autowired
     protected ActivityService activityService;
     @Value("#{propertiesReader['ACTIVITY_IMG']}")
@@ -89,29 +96,57 @@ public class ActivityController extends BaseController {
     //创建活动
     @RequestMapping("createact")
     @ResponseBody
-    public BaseModel<List<SqlActivity>> createAct() {
-        JSONObject jsonObject = this.convertRequestBody();
-        SqlActivity activity = JSON.toJavaObject(jsonObject, SqlActivity.class);
-        SqlOrganization userinfo = (SqlOrganization) this.getApplicationInfo("user");
-        BaseModel<List<SqlActivity>> model = new BaseModel<>();
-
-        if (userinfo == null) {
-            model.setStatus(Constants.FAIL_INVALID_USER);
-            model.setMessage("用户名无效");
+    public BaseModel<String> createAct() {
+        BaseModel<String> model = new BaseModel<>();
+        SqlActivity activity = (SqlActivity) this.getObject(new SqlActivity());
+        if (!this.isPermmit(Field.ORGANIZATION)) {
+            model.setStatus(Constants.FAIL_INVALID_AUTH);
+            model.setMessage("权限错误");
+            return model;
         }
-        /*else if(!userinfo.getRole().equals("organization")){
-			model.setStatus(Constants.FAIL_INVALID_AUTH);
-			model.setMessage("用户名无权创建活动");
-		}*/
-        else {
-            activity.setOrganizationId(userinfo.getId());
-            if (activityService.createActivity(activity)) {
-                model.setStatus(Constants.SUCCESS);
-            }
-            ;
-            model.setMessage("活动创建成功");
+        Long Oid = this.getUserInfo();
+        activity.setOrganizationId(Oid);
+        long actId = activityService.createActivity(activity);
+        if (actId == 0 || actId < 0) {
+            model.setStatus(Constants.FAIL_BUSINESS_ERROR);
+            model.setMessage("活动信息提交失败");
+            return model;
         }
+        this.setApplicationInfo("actId", activity.getId());
         return model;
+    }
+
+    //修改活动图片
+    @RequestMapping(value = "alterActPhoto")
+    @ResponseBody
+    public BaseModel<String> alterActPhoto() throws IOException {
+        BaseModel<String> model = new BaseModel<>();
+        if (!this.isPermmit(Field.ORGANIZATION)) {
+            model.setStatus(Constants.FAIL_INVALID_AUTH);
+            model.setMessage("权限错误");
+            return model;
+        }
+        Map result = this.getMultiform();
+        Map fileTable = (Map) (result.get("fileTable"));
+        if (fileTable.size() == 0) {
+            this.setApplicationInfo("actId",null);
+            return model;
+        }
+        Map formfieldsTable = (Map) (result.get("formfieldsTable"));
+        Map fileFormName = (Map) (result.get("fileFormName"));
+        long actId = (long) this.getApplicationInfo("actId");
+        String fileName = (String) fileFormName.get("file");
+        String newFileName = Long.toString(actId) + Math.random() * 100 + ioService.getType(fileName);
+        ioService.writeFile(ACTIVITY_IMG, newFileName, (byte[]) fileTable.get(fileName));
+        activityService.addActPhoto("\""+newFileName+"\"",actId);
+        return model;
+    }
+
+    //修改活动
+    @RequestMapping("test")
+    @ResponseBody
+    public void test() {
+        activityService.addActPhoto("\"tes2\"",100);
     }
 
     //修改活动
@@ -130,7 +165,7 @@ public class ActivityController extends BaseController {
             model.setStatus(Constants.FAIL_INVALID_AUTH);
             model.setMessage("用户名无权修改活动");
         } else {
-            if (activityService.createActivity(activity)) {
+            if (activityService.alterActivity(activity)) {
                 model.setStatus(Constants.SUCCESS);
             }
             ;
@@ -198,7 +233,7 @@ public class ActivityController extends BaseController {
     public void getIcon(@RequestParam(value = "photo", required = false) String filename, HttpServletResponse response) throws IOException {
         response.setHeader("Content-Type", "image/jpeg");//设置响应的媒体类型，这样浏览器会识别出响应的是图片
         byte[] image;
-        image = this.getPicture(ACTIVITY_IMG + filename);
+        image = this.getPicture(ACTIVITY_IMG + File.separator + filename);
         response.getOutputStream().write(image);
     }
 }

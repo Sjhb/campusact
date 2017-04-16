@@ -34,6 +34,35 @@ public Object getObject(Object object){
     object= JSONObject.toJavaObject(jsonObject,object.getClass());
     return  object;
 }
+    //设定信息 session
+    public void setApplicationInfo(String key, Object value) {
+        session.setAttribute(key, value);
+    }
+    //取得信息
+    protected Object getApplicationInfo(String key) {
+        return session.getAttribute(key);
+    }
+    //取得用户id
+    protected Long getUserInfo() {
+
+        MiUserInfo userInfo = (MiUserInfo) this.getApplicationInfo("user");
+
+        return userInfo.getId();
+    }
+    //取得用户对象
+    protected MiUserInfo getLoginUser() {
+
+        MiUserInfo userInfo = (MiUserInfo) this.getApplicationInfo("user");
+
+        return userInfo;
+    }
+    //取得用户的角色
+    protected String getUserRole() {
+
+        String userRole = (String) this.getApplicationInfo("role");
+
+        return userRole;
+    }
 
     //前端传回数据转json对象
     protected JSONObject convertRequestBody() {
@@ -76,35 +105,7 @@ public Object getObject(Object object){
         }
         return null;
     }
-//设定信息 session
-    public void setApplicationInfo(String key, Object value) {
-        session.setAttribute(key, value);
-    }
-//取得信息
-    protected Object getApplicationInfo(String key) {
-        return session.getAttribute(key);
-    }
-//取得用户id
-    protected Long getUserInfo() {
 
-        MiUserInfo userInfo = (MiUserInfo) this.getApplicationInfo("user");
-
-        return userInfo.getId();
-    }
-//取得用户对象
-    protected MiUserInfo getLoginUser() {
-
-        MiUserInfo userInfo = (MiUserInfo) this.getApplicationInfo("user");
-
-        return userInfo;
-    }
-//取得用户的角色
-    protected String getUserRole() {
-
-        String userRole = (String) this.getApplicationInfo("role");
-
-        return userRole;
-    }
 
     //IO操作
 //	读取图片
@@ -116,6 +117,7 @@ public Object getObject(Object object){
         fis.close();
         return buf;
     }
+
 
     //	读取文档
     protected byte[] getDocument(String filename) {
