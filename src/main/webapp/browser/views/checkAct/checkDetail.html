@@ -3,18 +3,25 @@
 </div>
 <div class="modal-body">
     <div id="act_head" class="trade">
-        <img class="icon" src={{activity.organization.icon}} >
+        <img class="icon" ng-src={{activity.organization.icon}} onerror="this.src='browser/images/icon/10001.jpg'">
         <h2>{{activity.organization.name}}</h2>
     </div>
 
     <div id="act_nav" class="trade" style="flex-direction: column;">
         <h3>{{activity.name}}</h3>
-        <div><h4>报名时间:{{activity.signtime}}--{{activity.endsigntime}}</h4></div>
-        <div><h4>活动时间:{{activity.stime}}--{{activity.etime}}</h4></div>
+        <div><h4>报名时间:{{activity.signTime}}--{{activity.endSignTime}}</h4></div>
+        <div><h4>活动时间:{{activity.startTime}}--{{activity.endTime}}</h4></div>
+        <div><h4>活动地址:{{activity.address}}</h4></div>
+        <div><h4>赞助商:{{activity.sponsor}}</h4></div>
     </div>
 
     <div id="act_deltail" class="trade" style="flex-direction: column;">
         <p>{{activity.detail}}</p>
+    </div>
+    <div class="trade" style="justify-content: center">
+        <div data-ng-repeat="photo in activity.photo">
+            <img ng-src="{{photo}}" class="act_photo">
+        </div>
     </div>
 </div>
 <div class="modal-footer">

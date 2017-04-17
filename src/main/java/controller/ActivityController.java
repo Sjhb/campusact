@@ -14,6 +14,7 @@ import model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -72,24 +73,18 @@ public class ActivityController extends BaseController {
     @RequestMapping("checkact")
     @ResponseBody
     public BaseModel<SqlActivity> checkAct() {
-        JSONObject jsonObject = this.convertRequestBody();
-        MiUserInfo userinfo = (MiUserInfo) this.getApplicationInfo("user");
-
-        SqlActivity activityCheck = JSON.toJavaObject(jsonObject, SqlActivity.class);
         BaseModel<SqlActivity> model = new BaseModel<>();
-        if (userinfo == null) {
-            model.setStatus(Constants.FAIL_INVALID_USER);
-            model.setMessage("用户名无效");
-        } else if (!userinfo.getRole().getDetail().equals("admin")) {
+        if (!this.isPermmit(Field.ADMINISTOR)){
             model.setStatus(Constants.FAIL_INVALID_AUTH);
-            model.setMessage("用户无权审批");
-        } else {
-            if (activityService.checkActivity(activityCheck)) {
-                model.setStatus(Constants.SUCCESS);
-            }
-            ;
-            model.setMessage("活动状态更改成功");
-        }
+            model.setMessage("权限错误");
+            return model;
+        };
+        SqlActivity activityCheck= (SqlActivity) this.getObject(new SqlActivity());
+        if(!activityService.checkActivity(activityCheck)){
+            model.setStatus(Constants.FAIL_BUSINESS_ERROR);
+            model.setMessage("更改失败");
+        };
+        model.setMessage("活动状态更改成功");
         return model;
     }
 

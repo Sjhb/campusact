@@ -52,6 +52,6 @@
 	</delete>
     <!-- 审批活动 -->
     <update id="checkActivity">
-	update activity set stateId=#{state} where id=#{id}
+	update activity set stateId=#{stateId} where id=#{id}
 	</update>
 </mapper>

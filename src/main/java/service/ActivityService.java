@@ -23,14 +23,14 @@ public class ActivityService {
 	//获得所有审核通过的活动
 	public List<Activity> getPassedActivity(Activity activity){
 		PageHelper.startPage(activity.getPageNum(), 9);
-		List<Activity> result= activityOperation.getPassedActivity();
+		List<Activity> result= activityOperation.getActivityByState(2000);
 
 		return result;
 	}
 	//获得所有待审核的活动
 	public List<Activity> getWaitingActivity(Activity activity){
 		PageHelper.startPage(activity.getPageNum(), 10);
-		List<Activity> activity2= activityOperation.getWaitingActivity();
+		List<Activity> activity2= activityOperation.getActivityByState(1000);
 		return activity2;
 	}
 	//创建活动

@@ -12,9 +12,8 @@
 		from activity,organization,state where
 		organization.id=activity.organizationId and activity.id=#{id} and activity.stateId=state.state
 	</select>
-
-    <!-- 获取所有的通过的活动 -->
-    <select id="getPassedActivity" resultMap="resultListActivity">
+    <!--根据状态获取活动-->
+    <select id="getActivityByState" resultMap="resultListActivity">
 		select
 		activity.id,
 		activity.name,
@@ -35,15 +34,9 @@
 		from activity,organization,state
 		where	organization.id=activity.organizationId
 		and activity.stateId=state.state
-		and state.state=2000 order by activity.startTime
-	</select>
-    <!-- 获取所有等待审核的活动 -->
-    <select id="getWaitingActivity" resultMap="resultListActivity">
-		select
-		activity.id,activity.name,activity.address,activity.photo,organization.name,organization.icon,activity.startTime,activity.endTime,activity.signTime,activity.endSignTime,activity.detail,activity.sponser,activity.stateId
-		,activity.signTime,activity.stateId,activity.endSignTime	from activity,organization where
-		organization.id=activity.organizationId and activity.stateId=10 order by activity.startTime
-	</select>
+		and state.state=#{stateId,jdbcType=INTEGER} order by activity.startTime
+    </select>
+
     <!-- 插入活动 -->
     <insert id="createActivity" parameterType="SqlActivity" useGeneratedKeys="true"
             keyProperty="id">

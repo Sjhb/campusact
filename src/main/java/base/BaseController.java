@@ -24,9 +24,8 @@ public class BaseController {
 //判断是否具有权限
     public boolean isPermmit(String role){
         String loginRole= getUserRole();
-        if (loginRole.equals(role)){
-            return true;
-        }else return false;
+        if (loginRole==null||!loginRole.equals(role))return false;
+         return true;
     }
 //    得到传入对象
 public Object getObject(Object object){
