@@ -40,8 +40,12 @@
     </update>
     <!-- 参加活动 -->
     <update id="engageActivity">
-	 update activity set engage=JSON_MERGE(engage,#{student_id,jdbcType=VARCHAR}) where id=#{activity_id,jdbcType=BIGINT}
+	 update activity set engage=JSON_MERGE(engage,#{stuId,jdbcType=VARCHAR}) where id=#{actId,jdbcType=BIGINT}
 	</update>
+    <!--获取参加了活动的同学-->
+    <select id="getEngage" resultType="String">
+        SELECT engage from activity WHERE id=#{actId,jdbcType=BIGINT}
+    </select>
     <!-- 退出已经参加的活动 -->
     <update id="cancelEngage">
 		update activity set engage=replace(engage,#{student_id,jdbcType=VARCHAR},'')where id=#{activity_id,jdbcType=BIGINT}

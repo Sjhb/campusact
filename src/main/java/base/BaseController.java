@@ -21,6 +21,12 @@ public class BaseController {
     public void setReqAndRes(HttpServletRequest request, HttpServletResponse Response) {
         this.session = request.getSession();
     }
+//    是否登录
+    public  boolean isLogin(){
+        MiUserInfo user=this.getLoginUser();
+        if (user!=null) return true;
+        return false;
+    }
 //判断是否具有权限
     public boolean isPermmit(String role){
         String loginRole= getUserRole();

@@ -170,18 +170,38 @@ public class ActivityController extends BaseController {
     }
 
     //参加活动//取得活动id，加入student的id
-    @RequestMapping("engageinact")
+    @RequestMapping("engage")
     @ResponseBody
     public BaseModel<SqlActivity> engageinAct() {
         JSONObject jsonObject = this.convertRequestBody();
         SqlActivity getAct = JSON.toJavaObject(jsonObject, SqlActivity.class);
-        SqlStudent getStu = (SqlStudent) this.getApplicationInfo("user");
         BaseModel<SqlActivity> model = new BaseModel<>();
-        if (!activityService.engageActivity(getStu, getAct)) {
+        long actId=getAct.getId();
+        if(!this.isLogin()) {
+            model.setMessage("未登录");
+            model.setStatus(Constants.FAIL_INVALID_USER);
+            return model;
+        };
+        if (!isPermmit(Field.STUDENT)){
+            model.setMessage("不是学生");
+            model.setStatus(Constants.FAIL_INVALID_AUTH);
+            return model;
+        }
+        long stuId=this.getUserInfo();
+        if (!activityService.engageActivity(stuId,actId)) {
             model.setMessage("操作失败");
             model.setStatus(Constants.FAIL_BUSINESS_ERROR);
         }
         ;
+        return model;
+    }
+
+//    获取所有参加了活动的同学
+    @RequestMapping(value = "getEngage")
+    @ResponseBody
+    public BaseModel<List> getEngage(){
+        BaseModel model=new BaseModel();
+       String test=activityService.getEngage(108);
         return model;
     }
 

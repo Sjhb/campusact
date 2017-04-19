@@ -13,7 +13,7 @@
             	activities_createAct:$resource(env.activities_api+'activity/createact'),
            		activities_checkAct:$resource(env.activities_api+'activity/checkact'),
 				activities_alterActPhoto:$resource(env.activities_api+'activity/alterActPhoto'),
-
+				activities_engage:$resource(env.activities_api+'activity/engage'),
 		};
 		return resource;
 	}]);

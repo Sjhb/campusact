@@ -62,11 +62,16 @@ public class ActivityService {
 		return true;
 	}
 	//参加活动
-	public boolean engageActivity(SqlStudent student, SqlActivity activity){
-		int i=sqlactivityOperation.engageActivity(activity.getId(),Long.toString(student.getId()));
+	public boolean engageActivity(long stuId,long actId){
+		int i=sqlactivityOperation.engageActivity(Long.toString(stuId),actId);
 		if(i==0)
 		return false;
 		else return true;
+	}
+//	获取参加了活动的学生id
+	public String getEngage(long actId){
+		String s=sqlactivityOperation.getEngage(actId);
+		return s;
 	}
 	//cancel engage in activity
 	public boolean cancelEngage(SqlStudent student,SqlActivity activity){
