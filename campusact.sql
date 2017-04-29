@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.11, for Win64 (x86_64)
 --
 -- Host: localhost    Database: campusact
 -- ------------------------------------------------------
--- Server version	5.7.17
+-- Server version	5.7.11
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -31,7 +31,7 @@ CREATE TABLE `activity` (
   `startTime` datetime NOT NULL,
   `endTime` datetime NOT NULL,
   `detail` text,
-  `photo` varchar(200) DEFAULT NULL,
+  `photo` json DEFAULT NULL,
   `address` varchar(200) DEFAULT NULL,
   `sponsor` varchar(200) DEFAULT NULL,
   `stateId` int(11) NOT NULL,
@@ -39,9 +39,9 @@ CREATE TABLE `activity` (
   PRIMARY KEY (`id`),
   KEY `organizationId` (`organizationId`),
   KEY `stateId` (`stateId`),
-  CONSTRAINT `activity_ibfk_1` FOREIGN KEY (`organizationId`) REFERENCES `organization` (`id`),
-  CONSTRAINT `activity_ibfk_2` FOREIGN KEY (`stateId`) REFERENCES `state` (`state`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  CONSTRAINT `activity_ibfk_2` FOREIGN KEY (`stateId`) REFERENCES `state` (`state`),
+  CONSTRAINT `activity_organization_id_fk` FOREIGN KEY (`organizationId`) REFERENCES `organization` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=109 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -50,7 +50,7 @@ CREATE TABLE `activity` (
 
 LOCK TABLES `activity` WRITE;
 /*!40000 ALTER TABLE `activity` DISABLE KEYS */;
-INSERT INTO `activity` VALUES (1,'教科学院春季篮球赛',300000000001,'2017-03-27 15:00:00','2017-04-27 15:00:00','2017-05-02 13:00:00','2017-06-25 13:00:00','教科学院春季篮球赛，欢迎大家踊跃报名，对于球赛的前几名，我们有丰厚的奖品等待着你们！赶快报名吧！','basketball.jpg','篮球场','可口可乐',2000,NULL);
+INSERT INTO `activity` VALUES (1,'教科学院春季篮球赛',100,'2017-03-27 15:00:00','2017-04-27 15:00:00','2017-05-02 13:00:00','2017-06-25 13:00:00','教科学院春季篮球赛，欢迎大家踊跃报名，对于球赛的前几名，我们有丰厚的奖品等待着你们！赶快报名吧！','[]','篮球场','可口可乐',2000,NULL);
 /*!40000 ALTER TABLE `activity` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -65,7 +65,7 @@ CREATE TABLE `administor` (
   `id` bigint(20) NOT NULL,
   `icon` varchar(25) DEFAULT NULL,
   `name` varchar(20) DEFAULT NULL,
-  `password` varchar(20) NOT NULL,
+  `password` varchar(20) NOT NULL DEFAULT '123456',
   `role` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `role` (`role`),
@@ -79,7 +79,7 @@ CREATE TABLE `administor` (
 
 LOCK TABLES `administor` WRITE;
 /*!40000 ALTER TABLE `administor` DISABLE KEYS */;
-INSERT INTO `administor` VALUES (100000000000,'1000000000001.jpg','王汉祥','100000000000',20);
+INSERT INTO `administor` VALUES (200,'1000000000001.jpg','王汉祥','200',20);
 /*!40000 ALTER TABLE `administor` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -193,7 +193,7 @@ CREATE TABLE `login` (
 
 LOCK TABLES `login` WRITE;
 /*!40000 ALTER TABLE `login` DISABLE KEYS */;
-INSERT INTO `login` VALUES (201301010101,'100001',10),(100000000000,'100000000000',20),(300000000001,'300000000000',30),(201301010101,'201301010101',10);
+INSERT INTO `login` VALUES (201301010101,'100001',10),(200,'200',20),(201301010101,'201301010101',10),(100,'100',30);
 /*!40000 ALTER TABLE `login` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -208,7 +208,7 @@ CREATE TABLE `organization` (
   `id` bigint(20) NOT NULL,
   `icon` varchar(25) DEFAULT NULL,
   `name` varchar(25) NOT NULL,
-  `password` varchar(20) NOT NULL,
+  `password` varchar(20) NOT NULL DEFAULT '123456',
   `phone` varchar(200) NOT NULL,
   `mail` varchar(100) DEFAULT NULL,
   `detail` text,
@@ -226,7 +226,7 @@ CREATE TABLE `organization` (
 
 LOCK TABLES `organization` WRITE;
 /*!40000 ALTER TABLE `organization` DISABLE KEYS */;
-INSERT INTO `organization` VALUES (300000000001,'300000000001.jpg','教科体育部','300000000000','15868149250','jktybu@163.com','教育技术与科技学院体育部，一群活力四射的青年','家和东苑十幢架空层教科办公室',30);
+INSERT INTO `organization` VALUES (100,'300000000001.jpg','教科体育部','100','15868149250','jktybu@163.com','教育技术与科技学院体育部，一群活力四射的青年','家和东苑十幢架空层教科办公室',30);
 /*!40000 ALTER TABLE `organization` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -258,11 +258,11 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `organization_change_with_login_update`
-AFTER update ON `organization`
-FOR EACH ROW
-  BEGIN
-    UPDATE login SET password=new.password WHERE id=old.id;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER organization_change_with_login_update
+AFTER UPDATE ON organization
+FOR EACH ROW
+  BEGIN
+    UPDATE login SET password=new.password ,login.id=NEW.id WHERE id=old.id;
   END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -350,13 +350,13 @@ CREATE TABLE `student` (
   `id` bigint(20) NOT NULL,
   `icon` varchar(25) DEFAULT NULL,
   `name` varchar(25) NOT NULL,
-  `password` varchar(20) NOT NULL,
+  `password` varchar(20) NOT NULL DEFAULT '123456',
   `sex` char(2) DEFAULT '男',
   `phone` varchar(11) DEFAULT NULL,
   `major` varchar(15) DEFAULT NULL,
   `class` varchar(10) DEFAULT NULL,
   `college` varchar(15) NOT NULL,
-  `role` int(11) DEFAULT NULL,
+  `role` int(11) DEFAULT '10',
   PRIMARY KEY (`id`),
   KEY `role` (`role`),
   CONSTRAINT `student_ibfk_1` FOREIGN KEY (`role`) REFERENCES `role` (`roleId`)
@@ -441,4 +441,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-03-28 17:07:10
+-- Dump completed on 2017-04-27 22:45:25
