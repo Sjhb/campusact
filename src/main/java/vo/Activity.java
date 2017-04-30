@@ -23,6 +23,15 @@ public class Activity {
     private Date endSignTime;// 报名结束时间
     private String address;//地址
     private SqlState state;
+    private String engage;//活动参与
+
+    public String getEngage() {
+        return engage;
+    }
+
+    public void setEngage(String engage) {
+        this.engage = engage;
+    }
 
     public String getAddress() {
         return address;

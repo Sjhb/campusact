@@ -37,7 +37,7 @@ public class Behave {
     public static final String ORG_APPLY= "ORG1";//    申请组织活动
     public static final String ORG_REGISTER= "ORG2";//    注册
     public static final String ORG_GET_REJECTED_ACTIVITY= "ORG3";//    获取不通过的活动
-//    管理活动：查看活动参与者,历史活动举办结果
+//    管理活动：查看活动参与者,历史 活动举办结果
     public static final String ORG_GET_ENGAGEED_STUDENT = "ORG4";//获得活动参与者
     public static final String ORG_GET_ORGANIZED_ACTIVITY= "ORG5";//查询举办过的活动
     public static final String ORG_PASSED_ACTIVITY= "ORG6";//查询通过审核的活动

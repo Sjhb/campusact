@@ -37,6 +37,23 @@ public class ActivityController extends BaseController {
     @Value("#{propertiesReader['ACTIVITY_IMG']}")
     private String ACTIVITY_IMG;
 
+//    根据组织id查找活动
+    @RequestMapping("getActByOid")
+    @ResponseBody
+    public BaseModel<List<Activity>> getActByOid(){
+        BaseModel<List<Activity>> model=new BaseModel<>();
+        Activity activity= (Activity) this.getObject(new Activity());
+        long Oid=this.getUserInfo();
+        if (Oid==0) {
+            model.setStatus(Constants.FAIL_INVALID_USER);
+            model.setMessage("无效用户");
+        }else {
+            List<Activity> result=activityService.getActivityByOid(activity,Oid);
+            model.setPage(new PageInfo<Activity>(result));
+            model.setData(result);
+        }
+        return model;
+    }
     //查看全部审核通过的活动
     @RequestMapping("getall")
     @ResponseBody

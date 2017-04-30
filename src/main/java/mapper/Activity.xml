@@ -18,6 +18,7 @@
 		activity.id,
 		activity.name,
 		activity.photo,
+        activity.address,
 		organization.id o_id,
 		organization.name o_name,
 		organization.icon o_icon,
@@ -36,7 +37,30 @@
 		and activity.stateId=state.state
 		and state.state=#{stateId,jdbcType=INTEGER} order by activity.startTime
     </select>
-
+    <!--根据组织ID获取活动-->
+    <select id="getActivityByOid" resultMap="resultListActivity">
+        select
+        activity.id,
+        activity.name,
+        activity.photo,
+        activity.address,
+        organization.name o_name,
+        organization.icon o_icon,
+        activity.startTime,
+        activity.endTime,
+        activity.signTime,
+        activity.endSignTime,
+        activity.detail,
+        activity.sponsor,
+        state.detail s_detail,
+        activity.signTime,
+        activity.endSignTime,
+        activity.engage
+        from activity,organization,state
+        where	organization.id=activity.organizationId
+        and activity.stateId=state.state
+        and activity.organizationId=#{Oid,jdbcType=BIGINT} order by activity.startTime
+    </select>
     <!-- 插入活动 -->
     <insert id="createActivity" parameterType="SqlActivity" useGeneratedKeys="true"
             keyProperty="id">
@@ -63,6 +87,7 @@
         <result column="signTime" property="signTime"/>
         <result column="endSignTime" property="endSignTime"/>
         <result column="address" property="address"/>
+        <result column="engage" property="engage"/>
         <association property="organization" javaType="SqlOrganization"
                      resultMap="resultListOrganization"></association>
         <association property="state" javaType="SqlState" resultMap="resultListState"/>

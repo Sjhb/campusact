@@ -1,7 +1,7 @@
-<div style="display: flex; justify-content: center;" data-ng-controller='org-actCtrl'>
-    <div style="width: 900px; background-color: white; height: 1000px ;text-align: center;    box-shadow: 0px 1px 1px 0px rgba(0,0,102,0.1);">
-        <div style="height: 40px"></div>
-        <table class="table table-hover">
+<div style="display: flex; justify-content: center;" data-ng-controller='orgActCtrl'>
+    <div style="width: 1200px; background-color: white; height: 1000px ;text-align: center;    box-shadow: 0px 1px 1px 0px rgba(0,0,102,0.1);">
+        <div style=" height: 40px "></div>
+        <table class="table table-hover" >
             <thead>
             <tr>
                 <th>活动名称</th>
@@ -13,19 +13,19 @@
                 <th>操作</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody style="font-size: 11px">
             <tr data-ng-repeat="activity in activities">
                 <td>{{activity.name}}</td>
                 <td>{{activity.address}}</td>
                 <td>{{activity.signTime}}--{{activity.endSignTime}}</td>
                 <td>{{activity.startTime}}--{{activity.endTime}}</td>
-                <th>{{count}}</th>
-                <th>{{activity.state.detail}}</th>
+                <td>{{activity.engage.length}}</td>
+                <td ng-show="activity.state.detail!='审核不通过'">{{activity.state.detail}}</td>
+                <td ng-show="activity.state.detail=='审核不通过'" style="color: red">{{activity.state.detail}}</td>
                 <td>
                     <div>
-                        <button class="btn btn-info" style="margin-right: 5px;" data-ng-click="showDetail(activity)">详情</button>
-                        <button class="btn btn-success" style="margin-right: 5px;" data-ng-click="permit(activity.id)">通过</button>
-                        <button class="btn btn-warning" data-ng-click="reject(activity.id)">不通过</button>
+                        <button class="btn  btn-info spx" style="margin-right: 5px;" data-ng-click="showDetail(activity)">详情</button>
+                        <button class="btn  btn-primary spx" ng-show='activity.state.detail=="审核不通过"' data-ng-click="reject(activity.id)">编辑</button>
                     </div>
                 </td>
             </tr>

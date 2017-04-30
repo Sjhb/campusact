@@ -33,7 +33,14 @@ public class ActivityService {
 		List<Activity> activity2= activityOperation.getActivityByState(1000);
 		return activity2;
 	}
+//	通过活动id查询活动
+	public  List<Activity> getActivityByOid(Activity activity,long oid){
+		PageHelper.startPage(activity.getPageNum(),9);
+		List<Activity> result=activityOperation.getActivityByOid(activity,oid);
+		return  result;
+	}
 	//创建活动
+
 	public long createActivity(SqlActivity activity){
 		long row=sqlactivityOperation.createActivity(activity);
 //        if (row>0){

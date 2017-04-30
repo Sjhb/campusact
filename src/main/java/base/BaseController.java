@@ -51,7 +51,7 @@ public Object getObject(Object object){
     protected Long getUserInfo() {
 
         MiUserInfo userInfo = (MiUserInfo) this.getApplicationInfo("user");
-
+        if (userInfo==null) return Long.valueOf(0);
         return userInfo.getId();
     }
     //取得用户对象
