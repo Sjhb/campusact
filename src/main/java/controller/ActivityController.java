@@ -203,14 +203,31 @@ public class ActivityController extends BaseController {
             return model;
         }
         long stuId=this.getUserInfo();
-        if (!activityService.engageActivity(stuId,actId)) {
+        if (!activityService.engageActivity("\""+Long.toString(stuId)+"\"",actId)) {
             model.setMessage("操作失败");
             model.setStatus(Constants.FAIL_BUSINESS_ERROR);
         }
         ;
         return model;
     }
+//查看参加了的活动（stuid）
+    @RequestMapping(value = "getActByStuid")
+    @ResponseBody
+    public  BaseModel<List<Activity>> getActByStuid(){
+        BaseModel<List<Activity>> model=new BaseModel<>();
+        Activity activity= (Activity) this.getObject(new Activity());
+        long stuId=this.getUserInfo();
+        if (stuId==0){
+            model.setStatus(Constants.FAIL_INVALID_USER);
+            model.setMessage("用户无效，可能未登录");
+        }else {
+            List<Activity> result=activityService.getActivityByStuid(activity,stuId);
+            model.setData(result);
+            model.setPage(new PageInfo<Activity>(result));
+        }
 
+        return model;
+    }
 //    获取所有参加了活动的同学
     @RequestMapping(value = "getEngage")
     @ResponseBody

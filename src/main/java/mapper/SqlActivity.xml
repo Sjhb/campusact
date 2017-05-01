@@ -40,7 +40,7 @@
     </update>
     <!-- 参加活动 -->
     <update id="engageActivity">
-	 update activity set engage=JSON_MERGE(engage,#{stuId,jdbcType=VARCHAR}) where id=#{actId,jdbcType=BIGINT}
+	 update activity set engage=JSON_MERGE(engage,#{stuId,jdbcType=VARCHAR }) where id=#{actId,jdbcType=BIGINT}
 	</update>
     <!--获取参加了活动的同学-->
     <select id="getEngage" resultType="String">

@@ -61,6 +61,30 @@
         and activity.stateId=state.state
         and activity.organizationId=#{Oid,jdbcType=BIGINT} order by activity.startTime
     </select>
+    <!--根据学生活动id找活动-->
+    <select id="getActivityByStuid" resultMap="resultListActivity">
+        select
+        activity.id,
+        activity.name,
+        activity.photo,
+        activity.address,
+        organization.name o_name,
+        organization.icon o_icon,
+        activity.startTime,
+        activity.endTime,
+        activity.signTime,
+        activity.endSignTime,
+        activity.detail,
+        activity.sponsor,
+        state.detail s_detail,
+        activity.signTime,
+        activity.endSignTime,
+        activity.engage
+        from activity,organization,state
+        where	organization.id=activity.organizationId
+        and activity.stateId=state.state
+        and JSON_SEARCH(engage,'one',#{Stuid,jdbcType=VARCHAR})>0 order by activity.startTime
+    </select>
     <!-- 插入活动 -->
     <insert id="createActivity" parameterType="SqlActivity" useGeneratedKeys="true"
             keyProperty="id">

@@ -27,6 +27,7 @@ public class ActivityService {
 
 		return result;
 	}
+
 	//获得所有待审核的活动
 	public List<Activity> getWaitingActivity(Activity activity){
 		PageHelper.startPage(activity.getPageNum(), 10);
@@ -38,6 +39,12 @@ public class ActivityService {
 		PageHelper.startPage(activity.getPageNum(),9);
 		List<Activity> result=activityOperation.getActivityByOid(activity,oid);
 		return  result;
+	}
+//	根据学生id获取活动
+	public  List<Activity> getActivityByStuid(Activity activity,long stuid){
+		PageHelper.startPage(activity.getPageNum(),9);
+		List<Activity> r=activityOperation.getActivityByStuid(activity,stuid);
+		return r;
 	}
 	//创建活动
 
@@ -69,8 +76,8 @@ public class ActivityService {
 		return true;
 	}
 	//参加活动
-	public boolean engageActivity(long stuId,long actId){
-		int i=sqlactivityOperation.engageActivity(Long.toString(stuId),actId);
+	public boolean engageActivity(String stuId,long actId){
+		int i=sqlactivityOperation.engageActivity(stuId,actId);
 		if(i==0)
 		return false;
 		else return true;

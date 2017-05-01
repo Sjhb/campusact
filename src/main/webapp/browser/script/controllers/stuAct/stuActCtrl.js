@@ -1,9 +1,9 @@
 /**
- * Created by Manlin on 2017/4/30.
+ * Created by Manlin on 2017/5/1.
  */
 (function () {
-    angular.module('activities').controller('orgActCtrl', ['$location','activitiesResource', '$scope', '$uibModal', 'actOperateService', orgActCtrl]);
-    function orgActCtrl($location,activitiesResource, $scope, $uibModal, actOperateService) {
+    angular.module('activities').controller('stuActCtrl',['$uibModal','actOperateService','activitiesResource','$scope',stuActCtrl]);
+    function stuActCtrl($uibModal,actOperateService,activitiesResource,$scope) {
         $scope.showDetail = function (activity) {
             $uibModal.open({
                 templateUrl: 'browser/views/org-act/orgActDetail.html',
@@ -22,7 +22,7 @@
         }
 
         $scope.search = function () {
-            activitiesResource.activities_getActByOid.save($scope.searchparam, function (res) {
+            activitiesResource.activities_getActByStuid.save($scope.searchparam, function (res) {
                 if (res.data != null) {
                     $scope.activities = actOperateService.operate(res.data);
                 }
@@ -58,8 +58,6 @@
 
             }
         };
-        $scope.reApply=function () {
-            $location.path('/createAct/create');
-        }
+
     }
 })();

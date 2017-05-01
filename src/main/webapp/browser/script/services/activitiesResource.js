@@ -11,6 +11,7 @@
 				activities_all:$resource(env.activities_api+'activity/getall'),
 				activities_waiting:$resource(env.activities_api+'activity/checkall'),
 				activities_getActByOid:$resource(env.activities_api+'activity/getActByOid'),
+				activities_getActByStuid:$resource(env.activities_api+'activity/getActByStuid'),
             	activities_createAct:$resource(env.activities_api+'activity/createact'),
            		activities_checkAct:$resource(env.activities_api+'activity/checkact'),
 				activities_alterActPhoto:$resource(env.activities_api+'activity/alterActPhoto'),
