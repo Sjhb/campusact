@@ -85,6 +85,10 @@
         and activity.stateId=state.state
         and JSON_SEARCH(engage,'one',#{Stuid,jdbcType=VARCHAR})>0 order by activity.startTime
     </select>
+    <!--判断学生是否已经登录-->
+    <select id="isEngage" resultType="long">
+         SELECT activity.id from activity WHERE id=#{actId,jdbcType=BIGINT} and JSON_SEARCH(engage,'one',#{stuId,jdbcType=VARCHAR})>0
+    </select>
     <!-- 插入活动 -->
     <insert id="createActivity" parameterType="SqlActivity" useGeneratedKeys="true"
             keyProperty="id">

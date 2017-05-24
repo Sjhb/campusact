@@ -203,11 +203,14 @@ public class ActivityController extends BaseController {
             return model;
         }
         long stuId=this.getUserInfo();
+//        if(activityService.isEngage(actId,stuId)){
+//            model.setMessage("已经参加活动，请勿重复参加");
+//            model.setStatus(Constants.FAIL_BUSINESS_ERROR);
+//        }else
         if (!activityService.engageActivity("\""+Long.toString(stuId)+"\"",actId)) {
             model.setMessage("操作失败");
             model.setStatus(Constants.FAIL_BUSINESS_ERROR);
         }
-        ;
         return model;
     }
 //查看参加了的活动（stuid）

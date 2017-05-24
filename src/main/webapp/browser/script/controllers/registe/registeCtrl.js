@@ -2,8 +2,12 @@
  *
  */
 (function () {
-    angular.module('activities').controller('registeCtrl', ['messageService','$scope','permission','modalService',registeCtrl]);
-    function registeCtrl(messageService,$scope,permission,modalService) {
+    angular.module('activities').controller('registeCtrl', ['FileUploader','messageService','$scope','permission','modalService',registeCtrl]);
+    function registeCtrl(FileUploader,messageService,$scope,permission,modalService) {
+        $scope.isActive='stu';
+        $scope.shiftRole=function(role) {
+            $scope.isActive=role;
+        }
         $scope.stu = {
             // id:,
             // icon,name,password,sex,phone,major,class,college
@@ -36,6 +40,122 @@
         }
         $("#stu_form").ajaxForm(options);
 
+        // 组织
+        $scope.org_confirmPass='';
+        $scope.org={};
+        $scope.confirmOrgPass=function () {
+            if($scope.org.password!=$scope.org_confirmPass){
+                $scope.worning=true;
+            }else{$scope.worning=false;}
+        }
 
+        //组织头像提交
+        var up_icon = $scope.up_icon= new FileUploader({
+            url: '/activity/alterActPhoto',
+            queueLimit: 1,
+            removeAfterUpload: true
+        })
+        up_icon.filters.push({
+            name: 'imageFilter',
+            fn: function (item /*{File|FileLikeObject}*/, options) {
+                var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
+                return '|jpg|png|jpeg|bmp|'.indexOf(type) !== -1;
+            }
+        });
+        up_icon.filters.push({
+            name: 'imgSizeFilter',
+            fn: function (item) {
+                return item.size / 1024 / 1024 < 1;
+            }
+        });
+        $scope.clearIcon= function () {
+            up_icon.clearQueue();
+            $scope.remove_Icon= false;
+            $scope.limit_icon = false;
+        }
+        // 是否禁用添加按钮
+        $scope.limit_icon=false;
+        // 是否显示移除按钮
+        $scope.removeIcon = false;
+        // 从末尾移除图片
+        $scope.removeIcon= function () {
+            up_icon.queue.pop();
+            if (up_icon.queue.length == 0) {
+                $scope.remove_Icon= false;
+            }
+            if (up_icon.queue.length < 1.
+            )
+                $scope.limit_icon = false;
+        }
+        up_icon.onAfterAddingFile = function (fileItem) {
+            $scope.remove_Icon = true;
+            if (up_icon.queue.length == 1) {
+                $scope.limit_icon = true;
+            }
+        }
+        up_icon.onCompleteAll = function () {
+            svae();
+            $scope.reset();
+            $scope.uploadStatus = true;
+            $scope.state = '';
+            if (uploadResult.length > 0) {
+                messageService('活动申请信息提交成功，图片' + uploadResult.toString()+"上传失败");
+            }else messageService('活动申请信息提交成功');
+        }
+
+        //文件
+
+        var up_docu = $scope.up_docu= new FileUploader({
+            url: '/activity/alterActPhoto',
+            queueLimit: 3,
+            removeAfterUpload: true
+        })
+        up_docu.filters.push({
+            name: 'imageFilter',
+            fn: function (item /*{File|FileLikeObject}*/, options) {
+                var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
+                return '|jpg|png|jpeg|bmp|'.indexOf(type) !== -1;
+            }
+        });
+        up_docu.filters.push({
+            name: 'imgSizeFilter',
+            fn: function (item) {
+                return item.size / 1024 / 1024 < 1;
+            }
+        });
+        $scope.clearIcon= function () {
+            up_icon.clearQueue();
+            $scope.remove_Docu= false;
+            $scope.limit_docu = false;
+        }
+        // 是否禁用添加按钮
+        $scope.limit_docu=false;
+        // 是否显示移除按钮
+        $scope.remove_Docu = false;
+        // 从末尾移除图片
+        $scope.removeDocu= function () {
+            up_docu.queue.pop();
+            if (up_docu.queue.length == 0) {
+                $scope.remove_Docu= false;
+            }
+            if (up_docu.queue.length < 1.
+            )
+                $scope.limit_docu = false;
+        }
+        up_docu.onAfterAddingFile = function (fileItem) {
+            $scope.remove_Docu = true;
+            if (up_docu.queue.length == 1) {
+                $scope.limit_docu = true;
+            }
+        }
+        up_docu.onCompleteAll = function () {
+            // svae();
+            $scope.reset();
+            $scope.uploadStatus = true;
+            $scope.state = '';
+            if (uploadResult.length > 0) {
+                messageService('活动申请信息提交成功，图片' + uploadResult.toString()+"上传失败");
+            }else messageService('活动申请信息提交成功');
+        }
     }
 })();

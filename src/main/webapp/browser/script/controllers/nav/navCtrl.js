@@ -3,7 +3,7 @@
  */
 /* navController*/
 (function() {
-    angular.module('activities').controller('navCtrl',['permission','$scope','$uibModal',navCtrl]).controller('logoutCtrl',['permission','$scope','$uibModalInstance',logoutCtrl]);
+    angular.module('activities').controller('navCtrl',['permission','$scope','$uibModal',navCtrl]).controller('logoutCtrl',['$location','activitiesResource','permission','$scope','$uibModalInstance',logoutCtrl]);
     function navCtrl(permission,$scope,$uibModal) {
        $scope.showModal=function () {//打开模态
            $uibModal.open({
@@ -28,10 +28,16 @@
            })
         }
        };
-       function logoutCtrl(permission,$scope,$uibModalInstance){
+       function logoutCtrl($location,activitiesResource,permission,$scope,$uibModalInstance){
+           var user={};
             $scope.logOut=function () {
                 permission.setPermission(null);
-                $uibModalInstance.dismiss('cancel');
+                activitiesResource.user_logout.save(user,function (data) {
+                    if(data.status==200){
+                        $uibModalInstance.dismiss('cancel');
+                        $location.path('/allAct/allAct')
+                    }
+                });
             }
             $scope.cancel=function () {
                 $uibModalInstance.dismiss('cancel');

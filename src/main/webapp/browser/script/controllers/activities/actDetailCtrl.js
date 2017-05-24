@@ -20,7 +20,7 @@
                     if (res.status == 200) {
                         messageService("报名成功！");
                     } else {
-                        messageService("报名出错！")
+                        messageService(res.message)
                     }
                 });
         }

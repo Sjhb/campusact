@@ -46,6 +46,17 @@ public class ActivityService {
 		List<Activity> r=activityOperation.getActivityByStuid(activity,stuid);
 		return r;
 	}
+	//判断学生是否已经参加了活动
+	public boolean isEngage(long actId,long stuId){
+		long column=activityOperation.isEngage(actId,stuId);
+//		if(column==null){
+//
+//		}
+		if(column>0){
+			return true;
+		}
+		return false;
+	}
 	//创建活动
 
 	public long createActivity(SqlActivity activity){

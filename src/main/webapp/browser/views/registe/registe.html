@@ -1,73 +1,169 @@
 <div style="display: flex; justify-content: center;" data-ng-controller='registeCtrl'>
-	<div style="width: 700px; background-color: white; height: 1000px ;text-align: center;">
-		<div class="trade" style="margin-top: 20px;">
-			<label class="trade-label row-5" style="color: #9a9a9a;">完善你的个人信息</label>
-		</div>
-		<form id="stu_form" method="post" action="/student/register" >
-		<div class="trade">
-			<label class="trade-label row-3">学号</label>
-			<div class="row-6">
-				<input type="text" name="id" class="input" data-ng-model="stu.id" ng-required="true" required >
-			</div>
-		</div>
-		<div class="trade">
-			<label class="trade-label row-3">姓名</label>
-			<div class="row-6">
-				<input type="text" name="name" class="input" id="name" placeholder="" data-ng-model="stu.name" required>
-			</div>
-		</div>
-		<div class="trade">
-			<label class="trade-label row-3">性别</label>
-			<div class="row-6">
-				<input type="radio" name="sex" value="男" data-ng-model="stu.sex"  ng-checked="true" >男生
-				<input type="radio" name="sex" value="女" data-ng-model="stu.sex">女生
-			</div>
-		</div>
-		<div class="trade">
-			<label class="trade-label row-3">电话</label>
-			<div class="row-6">
-				<input type="text" name="phone" class="input" id="phone" placeholder="" data-ng-model="stu.phone"	required>
-			</div>
-		</div>
-		<div class="trade">
-			<label class="trade-label row-3">密码</label>
-			<div class="row-6">
-				<input name="password" class="input" id="password" placeholder="" type="password" data-ng-model="stu.password" required data-ng-change="confirm()">
-			</div>
-		</div>
-		<div class="trade">
-			<label class="trade-label row-3">确认密码</label>
-			<div class="row-6">
-				<input class="input" placeholder="" type="password" data-ng-model="confirmPass" required data-ng-change="confirm()">
-			</div>
-			<div class="row-2" id="worning"  class="ng-hide" ng-show="worning" style="padding: 0px"><label style="color: red">密码不一致</label></div>
-		</div>
-		<div class="trade">
-			<label class="trade-label row-3">专业</label>
-			<div class="row-6">
-				<input name="major" type="text" class="input" data-ng-model="stu.major" required>
-			</div>
-		</div>
-		<div class="trade">
-			<label class="trade-label row-3">班级</label>
-			<div class="row-6">
-				<input name="classes" type="text" class="input" data-ng-model="stu.classes" required>
-			</div>
-		</div>
-		<div class="trade">
-			<label class="trade-label row-3">学院</label>
-			<div class="row-6">
-				<input type="text"   name="college" class="input" data-ng-model="stu.college" required>
-			</div>
-		</div>
-			<label class="trade-label row-3">{{message}}</label>
-		<div class="row-8" style="margin: 0 auto;">
-			<hr>
-		</div>
-		
-		<div style="margin: 0 auto;text-align: center;">
-			<input  id="submitbutton"  type="submit" class="btn btn-success" style="width: 50px;" value="提交">
-		</div>
-		</form>
-	</div>
+    <div style="width: 700px; background-color: white;text-align: center;padding: 50px  ">
+        <div class="trade" style="margin-top: 20px;">
+            <div style="width: 300px; display: flex;justify-content: center;margin: 0px auto;">
+            <div ng-class="{true: 'registe registe-active margin-10', false: 'registe margin-10'}[isActive=='stu']" data-ng-click="shiftRole('stu')">学生注册</div>
+            <div ng-class="{true: 'registe registe-active margin-10', false: 'registe margin-10'}[isActive=='org']" data-ng-click="shiftRole('org')">组织注册</div>
+            </div>
+        </div>
+        <div class="trade" style="margin-top: 20px;">
+            <label class="trade-label row-5" style="color: #9a9a9a;" data-ng-show="isActive=='stu'">完善你的个人信息</label>
+            <label class="trade-label row-5" style="color: #9a9a9a;" data-ng-show="isActive=='org'">完善组织信息</label>
+        </div>
+        <form id="stu_form" method="post" action="/student/register" data-ng-show="isActive=='stu'">
+            <div class="trade">
+                <label class="trade-label row-3">学号</label>
+                <div class="row-6">
+                    <input type="text" name="id" class="input" data-ng-model="stu.id" ng-required="true" required>
+                </div>
+            </div>
+            <div class="trade">
+                <label class="trade-label row-3">姓名</label>
+                <div class="row-6">
+                    <input type="text" name="name" class="input" id="name" placeholder="" data-ng-model="stu.name"
+                           required>
+                </div>
+            </div>
+            <div class="trade">
+                <label class="trade-label row-3">性别</label>
+                <div class="row-6">
+                    <input type="radio" name="sex" value="男" data-ng-model="stu.sex" ng-checked="true">男生
+                    <input type="radio" name="sex" value="女" data-ng-model="stu.sex">女生
+                </div>
+            </div>
+            <div class="trade">
+                <label class="trade-label row-3">电话</label>
+                <div class="row-6">
+                    <input type="text" name="phone" class="input" id="phone" placeholder="" data-ng-model="stu.phone"
+                           required>
+                </div>
+            </div>
+            <div class="trade">
+                <label class="trade-label row-3">密码</label>
+                <div class="row-6">
+                    <input name="password" class="input" id="password" placeholder="" type="password"
+                           data-ng-model="stu.password" required data-ng-change="confirm()">
+                </div>
+            </div>
+            <div class="trade">
+                <label class="trade-label row-3">确认密码</label>
+                <div class="row-6">
+                    <input class="input" placeholder="" type="password" data-ng-model="confirmPass" required
+                           data-ng-change="confirm()">
+                </div>
+                <div class="row-2" id="worning" class="ng-hide" ng-show="worning" style="padding: 0px"><label
+                        style="color: red">密码不一致</label></div>
+            </div>
+            <div class="trade">
+                <label class="trade-label row-3">专业</label>
+                <div class="row-6">
+                    <input name="major" type="text" class="input" data-ng-model="stu.major" required>
+                </div>
+            </div>
+            <div class="trade">
+                <label class="trade-label row-3">班级</label>
+                <div class="row-6">
+                    <input name="classes" type="text" class="input" data-ng-model="stu.classes" required>
+                </div>
+            </div>
+            <div class="trade">
+                <label class="trade-label row-3">学院</label>
+                <div class="row-6">
+                    <input type="text" name="college" class="input" data-ng-model="stu.college" required>
+                </div>
+            </div>
+            <label class="trade-label row-3">{{message}}</label>
+            <div class="row-8" style="margin: 0 auto;">
+                <hr>
+            </div>
+
+            <div style="margin: 0 auto;text-align: center;">
+                <input id="submitbutton" type="submit" class="btn btn-success" style="width: 50px;" value="提交">
+            </div>
+        </form>
+
+        <form id="org_form" method="post" action="/student/register" data-ng-show="isActive=='org'">
+            <div class="trade">
+                <label class="trade-label row-3">组织名称</label>
+                <div class="row-6">
+                    <input type="text" name="org_name" class="input" id="org-name" placeholder="" data-ng-model="org.name"
+                           required>
+                </div>
+            </div>
+            <div class="trade">
+                <label class="trade-label row-3">邮箱</label>
+                <div class="row-6">
+                <input type="email" name="org_email" class="input" id="org-email" placeholder="" data-ng-model="org.email"
+                       required>
+                </div>
+            </div>
+            <div class="trade">
+                <label class="trade-label row-3">电话</label>
+                <div class="row-6">
+                    <input type="text" name="org_phone" class="input" id="org-phone" placeholder="" data-ng-model="org.phone"
+                           required>
+                </div>
+            </div>
+            <div class="trade">
+                <label class="trade-label row-3">密码</label>
+                <div class="row-6">
+                    <input name="org_password" class="input" id="org-password" placeholder="" type="password"
+                           data-ng-model="org.password" required data-ng-change="confirmOrgPass()">
+                </div>
+            </div>
+            <div class="trade">
+                <label class="trade-label row-3">确认密码</label>
+                <div class="row-6">
+                    <input class="input" placeholder="" type="password" data-ng-model="org_confirmPass" required
+                           data-ng-change="confirmOrgPass()">
+                </div>
+                <div class="row-2" id="org-worning" class="ng-hide" ng-show="worning" style="padding: 0px"><label
+                        style="color: red">密码不一致</label></div>
+            </div>
+            <div class="trade">
+                <label class="trade-label row-3">地址</label>
+                <div class="row-6">
+                    <input name="org_address" type="text" class="input" data-ng-model="org.address" required>
+                </div>
+            </div>
+            <div class="trade">
+                <label class="trade-label row-3">详情</label>
+                <div class="row-6">
+                    <textarea style="height: 300px; resize: none;" name="org_detail" type="text" class="input" data-ng-model="org.classes" required></textarea>
+                </div>
+            </div>
+            <div class="trade">
+                <label class="trade-label row-3">头像</label>
+                <div class="row-6" style="position: relative;text-align: left ">
+                    <div data-ng-repeat="item in up_icon.queue" style="display: inline-block;">
+                        <div print-img="{file:item._file}"></div>
+                    </div>
+                    <a name="file" href="javascript:;" class="btn btn-success " style="position: relative;display: block; ">选择图片
+                        <input type="file" class="file_input" style="width: 100%;height: 100%;" nv-file-select uploader="up_icon" ng-disabled="limit_icon">
+                    </a>
+                    <a class="btn btn-danger" style="display: block;margin-top: 5px" ng-show="remove_Icon" data-ng-click="removeIcon()" >移除图片</a>
+                </div>
+            </div>
+            <div class="trade">
+                <label class="trade-label row-3">组织证件</label>
+                <div class="row-6" style="position: relative;text-align: left ">
+                    <div data-ng-repeat="item in up_docu.queue" style="display: inline-block;">
+                        <div print-img="{file:item._file}"></div>
+                    </div>
+                    <a name="file" href="javascript:;" class="btn btn-success " style="position: relative;display: block; ">选择文件照片
+                        <input type="file" class="file_input" style="width: 100%;height: 100%;" nv-file-select uploader="up_docu" ng-disabled="limit_docu">
+                    </a>
+                    <a class="btn btn-danger" style="display: block;margin-top: 5px" ng-show="remove_Docu" data-ng-click="removeDocu()" >移除文件照片</a>
+                </div>
+            </div>
+            <label class="trade-label row-3">{{message}}</label>
+            <div class="row-8" style="margin: 0 auto;">
+                <hr>
+            </div>
+
+            <div style="margin: 0 auto;text-align: center;">
+                <input id="submit" type="submit" class="btn btn-success" style="width: 50px;" value="提交">
+            </div>
+        </form>
+    </div>
 </div>

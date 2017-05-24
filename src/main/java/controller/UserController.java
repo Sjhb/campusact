@@ -75,46 +75,10 @@ public class UserController extends BaseController {
     @RequestMapping("logout")
     @ResponseBody
     public BaseModel<MiUserInfo> logout() {
-        JSONObject jsonObject = this.convertRequestBody();
-        MiUserInfo logoutUser = JSON.toJavaObject(jsonObject, MiUserInfo.class);
         BaseModel<MiUserInfo> model = new BaseModel<>();
-
-        String role = (String) getApplicationInfo("role");
-        /*String id=(String)((Object)getApplicationInfo("user").getId());*/
-        if (logoutUser.getRole().equals(role)) {
-            switch (role) {
-                case "student": {
-                    SqlStudent student = (SqlStudent) getApplicationInfo("user");
-                    if (logoutUser.getId() == student.getId()) {
-                        setApplicationInfo("role", null);
-                        setApplicationInfo("user", null);
-                    }
-                }
-                ;
-                case "admin": {
-                    SqlAdmin admin = (SqlAdmin) getApplicationInfo("user");
-                    if (logoutUser.getId() == admin.getId()) {
-                        setApplicationInfo("role", null);
-                        setApplicationInfo("user", null);
-                    }
-                }
-                ;
-                case "organization": {
-                    SqlOrganization organization = (SqlOrganization) getApplicationInfo("user");
-                    if (logoutUser.getId() == organization.getId()) {
-                        setApplicationInfo("role", null);
-                        setApplicationInfo("user", null);
-                    }
-                }
-            }
-        } else {
-            setApplicationInfo("role", null);
-            setApplicationInfo("user", null);
-            model.setStatus(Constants.FAIL_BUSINESS_ERROR);
-            model.setMessage("用户信息不一致");
-        }
+        setApplicationInfo("role", null);
+        setApplicationInfo("user", null);
         return model;
-
     }
 
     /*

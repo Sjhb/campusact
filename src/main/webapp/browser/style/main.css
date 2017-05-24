@@ -296,3 +296,21 @@ th{
 		padding: 1px 2px;
 		font-size: 10px;
 }
+
+
+.registe{
+	width: 100px;
+	height: 30px;
+	display: flex;
+	border-radius: 5px;
+	background: #b1d6b1;
+	flex-direction: column;
+	justify-content: center;
+	cursor: pointer;
+}
+.registe-active{
+	background: #449d44;
+}
+.margin-10{
+	margin: 0px 10px 0px 10px;
+}
