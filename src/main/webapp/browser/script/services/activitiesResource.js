@@ -20,9 +20,5 @@
 		};
 		return resource;
 	}]);
-	
-	
-	
-	
 }
 )();

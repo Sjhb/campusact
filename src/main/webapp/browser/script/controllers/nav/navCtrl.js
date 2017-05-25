@@ -3,7 +3,8 @@
  */
 /* navController*/
 (function() {
-    angular.module('activities').controller('navCtrl',['permission','$scope','$uibModal',navCtrl]).controller('logoutCtrl',['$location','activitiesResource','permission','$scope','$uibModalInstance',logoutCtrl]);
+    angular.module('activities').controller('navCtrl',['permission','$scope','$uibModal',navCtrl])
+        .controller('logoutCtrl',['$location','activitiesResource','permission','$scope','$uibModalInstance',logoutCtrl]);
     function navCtrl(permission,$scope,$uibModal) {
        $scope.showModal=function () {//打开模态
            $uibModal.open({

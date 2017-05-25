@@ -3,8 +3,8 @@
 				<div data-ng-repeat="activity in activitiesScroll.items" class="act-block" data-ng-click="showDetail(activity)">
 					<img ng-src="{{activity.photo[0]}}" alt="photo not fund" onerror="this.src='browser/images/default.jpg'">
 					<p>{{activity.name}}</p>
-					<p>{{activity.organization.name}}</p>
-					<p>报名截止：{{activity.endSignTime}}</p>
+					<p>报名截止：</p>
+					<p>{{activity.endSignTime}}</p>
 				</div>
 			</div>
 	</div>
