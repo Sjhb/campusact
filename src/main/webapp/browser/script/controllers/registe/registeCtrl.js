@@ -40,9 +40,11 @@
         }
         $("#stu_form").ajaxForm(options);
 
+        $scope.org={
+            //name,email,phone,password,address,detail
+        }
         // 组织
         $scope.org_confirmPass='';
-        $scope.org={};
         $scope.confirmOrgPass=function () {
             if($scope.org.password!=$scope.org_confirmPass){
                 $scope.worning=true;
@@ -51,7 +53,7 @@
 
         //组织头像提交
         var up_icon = $scope.up_icon= new FileUploader({
-            url: '/activity/alterActPhoto',
+            url: '/organization/alterIcon',
             queueLimit: 1,
             removeAfterUpload: true
         })
@@ -76,7 +78,7 @@
         // 是否禁用添加按钮
         $scope.limit_icon=false;
         // 是否显示移除按钮
-        $scope.removeIcon = false;
+        $scope.remove_Icon = false;
         // 从末尾移除图片
         $scope.removeIcon= function () {
             up_icon.queue.pop();
@@ -93,20 +95,21 @@
                 $scope.limit_icon = true;
             }
         }
+
         up_icon.onCompleteAll = function () {
-            svae();
-            $scope.reset();
-            $scope.uploadStatus = true;
-            $scope.state = '';
-            if (uploadResult.length > 0) {
-                messageService('活动申请信息提交成功，图片' + uploadResult.toString()+"上传失败");
-            }else messageService('活动申请信息提交成功');
+            // $scope.reset();
+            // $scope.uploadStatus = true;
+            // $scope.state = '';
+            // if (uploadResult.length > 0) {
+            //     messageService('活动申请信息提交成功，图片' + uploadResult.toString()+"上传失败");
+            // }else messageService('活动申请信息提交成功');
         }
+
 
         //文件
 
         var up_docu = $scope.up_docu= new FileUploader({
-            url: '/activity/alterActPhoto',
+            url: '/organization/alterDocu',
             queueLimit: 3,
             removeAfterUpload: true
         })
@@ -120,11 +123,11 @@
         up_docu.filters.push({
             name: 'imgSizeFilter',
             fn: function (item) {
-                return item.size / 1024 / 1024 < 1;
+                return item.size / 1024 / 1024 < 2;
             }
         });
-        $scope.clearIcon= function () {
-            up_icon.clearQueue();
+        $scope.clearDocu= function () {
+            up_docu.clearQueue();
             $scope.remove_Docu= false;
             $scope.limit_docu = false;
         }
@@ -138,24 +141,64 @@
             if (up_docu.queue.length == 0) {
                 $scope.remove_Docu= false;
             }
-            if (up_docu.queue.length < 1.
+            if (up_docu.queue.length < 3.
             )
                 $scope.limit_docu = false;
         }
         up_docu.onAfterAddingFile = function (fileItem) {
             $scope.remove_Docu = true;
-            if (up_docu.queue.length == 1) {
+            if (up_docu.queue.length == 3) {
                 $scope.limit_docu = true;
             }
         }
+ // 重置
+        $scope.reset=function () {
+            $scope.org= {
+                name:'',
+                email:'',
+                phone:'',
+                password:'',
+                address:'',
+                detail:''
+            }
+            $scope.message='';
+            $scope.clear();
+            $scope.clearItems();
+            $scope.isSubmit = true;
+        };
+
         up_docu.onCompleteAll = function () {
-            // svae();
             $scope.reset();
             $scope.uploadStatus = true;
-            $scope.state = '';
-            if (uploadResult.length > 0) {
-                messageService('活动申请信息提交成功，图片' + uploadResult.toString()+"上传失败");
-            }else messageService('活动申请信息提交成功');
+        }
+        $scope.clear=function () {
+            $scope.clearIcon();
+            $scope.clearDocu();
+        }
+
+// 提交
+        $scope.uploadFile=function () {
+            up_docu.uploadFile()
+            $scope.state = '上传图片...';
+        }
+// 提交活动信息
+        $scope.submit_organization=function() {
+            var check = _.find($scope.org, function (item) {
+                if (item == '')return true;
+            });
+            if (check == undefined) {
+                $scope.isSubmit = false;
+                $scope.message = '提交活动信息中';
+                activitiesResource.organization_register.save($scope.org, function (res) {
+                    if (res.status != 200) {
+                        messageService(res.message);
+                    } else {
+                        $scope.uploadFile();
+                    }
+                });
+            } else {
+                $scope.state = '请填写所有信息';
+            }
         }
     }
 })();

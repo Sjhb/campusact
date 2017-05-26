@@ -9,6 +9,7 @@
 				user_logout:$resource(env.activities_api+'user/logout'),
 				user_search:$resource(env.activities_api+'user/search'),
 				student_register:$resource(env.activities_api+'/student/register'),
+				organization_register:$resource(env.activities_api+'/organization/register'),
 				activities_all:$resource(env.activities_api+'activity/getall'),
 				activities_waiting:$resource(env.activities_api+'activity/checkall'),
 				activities_getActByOid:$resource(env.activities_api+'activity/getActByOid'),

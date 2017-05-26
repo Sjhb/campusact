@@ -82,7 +82,7 @@
             </div>
         </form>
 
-        <form id="org_form" method="post" action="/student/register" data-ng-show="isActive=='org'">
+        <div id="org_form"  data-ng-show="isActive=='org'">
             <div class="trade">
                 <label class="trade-label row-3">组织名称</label>
                 <div class="row-6">
@@ -162,8 +162,8 @@
             </div>
 
             <div style="margin: 0 auto;text-align: center;">
-                <input id="submit" type="submit" class="btn btn-success" style="width: 50px;" value="提交">
+                <input id="submit" data-ng-show="isSubmit" type="submit"  data-ng-click="submit_organization" class="btn btn-success" style="width: 50px;" value="提交">
             </div>
-        </form>
+        </div>
     </div>
 </div>
