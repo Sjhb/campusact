@@ -16,4 +16,7 @@ public interface SqlOrganizationOperation {
 	public long insertOrg(SqlOrganization organization);//插入
 	public int alterIcon(@Param("iconName")String iconName,@Param("orgId")long orgId);//设置头像
 	public int alterDocu(@Param("docuName")String docuName,@Param("orgId")long orgId);//设置文件信息
+	public List<SqlOrganization> getAllOrg();//获取组织者
+	public int checkOrg(SqlOrganization organization);//通过审核
+	public int deleteOrg(SqlOrganization organization);//
 }

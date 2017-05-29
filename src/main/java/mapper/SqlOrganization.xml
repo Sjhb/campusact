@@ -17,6 +17,8 @@
         <result column="mail" property="mail"/>
         <result column="detail" property="detail"/>
         <result column="address" property="address"/>
+        <result column="state" property="state"/>
+        <result column="document" property="document"/>
     </resultMap>
     <update id="resetPass">
 		UPDATE organization SET password=123456 WHERE id=#{id}
@@ -41,4 +43,14 @@ UPDATE organization	SET document=#{docuName,jdbcType=VARCHAR}	WHERE id=#{orgId,j
     <select id="getOrgByName" resultType="int" parameterType="SqlOrganization">
         SELECT COUNT(*)  FROM organization WHERE name=#{name}
     </select>
+    <select id="getAllOrg" resultMap="resultListSqlOrganization">
+    SELECT id,icon,name,phone,mail,detail,address,document,state
+    FROM organization
+    </select>
+    <update id="checkOrg" parameterType="SqlOrganization" >
+        UPDATE organization SET state=1 WHERE id=#{id}
+    </update>
+    <delete id="delete" parameterType="SqlOrganization">
+      DELETE * FROM organization WHERE id=#{id}
+    </delete>
 </mapper>

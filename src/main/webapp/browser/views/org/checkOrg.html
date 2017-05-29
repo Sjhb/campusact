@@ -8,21 +8,25 @@
                 <th>名称</th>
                 <th>邮箱</th>
                 <th>地址</th>
+                <th>证明材料</th>
                 <th>操作</th>
             </tr>
             </thead>
             <tbody>
-            <tr data-ng-repeat="activity in activities">
+            <tr data-ng-repeat="org in orgList">
                 <td>{{org.id}}</td>
                 <td>{{org.name}}</td>
                 <td>{{org.mail}}</td>
                 <td>{{org.address}}</td>
+                <td><span style="color: red" data-ng-show="org.document.length==0">无证明材料</span>
+                    <span style="color: blue;cursor: pointer" data-ng-show="org.document.length>0" data-ng-click="showDocument(org.document)">证明材料</span>
+                </td>
                 <td>
                     <div>
                         <button class="btn btn-info" style="margin-right: 5px;" data-ng-click="showDetail(org)">详情</button>
-                        <button class="btn btn-success" style="margin-right: 5px;" data-ng-click="permit(org.id)" data-ng-show="org.state==1">通过</button>
-                        <button class="btn btn-warning" data-ng-click="reject(org.id)" data-ng-show="org.state==1">不通过</button>
-                        <button class="btn btn-warning" data-ng-click="reject(org.id)" data-ng-show="org.state==2">注销账户</button>
+                        <button class="btn btn-success" style="margin-right: 5px;" data-ng-click="permit(org.id)" data-ng-show="org.state==2">通过</button>
+                        <button class="btn btn-warning" data-ng-click="reject(org.id)" data-ng-show="org.state==2">不通过</button>
+                        <button class="btn btn-warning" data-ng-click="reject(org.id)" data-ng-show="org.state==1">注销账户</button>
                     </div>
                 </td>
             </tr>

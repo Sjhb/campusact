@@ -10,6 +10,9 @@ public class SqlOrganization {
 	private String phone;
 	private String mail;
 	private String address;
+
+	private String document;
+	private int state;
 	private int role;
 	private Integer pageNum;
 	public Long getId() {
@@ -63,17 +66,26 @@ public class SqlOrganization {
 	public void setPageNum(Integer pageNum) {
 		this.pageNum = pageNum;
 	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 	public String getPassword() {
 		return password;
 	}
-
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public String getDocument() {
+		return document;
+	}
+	public void setDocument(String document) {
+		this.document = document;
+	}
+	public int getState() {
+		return state;
+	}
+	public void setState(int state) {
+		this.state = state;
 	}
 
 }

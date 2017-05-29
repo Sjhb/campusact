@@ -3,7 +3,8 @@
  */
 (function () {
     angular.module('activities').controller('checkOrgCtrl',['$uibModal','$scope','activitiesResource','messageService',checkOrgCtrl])
-        .controller('rejectOrgCtrl',['messageService','activitiesResource','$rootScope','$scope','$uibModalInstance','activityid',rejectOrgCtrl]);
+        .controller('rejectOrgCtrl',['messageService','activitiesResource','$rootScope','$scope','$uibModalInstance','orgId',rejectOrgCtrl])
+        .controller('OrgDetailCtrl',['messageService','activitiesResource','$rootScope','$scope','$uibModalInstance','org',OrgDetailCtrl]);
     function checkOrgCtrl($uibModal,$scope,activitiesResource,messageService) {
         $scope.changeNum = function(num) {
             $scope.searchparam.pageNum = num;
@@ -11,27 +12,30 @@
         }
 
         $scope.search = function() {
-            activitiesResource.activities_waiting.save($scope.searchparam, function(res) {
+            activitiesResource.organization_getAllOrg.save($scope.searchparam, function(res) {
                 for (var i = 0; i <res.data.length; i++) {
-                    var a = res.data[i].photo;
-                    while (a.indexOf('"') != -1) {
-                        a = a.replace('"', '');
+                    // var a = res.data[i].document;
+                    // while (a.indexOf('"') != -1) {
+                    //     a = a.replace('"', '');
+                    // }
+                    // a = a.replace(']', '');
+                    // a = a.replace('[', '');
+                    // if (a.length == 0) {
+                    //     res.data[i].document = [];
+                    // } else {
+                    //     a = a.split(',');
+                    //     res.data[i].document = new Array();
+                    //     _.each(a, function (item) {
+                    //         item = item.trim();
+                    //         res.data[i].document.push("/organization/getOrgDocu?photo=" + item);
+                    //     })
+                    // }
+                    if(res.data[i].length!=null){
+                        res.data[i].document='/organization/getOrgDocu?photo'+res.data[i].document;
                     }
-                    a = a.replace(']', '');
-                    a = a.replace('[', '');
-                    if (a.length == 0) {
-                        res.data[i].photo = [];
-                    } else {
-                        a = a.split(',');
-                        res.data[i].photo = new Array();
-                        _.each(a, function (item) {
-                            item = item.trim();
-                            res.data[i].photo.push("/activity/getPhoto?photo=" + item);
-                        })
-                    }
-                    res.data[i].organization.icon = '/user/getIcon?role=organization&icon=' + res.data[i].organization.icon;
+                    res.data[i].icon = '/user/getIcon?role=organization&icon=' + res.data[i].icon;
                 };
-                $scope.activities=res.data;
+                $scope.orgList=res.data;
                 $scope.paginationConf.totalItems = res.page.totalNum;
                 $scope.paginationConf.currentPage = res.page.pageNum;
                 $scope.paginationConf.numberOfPages = res.page.pages;
@@ -65,14 +69,14 @@
             }
         };
         // 活动不通过回调
-        $scope.$on('actChanged',function (event, data) {
+        $scope.$on('orgChanged',function (event, data) {
             messageService('操作成功');
             $scope.search();
         });
         //通过按钮
         $scope.permit=function (id) {
-            $scope.checkedact={id:id,stateId:2000}
-            activitiesResource.activities_checkAct.save($scope.checkedact,function (res) {
+            $scope.checkedorg={id:id,state:1}
+            activitiesResource.activities_checkOrg.save($scope.checkedorg,function (res) {
                 if(res.status==200){
                     $scope.search();
                 }else{
@@ -81,41 +85,44 @@
             });
         }
         //详情
-        $scope.showDetail=function(activity){
+        $scope.showDetail=function(org){
             $uibModal.open({
-                templateUrl:'browser/views/checkAct/checkDetail.html',
-                controller:'actDetailCtrl',
+                templateUrl:'browser/views/org/checkOrg.html',
+                controller:'OrgDetailCtrl',
                 size:'lg',
                 resolve:{
-                    activity:function () {
-                        return activity;
+                    org:function () {
+                        return org;
                     }
                 }
             });
         }
         //拒绝
-        $scope.reject=function(activityid) {
+        $scope.reject=function(orgId) {
             $uibModal.open({
                 templateUrl:'browser/views/checkAct/reject.html',
-                controller:'rejectCtrl',
+                controller:'rejectOrgCtrl',
                 size:'sm',
                 resolve:{
-                    activityid:function () {
-                        return activityid;
+                    orgId:function () {
+                        return orgId;
                     }
                 }
             });
         }
 
     }
-    function rejectCtrl(messageService,activitiesResource,$rootScope,$scope,$uibModalInstance,activityid) {
-        $scope.activity=activityid;
+    function rejectOrgCtrl(messageService,activitiesResource,$rootScope,$scope,$uibModalInstance,orgId) {
+        var org={
+            id:'',
+            state:3
+        }
+        org.id=orgId;
         var broad=function() {
-            $rootScope.$broadcast('actChanged');
+            $rootScope.$broadcast('orgChanged');
         }
         $scope.reject=function(){
-            var checkedact={id:activityid,stateId:3000}
-            activitiesResource.activities_checkAct.save(checkedact,function (res) {
+            activitiesResource.organization_checkOrg.save(org,function (res) {
                 if(res.status==200){
                     broad();
                     $scope.cancel();
@@ -128,6 +135,10 @@
         $scope.cancel=function () {
             $uibModalInstance.dismiss('cancel');
         }
+    }
+    function OrgDetailCtrl(messageService,activitiesResource,$rootScope,$scope,$uibModalInstance,org) {
+        $scope.org=org;
+
     }
 
 })();

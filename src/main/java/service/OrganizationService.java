@@ -1,10 +1,14 @@
 package service;
 
+import com.github.pagehelper.PageHelper;
 import model.MiUser;
 import model.SqlOrganization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sqlInters.SqlOrganizationOperation;
+import vo.Activity;
+
+import java.util.List;
 
 /**
  * Created by Manlin on 2017/4/13.
@@ -50,4 +54,23 @@ public class OrganizationService {
             return true;
         }
     }
+    //获得所有组织者
+    public List<SqlOrganization> getOrg(SqlOrganization org){
+        PageHelper.startPage(org.getPageNum(), 9);
+        List<SqlOrganization> result= sqlOrganizationOperation.getAllOrg();
+        return result;
+    }
+//    审批组织者
+   public  boolean checkOrg(SqlOrganization org){
+        if(org.getState()==3){
+            int dere=sqlOrganizationOperation.deleteOrg(org);
+            if (dere>0){
+                return true;
+            }else return false;
+        }else {
+            int chre=sqlOrganizationOperation.checkOrg(org);
+            if (chre>0) return true;
+            else return false;
+        }
+   }
 }
