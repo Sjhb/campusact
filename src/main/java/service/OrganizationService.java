@@ -19,16 +19,35 @@ public class OrganizationService {
         if (result>0) return true;
         return false;
     }
-    public int insertOrg(SqlOrganization org){
-//        1:名称被占用 2：成功 0：失败
+    public long insertOrg(SqlOrganization org){
+//        2:名称被占用 1：成功 0：失败
+        long re=0;
         int cloumn=sqlOrganizationOperation.getOrgByName(org);
         if(cloumn>0){
-            return 1;
+            return re=2;
         }
-        int re=sqlOrganizationOperation.insertOrg(org);
+        re=sqlOrganizationOperation.insertOrg(org);
         if(re>0){
-            return 2;
+            return re;
         }else
-            return 0;
+            return re=0;
+    }
+//    头像
+    public boolean alterIcon(String name,long id){
+        int re=sqlOrganizationOperation.alterIcon(name,id);
+            if(re==0){
+                return false;
+            }else {
+                return true;
+            }
+          }
+          //文件
+    public boolean alterDocu(String name,long id){
+        int re=sqlOrganizationOperation.alterDocu(name,id);
+        if(re==0){
+            return false;
+        }else {
+            return true;
+        }
     }
 }

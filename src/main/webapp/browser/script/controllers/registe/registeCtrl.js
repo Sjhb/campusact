@@ -2,8 +2,8 @@
  *
  */
 (function () {
-    angular.module('activities').controller('registeCtrl', ['FileUploader','messageService','$scope','permission','modalService',registeCtrl]);
-    function registeCtrl(FileUploader,messageService,$scope,permission,modalService) {
+    angular.module('activities').controller('registeCtrl', ['activitiesResource','FileUploader','messageService','$scope','permission','modalService',registeCtrl]);
+    function registeCtrl(activitiesResource,FileUploader,messageService,$scope,permission,modalService) {
         $scope.isActive='stu';
         $scope.shiftRole=function(role) {
             $scope.isActive=role;
@@ -41,8 +41,9 @@
         $("#stu_form").ajaxForm(options);
 
         $scope.org={
-            //name,email,phone,password,address,detail
+            //name,mail,phone,password,address,detail
         }
+        $scope.isSubmit=true;
         // 组织
         $scope.org_confirmPass='';
         $scope.confirmOrgPass=function () {
@@ -105,7 +106,6 @@
             // }else messageService('活动申请信息提交成功');
         }
 
-
         //文件
 
         var up_docu = $scope.up_docu= new FileUploader({
@@ -152,16 +152,25 @@
             }
         }
  // 重置
+        $scope.clearItems = function () {
+            up_icon.clearQueue();
+            up_docu.clearQueue();
+            $scope.remove_Docu = false;
+            $scope.remove_Icon = false;
+            $scope.limit_docu = false;
+            $scope.limit_icon = false;
+        }
         $scope.reset=function () {
             $scope.org= {
                 name:'',
-                email:'',
+                mail:'',
                 phone:'',
                 password:'',
                 address:'',
                 detail:''
             }
             $scope.message='';
+            $scope.org_confirmPass='';
             $scope.clear();
             $scope.clearItems();
             $scope.isSubmit = true;
@@ -178,10 +187,11 @@
 
 // 提交
         $scope.uploadFile=function () {
-            up_docu.uploadFile()
+            up_icon.uploadAll();
+            up_docu.uploadAll();
             $scope.state = '上传图片...';
         }
-// 提交活动信息
+// 整体提交组织注册信息
         $scope.submit_organization=function() {
             var check = _.find($scope.org, function (item) {
                 if (item == '')return true;
@@ -192,6 +202,7 @@
                 activitiesResource.organization_register.save($scope.org, function (res) {
                     if (res.status != 200) {
                         messageService(res.message);
+                        $scope.reset();
                     } else {
                         $scope.uploadFile();
                     }

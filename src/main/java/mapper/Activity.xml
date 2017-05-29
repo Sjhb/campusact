@@ -92,7 +92,7 @@
     <!-- 插入活动 -->
     <insert id="createActivity" parameterType="SqlActivity" useGeneratedKeys="true"
             keyProperty="id">
-		insert into activity(name,id,signTime,endSignTime,startTime,endTime,detail,photo,sponser,stateId,engage)
+		insert into activity(name,organizationId,signTime,endSignTime,startTime,endTime,detail,photo,sponsor,stateId,engage)
 		values (#{name},#{organizationId},#{signTime},#{endSignTime},#{startTime},#{endTime},#{detail},#{photo},#{sponser},10,'[]')
 		</insert>
     <!--更改活动-->

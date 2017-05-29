@@ -93,7 +93,7 @@
             <div class="trade">
                 <label class="trade-label row-3">邮箱</label>
                 <div class="row-6">
-                <input type="email" name="org_email" class="input" id="org-email" placeholder="" data-ng-model="org.email"
+                <input type="text" name="org_mail" class="input" id="org-mail" placeholder="" data-ng-model="org.mail"
                        required>
                 </div>
             </div>
@@ -129,7 +129,7 @@
             <div class="trade">
                 <label class="trade-label row-3">详情</label>
                 <div class="row-6">
-                    <textarea style="height: 300px; resize: none;" name="org_detail" type="text" class="input" data-ng-model="org.classes" required></textarea>
+                    <textarea style="height: 300px; resize: none;" name="org_detail" type="text" class="input" data-ng-model="org.detail" required></textarea>
                 </div>
             </div>
             <div class="trade">
@@ -162,7 +162,7 @@
             </div>
 
             <div style="margin: 0 auto;text-align: center;">
-                <input id="submit" data-ng-show="isSubmit" type="submit"  data-ng-click="submit_organization" class="btn btn-success" style="width: 50px;" value="提交">
+                <input id="submit" data-ng-show="isSubmit" type="submit"  data-ng-click="submit_organization()" class="btn btn-success" style="width: 50px;" value="提交">
             </div>
         </div>
     </div>

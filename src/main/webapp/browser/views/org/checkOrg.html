@@ -1,0 +1,34 @@
+<div style="display: flex; justify-content: center;" data-ng-controller='checkOrgCtrl'>
+    <div style="width: 900px; background-color: white; height: 1000px ;text-align: center;    box-shadow: 0px 1px 1px 0px rgba(0,0,102,0.1);">
+        <div style="height: 40px"></div>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>组织者编号</th>
+                <th>名称</th>
+                <th>邮箱</th>
+                <th>地址</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-repeat="activity in activities">
+                <td>{{org.id}}</td>
+                <td>{{org.name}}</td>
+                <td>{{org.mail}}</td>
+                <td>{{org.address}}</td>
+                <td>
+                    <div>
+                        <button class="btn btn-info" style="margin-right: 5px;" data-ng-click="showDetail(org)">详情</button>
+                        <button class="btn btn-success" style="margin-right: 5px;" data-ng-click="permit(org.id)" data-ng-show="org.state==1">通过</button>
+                        <button class="btn btn-warning" data-ng-click="reject(org.id)" data-ng-show="org.state==1">不通过</button>
+                        <button class="btn btn-warning" data-ng-click="reject(org.id)" data-ng-show="org.state==2">注销账户</button>
+                    </div>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+        <div style="padding-right: 20px;"><paging conf="paginationConf"></paging></div>
+    </div>
+</div>

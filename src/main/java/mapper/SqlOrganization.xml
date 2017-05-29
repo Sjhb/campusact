@@ -1,24 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="sqlInters.SqlOrganizationOperation">
-<!-- 查询组织 -->
-	<select id="selectSqlOrganization" parameterType="MiUserInfo"	resultMap="resultListSqlOrganization">
+    <!-- 查询组织 -->
+    <select id="selectSqlOrganization" parameterType="MiUserInfo" resultMap="resultListSqlOrganization">
 		select
 		id,icon,name,phone,mail,detail,address from organization where
 		id=#{id}
 	</select>
-	<resultMap type="SqlOrganization" id="resultListSqlOrganization">
-		<id column="id" property="id" />
-		<result column="icon" property="icon" />
-		<result column="name" property="name" />
-		<result column="phone" property="phone" />
-		<result column="mail" property="mail" />
-		<result column="detail" property="detail" />
-		<result column="address" property="address" />
-	</resultMap>
-	<update id="resetPass">
+    <resultMap type="SqlOrganization" id="resultListSqlOrganization">
+        <id column="id" property="id"/>
+        <result column="icon" property="icon"/>
+        <result column="name" property="name"/>
+        <result column="phone" property="phone"/>
+        <result column="mail" property="mail"/>
+        <result column="detail" property="detail"/>
+        <result column="address" property="address"/>
+    </resultMap>
+    <update id="resetPass">
 		UPDATE organization SET password=123456 WHERE id=#{id}
 	</update>
+    <!--插入组织者-->
+    <insert id="insertOrg" parameterType="SqlOrganization" useGeneratedKeys="true" keyProperty="id"  keyColumn="id">
+        INSERT INTO organization(name,password,phone,mail,detail,address,role,state)
+        VALUES (#{name},#{password},#{phone},#{mail},#{detail},#{address},30,2);
+        <selectKey keyProperty="id" resultType="long" order="AFTER">
+            SELECT LAST_INSERT_ID();
+        </selectKey>
+    </insert>
+    <!--头像-->
+    <update id="alterIcon">
+		UPDATE organization	SET icon=#{iconName,jdbcType=VARCHAR}	WHERE id=#{orgId,jdbcType=BIGINT}
+	</update>
+<!--文件-->
+    <update id="alterDocu">
+UPDATE organization	SET document=#{docuName,jdbcType=VARCHAR}	WHERE id=#{orgId,jdbcType=BIGINT}
+</update>
+    <!--通过name获得组织者信息-->
+    <select id="getOrgByName" resultType="int" parameterType="SqlOrganization">
+        SELECT COUNT(*)  FROM organization WHERE name=#{name}
+    </select>
 </mapper>
