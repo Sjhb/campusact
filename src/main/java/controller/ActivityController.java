@@ -23,6 +23,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import service.ActivityService;
 import service.IOService;
+import service.OrganizationService;
 import vo.Activity;
 
 import javax.servlet.http.HttpServletResponse;
@@ -34,26 +35,68 @@ public class ActivityController extends BaseController {
     protected IOService ioService;
     @Autowired
     protected ActivityService activityService;
+    @Autowired
+    protected OrganizationService organizationService;
+
     @Value("#{propertiesReader['ACTIVITY_IMG']}")
     private String ACTIVITY_IMG;
 
-//    根据组织id查找活动
+
+    //    查看是否具有创建活动的权限
+    @RequestMapping("checkAuth")
+    @ResponseBody
+    public BaseModel<String> checkAuth() {
+        BaseModel<String> model = new BaseModel<>();
+        boolean re = this.isPermmit(Field.ORGANIZATION);
+        if (!re) {
+            model.setStatus(Constants.FAIL_BUSINESS_ERROR);
+            model.setMessage("权限错误");
+        }
+        long oId = this.getUserInfo();
+        int auth = organizationService.checkAuth(oId);
+        switch (auth) {
+            case 0: {
+                model.setStatus(Constants.FAIL_BUSINESS_ERROR);
+                model.setMessage("未知错误");
+                break;
+            }
+            case 1: {
+                model.setStatus(Constants.SUCCESS);
+                model.setMessage("success");
+                break;
+            }
+            case 2: {
+                model.setStatus(Constants.FAIL_INVALID_USER);
+                model.setMessage("您的账户目前还处于未审核状态，不能发布活动信息");
+                break;
+            }
+            case 3: {
+                model.setStatus(Constants.FAIL_INVALID_USER);
+                model.setMessage("您的账户未通过审核，不能发布活动信息");
+                break;
+            }
+        }
+        return model;
+    }
+
+    //    根据组织id查找活动
     @RequestMapping("getActByOid")
     @ResponseBody
-    public BaseModel<List<Activity>> getActByOid(){
-        BaseModel<List<Activity>> model=new BaseModel<>();
-        Activity activity= (Activity) this.getObject(new Activity());
-        long Oid=this.getUserInfo();
-        if (Oid==0) {
+    public BaseModel<List<Activity>> getActByOid() {
+        BaseModel<List<Activity>> model = new BaseModel<>();
+        Activity activity = (Activity) this.getObject(new Activity());
+        long Oid = this.getUserInfo();
+        if (Oid == 0) {
             model.setStatus(Constants.FAIL_INVALID_USER);
             model.setMessage("无效用户");
-        }else {
-            List<Activity> result=activityService.getActivityByOid(activity,Oid);
+        } else {
+            List<Activity> result = activityService.getActivityByOid(activity, Oid);
             model.setPage(new PageInfo<Activity>(result));
             model.setData(result);
         }
         return model;
     }
+
     //查看全部审核通过的活动
     @RequestMapping("getall")
     @ResponseBody
@@ -89,16 +132,18 @@ public class ActivityController extends BaseController {
     @ResponseBody
     public BaseModel<SqlActivity> checkAct() {
         BaseModel<SqlActivity> model = new BaseModel<>();
-        if (!this.isPermmit(Field.ADMINISTOR)){
+        if (!this.isPermmit(Field.ADMINISTOR)) {
             model.setStatus(Constants.FAIL_INVALID_AUTH);
             model.setMessage("权限错误");
             return model;
-        };
-        SqlActivity activityCheck= (SqlActivity) this.getObject(new SqlActivity());
-        if(!activityService.checkActivity(activityCheck)){
+        }
+        ;
+        SqlActivity activityCheck = (SqlActivity) this.getObject(new SqlActivity());
+        if (!activityService.checkActivity(activityCheck)) {
             model.setStatus(Constants.FAIL_BUSINESS_ERROR);
             model.setMessage("更改失败");
-        };
+        }
+        ;
         model.setMessage("活动状态更改成功");
         return model;
     }
@@ -139,7 +184,7 @@ public class ActivityController extends BaseController {
         Map result = this.getMultiform();
         Map fileTable = (Map) (result.get("fileTable"));
         if (fileTable.size() == 0) {
-            this.setApplicationInfo("actId",null);
+            this.setApplicationInfo("actId", null);
             return model;
         }
         Map formfieldsTable = (Map) (result.get("formfieldsTable"));
@@ -148,7 +193,7 @@ public class ActivityController extends BaseController {
         String fileName = (String) fileFormName.get("file");
         String newFileName = Long.toString(actId) + Math.random() * 100 + ioService.getType(fileName);
         ioService.writeFile(ACTIVITY_IMG, newFileName, (byte[]) fileTable.get(fileName));
-        activityService.addActPhoto("\""+newFileName+"\"",actId);
+        activityService.addActPhoto("\"" + newFileName + "\"", actId);
         return model;
     }
 
@@ -156,7 +201,7 @@ public class ActivityController extends BaseController {
     @RequestMapping("test")
     @ResponseBody
     public void test() {
-        activityService.addActPhoto("\"tes2\"",100);
+        activityService.addActPhoto("\"tes2\"", 100);
     }
 
     //修改活动
@@ -191,52 +236,55 @@ public class ActivityController extends BaseController {
         JSONObject jsonObject = this.convertRequestBody();
         SqlActivity getAct = JSON.toJavaObject(jsonObject, SqlActivity.class);
         BaseModel<SqlActivity> model = new BaseModel<>();
-        long actId=getAct.getId();
-        if(!this.isLogin()) {
+        long actId = getAct.getId();
+        if (!this.isLogin()) {
             model.setMessage("未登录");
             model.setStatus(Constants.FAIL_INVALID_USER);
             return model;
-        };
-        if (!isPermmit(Field.STUDENT)){
+        }
+        ;
+        if (!isPermmit(Field.STUDENT)) {
             model.setMessage("不是学生");
             model.setStatus(Constants.FAIL_INVALID_AUTH);
             return model;
         }
-        long stuId=this.getUserInfo();
+        long stuId = this.getUserInfo();
 //        if(activityService.isEngage(actId,stuId)){
 //            model.setMessage("已经参加活动，请勿重复参加");
 //            model.setStatus(Constants.FAIL_BUSINESS_ERROR);
 //        }else
-        if (!activityService.engageActivity("\""+Long.toString(stuId)+"\"",actId)) {
+        if (!activityService.engageActivity("\"" + Long.toString(stuId) + "\"", actId)) {
             model.setMessage("操作失败");
             model.setStatus(Constants.FAIL_BUSINESS_ERROR);
         }
         return model;
     }
-//查看参加了的活动（stuid）
+
+    //查看参加了的活动（stuid）
     @RequestMapping(value = "getActByStuid")
     @ResponseBody
-    public  BaseModel<List<Activity>> getActByStuid(){
-        BaseModel<List<Activity>> model=new BaseModel<>();
-        Activity activity= (Activity) this.getObject(new Activity());
-        long stuId=this.getUserInfo();
-        if (stuId==0){
+    public BaseModel<List<Activity>> getActByStuid() {
+        BaseModel<List<Activity>> model = new BaseModel<>();
+        Activity activity = (Activity) this.getObject(new Activity());
+        long stuId = this.getUserInfo();
+        if (stuId == 0) {
             model.setStatus(Constants.FAIL_INVALID_USER);
             model.setMessage("用户无效，可能未登录");
-        }else {
-            List<Activity> result=activityService.getActivityByStuid(activity,stuId);
+        } else {
+            List<Activity> result = activityService.getActivityByStuid(activity, stuId);
             model.setData(result);
             model.setPage(new PageInfo<Activity>(result));
         }
 
         return model;
     }
-//    获取所有参加了活动的同学
+
+    //    获取所有参加了活动的同学
     @RequestMapping(value = "getEngage")
     @ResponseBody
-    public BaseModel<List> getEngage(){
-        BaseModel model=new BaseModel();
-       String test=activityService.getEngage(108);
+    public BaseModel<List> getEngage() {
+        BaseModel model = new BaseModel();
+        String test = activityService.getEngage(108);
         return model;
     }
 

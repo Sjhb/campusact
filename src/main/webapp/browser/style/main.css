@@ -65,7 +65,7 @@ a:hover{
 	color: #799999;
 	padding:0px 10px;
 	display: block;
-    width: 75px;
+    width: 100px;
     flex-shrink: 0;
     text-align: center;
 }
@@ -313,4 +313,16 @@ th{
 }
 .margin-10{
 	margin: 0px 10px 0px 10px;
+}
+.link{
+	color: blue;
+	cursor: pointer;
+}
+.link:hover{
+	text-decoration: underline;
+}
+.picture{
+	max-width: 450px;
+	margin: 0px auto;
+	display: block;
 }

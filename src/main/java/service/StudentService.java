@@ -31,6 +31,16 @@ public class StudentService {
         }
         return  re;
     }
+    //获取学生信息
+    public SqlStudent getStuById(long sId){
+        SqlStudent student=null;
+        List<SqlStudent> list=sqlStudentOperation.selectSqlStudent(sId);
+        if(list.size()==0){
+            return student;
+        }else {
+            return list.get(0);
+        }
+    }
 //    变更头像
     public  boolean  alterIcon(String icon,long id){
         int result=sqlStudentOperation.alterIcon(icon,id);

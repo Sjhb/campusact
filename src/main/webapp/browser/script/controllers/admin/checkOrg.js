@@ -4,7 +4,8 @@
 (function () {
     angular.module('activities').controller('checkOrgCtrl',['$uibModal','$scope','activitiesResource','messageService',checkOrgCtrl])
         .controller('rejectOrgCtrl',['messageService','activitiesResource','$rootScope','$scope','$uibModalInstance','orgId',rejectOrgCtrl])
-        .controller('OrgDetailCtrl',['messageService','activitiesResource','$rootScope','$scope','$uibModalInstance','org',OrgDetailCtrl]);
+        .controller('OrgDetailCtrl',['messageService','activitiesResource','$rootScope','$scope','$uibModalInstance','org',OrgDetailCtrl])
+        .controller('orgDocuCtrl',['messageService','activitiesResource','$rootScope','$scope','$uibModalInstance','url',orgDocuCtrl]);
     function checkOrgCtrl($uibModal,$scope,activitiesResource,messageService) {
         $scope.changeNum = function(num) {
             $scope.searchparam.pageNum = num;
@@ -14,24 +15,8 @@
         $scope.search = function() {
             activitiesResource.organization_getAllOrg.save($scope.searchparam, function(res) {
                 for (var i = 0; i <res.data.length; i++) {
-                    // var a = res.data[i].document;
-                    // while (a.indexOf('"') != -1) {
-                    //     a = a.replace('"', '');
-                    // }
-                    // a = a.replace(']', '');
-                    // a = a.replace('[', '');
-                    // if (a.length == 0) {
-                    //     res.data[i].document = [];
-                    // } else {
-                    //     a = a.split(',');
-                    //     res.data[i].document = new Array();
-                    //     _.each(a, function (item) {
-                    //         item = item.trim();
-                    //         res.data[i].document.push("/organization/getOrgDocu?photo=" + item);
-                    //     })
-                    // }
-                    if(res.data[i].length!=null){
-                        res.data[i].document='/organization/getOrgDocu?photo'+res.data[i].document;
+                    if(res.data[i].document!=null){
+                        res.data[i].document='/organization/getOrgDocu?photo='+res.data[i].document;
                     }
                     res.data[i].icon = '/user/getIcon?role=organization&icon=' + res.data[i].icon;
                 };
@@ -76,7 +61,18 @@
         //通过按钮
         $scope.permit=function (id) {
             $scope.checkedorg={id:id,state:1}
-            activitiesResource.activities_checkOrg.save($scope.checkedorg,function (res) {
+            activitiesResource.organization_checkOrg.save($scope.checkedorg,function (res) {
+                if(res.status==200){
+                    $scope.search();
+                }else{
+                    messageService(res.data.message);
+                }
+            });
+        }
+        // 注销账户
+        $scope.deleteOrg=function (id) {
+            $scope.deleteOrg={id:id}
+            activitiesResource.organization_deleteOrg.save($scope.deleteOrg,function (res) {
                 if(res.status==200){
                     $scope.search();
                 }else{
@@ -87,7 +83,7 @@
         //详情
         $scope.showDetail=function(org){
             $uibModal.open({
-                templateUrl:'browser/views/org/checkOrg.html',
+                templateUrl:'browser/views/org/orgDetail.html',
                 controller:'OrgDetailCtrl',
                 size:'lg',
                 resolve:{
@@ -109,6 +105,18 @@
                     }
                 }
             });
+        }
+        $scope.showDocument=function (url) {
+            $uibModal.open({
+                templateUrl:'browser/views/org/picture.html',
+                controller:'orgDocuCtrl',
+                size:'lg',
+                resolve:{
+                    url:function () {
+                        return url;
+                    }
+                }
+            })
         }
 
     }
@@ -138,7 +146,15 @@
     }
     function OrgDetailCtrl(messageService,activitiesResource,$rootScope,$scope,$uibModalInstance,org) {
         $scope.org=org;
-
+        $scope.ok = function () {
+            $uibModalInstance.dismiss('cancel');
+        }
+    }
+    function orgDocuCtrl(messageService,activitiesResource,$rootScope,$scope,$uibModalInstance,url) {
+        $scope.url=url;
+        $scope.ok = function () {
+            $uibModalInstance.dismiss('cancel');
+        }
     }
 
 })();

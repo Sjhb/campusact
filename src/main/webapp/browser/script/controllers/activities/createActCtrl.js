@@ -20,7 +20,17 @@
             format: 'yyyy-mm-dd hh:mm',
             locale: moment.locale('zh-cn')
         });
-
+        function init() {
+            var test={};
+            activitiesResource.activities_checkAuth.save(test,function(res) {
+                if(res.status==200){
+                    $scope.isSubmit=true;
+                }else {
+                    $scope.isSubmit=false;
+                    messageService(res.message);
+                }
+            });
+        }
 
         $scope.clear = function () {
             $scope.state = '';
@@ -76,6 +86,7 @@
         // 存储图片提交信息
         var uploadResult = new Array();
         // 从末尾移除图片
+        init();
         $scope.removePhoto = function () {
             uploader.queue.pop();
             if (uploader.queue.length == 0) {

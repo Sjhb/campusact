@@ -1,0 +1,79 @@
+<div style="display: flex; justify-content: center;" data-ng-controller='alterInfoCtrl'>
+    <div style="width: 700px; background-color: white;text-align: center;padding: 50px  ">
+        <div class="trade" style="margin-top: 20px;">
+            <label class="trade-label row-5" style="color: #9a9a9a;" >修改的个人信息</label>
+        </div>
+        <form id="stu_form" method="post" action="/student/alterInfo" >
+            <div class="trade">
+                <label class="trade-label row-3">学号</label>
+                <div class="row-6">
+                    <input type="text" name="id" class="input" data-ng-model="stu.id" ng-required="true" required>
+                </div>
+            </div>
+            <div class="trade">
+                <label class="trade-label row-3">姓名</label>
+                <div class="row-6">
+                    <input type="text" name="name" class="input" id="name" placeholder="" data-ng-model="stu.name"
+                           required>
+                </div>
+            </div>
+            <div class="trade">
+                <label class="trade-label row-3">性别</label>
+                <div class="row-6">
+                    <input type="radio" name="sex" value="男" data-ng-model="stu.sex" ng-checked="true">男生
+                    <input type="radio" name="sex" value="女" data-ng-model="stu.sex">女生
+                </div>
+            </div>
+            <div class="trade">
+                <label class="trade-label row-3">电话</label>
+                <div class="row-6">
+                    <input type="text" name="phone" class="input" id="phone" placeholder="" data-ng-model="stu.phone"
+                           required>
+                </div>
+            </div>
+            <div class="trade">
+                <label class="trade-label row-3">密码</label>
+                <div class="row-6">
+                    <input name="password" class="input" id="password" placeholder="" type="password"
+                           data-ng-model="stu.password" required data-ng-change="confirm()">
+                </div>
+            </div>
+            <div class="trade">
+                <label class="trade-label row-3">确认密码</label>
+                <div class="row-6">
+                    <input class="input" placeholder="" type="password" data-ng-model="confirmPass" required
+                           data-ng-change="confirm()">
+                </div>
+                <div class="row-2" id="worning" class="ng-hide" ng-show="worning" style="padding: 0px"><label
+                        style="color: red">密码不一致</label></div>
+            </div>
+            <div class="trade">
+                <label class="trade-label row-3">专业</label>
+                <div class="row-6">
+                    <input name="major" type="text" class="input" data-ng-model="stu.major" required>
+                </div>
+            </div>
+            <div class="trade">
+                <label class="trade-label row-3">班级</label>
+                <div class="row-6">
+                    <input name="classes" type="text" class="input" data-ng-model="stu.classes" required>
+                </div>
+            </div>
+            <div class="trade">
+                <label class="trade-label row-3">学院</label>
+                <div class="row-6">
+                    <input type="text" name="college" class="input" data-ng-model="stu.college" required>
+                </div>
+            </div>
+            <label class="trade-label row-3">{{message}}</label>
+            <div class="row-8" style="margin: 0 auto;">
+                <hr>
+            </div>
+
+            <div style="margin: 0 auto;text-align: center;">
+                <input id="submitbutton" type="submit" class="btn btn-success" style="width: 50px;" value="提交">
+            </div>
+        </form>
+        </div>
+    </div>
+</div>

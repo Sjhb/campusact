@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
+import service.StudentService;
 import service.UserService;
 
 import javax.servlet.http.HttpServletResponse;
@@ -28,7 +29,9 @@ import javax.servlet.http.HttpServletResponse;
 public class UserController extends BaseController {
     @Autowired
     protected UserService userservice;
-//设置文件读取路径
+    @Autowired
+    protected StudentService studentService;
+    //设置文件读取路径
     @Value("#{propertiesReader['ORGANIZATION_ICON']}")
     private String ORGANIZATION_ICON;
     @Value("#{propertiesReader['STUDENT_ICON']}")
@@ -40,7 +43,7 @@ public class UserController extends BaseController {
     @RequestMapping("test")
     @ResponseBody
     public void test() {
-        MiUser test= (MiUser) this.getObject(new MiUser());
+        MiUser test = (MiUser) this.getObject(new MiUser());
         test.getId();
     }
 
@@ -96,6 +99,24 @@ public class UserController extends BaseController {
         return model;
     }
 
+    /*
+     * 获取单个用户
+     */
+    @RequestMapping("getStu")
+    @ResponseBody
+    public BaseModel<SqlStudent> getStu() {
+        BaseModel<SqlStudent> model = new BaseModel<>();
+        if (!this.isLogin()) {
+            model.setStatus(Constants.FAIL_INVALID_USER);
+            model.setMessage("未登录");
+            return model;
+        }
+        long sId=this.getUserInfo();
+        SqlStudent restu=studentService.getStuById(sId);
+
+        return model;
+    }
+
     //修改用户信息
     @RequestMapping("alter")
     @ResponseBody
@@ -127,17 +148,25 @@ public class UserController extends BaseController {
         }
         return model;
     }
+
     //获取用户头像
-    @RequestMapping(value = "getIcon",method = RequestMethod.GET)
+    @RequestMapping(value = "getIcon", method = RequestMethod.GET)
     @ResponseBody
-    public  void getIcon(@RequestParam(value = "role",required = false) String role,@RequestParam(value = "icon",required = false) String filename,HttpServletResponse  response) throws IOException {
+    public void getIcon(@RequestParam(value = "role", required = false) String role, @RequestParam(value = "icon", required = false) String filename, HttpServletResponse response) throws IOException {
         response.setHeader("Content-Type", "image/jpeg");//设置响应的媒体类型，这样浏览器会识别出响应的是图片
         byte[] image;
-        switch (role){
-            case Field.STUDENT:image=this.getPicture(STUDENT_ICON +filename);break;
-            case Field.ADMINISTOR:image=this.getPicture(ADMINISTOR_ICON+filename);break;
-            case Field.ORGANIZATION:image=this.getPicture(ORGANIZATION_ICON +filename);break;
-            default: image=null;
+        switch (role) {
+            case Field.STUDENT:
+                image = this.getPicture(STUDENT_ICON + filename);
+                break;
+            case Field.ADMINISTOR:
+                image = this.getPicture(ADMINISTOR_ICON + filename);
+                break;
+            case Field.ORGANIZATION:
+                image = this.getPicture(ORGANIZATION_ICON + filename);
+                break;
+            default:
+                image = null;
         }
         response.getOutputStream().write(image);
     }

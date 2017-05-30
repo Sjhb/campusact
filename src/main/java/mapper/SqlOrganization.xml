@@ -40,17 +40,24 @@
 UPDATE organization	SET document=#{docuName,jdbcType=VARCHAR}	WHERE id=#{orgId,jdbcType=BIGINT}
 </update>
     <!--通过name获得组织者信息-->
-    <select id="getOrgByName" resultType="int" parameterType="SqlOrganization">
-        SELECT COUNT(*)  FROM organization WHERE name=#{name}
+    <select id="getOrgByName" parameterType="SqlOrganization" resultMap="resultListSqlOrganization">
+        SELECT  id,state
+         FROM organization WHERE name=#{name}
+    </select>
+    <select id="checkOrgByName" resultType="int" parameterType="SqlOrganization">
+        SELECT  count(*) FROM organization WHERE name=#{name} AND state=1
     </select>
     <select id="getAllOrg" resultMap="resultListSqlOrganization">
     SELECT id,icon,name,phone,mail,detail,address,document,state
     FROM organization
     </select>
     <update id="checkOrg" parameterType="SqlOrganization" >
-        UPDATE organization SET state=1 WHERE id=#{id}
+        UPDATE organization SET state=#{state} WHERE id=#{id}
     </update>
-    <delete id="delete" parameterType="SqlOrganization">
-      DELETE * FROM organization WHERE id=#{id}
+    <delete id="deleteOrg" parameterType="SqlOrganization">
+      DELETE FROM organization WHERE id=#{id}
     </delete>
+    <select id="checkAuth" parameterType="long" resultType="int">
+        SELECT state FROM organization WHERE id=#{oId}
+    </select>
 </mapper>

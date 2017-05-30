@@ -7,7 +7,7 @@
         // //注册csrf的token
         // $httpProvider.interceptors.push('csrfInterceptor');
         //本地路由
-		var views=['stuAct/stuAct','org-act/org-act','allAct/allAct','createAct/create,organization','checkAct/check,admin','registe/registe','org/checkOrg'];
+		var views=['stuAct/stuAct','org-act/org-act','allAct/allAct','createAct/create,organization','checkAct/check,admin','registe/registe','org/checkOrg','stu/alterInfo'];
 		var setRoutes = function(route) {
 		    var l = route.indexOf(",");
 		    //var view = l != -1 ? route.substring(0, l) : route;

@@ -3,24 +3,24 @@
 </div>
 <div class="modal-body">
     <div id="act_head" class="">
-        <img class="icon" ng-src={{activity.organization.icon}} onerror="this.src='browser/images/icon/10001.jpg'">
-        <h2 style="display: inline-block">{{activity.organization.name}}</h2>
-        <button class="btn btn-primary" style=" width: 30px;    height: 20px;    margin-top: 10px;float: right" data-ng-click="engage()">报名</button>
-        <label style="display: none;float: right">已报名</label>
+        <img class="icon" ng-src={{org.icon}} onerror="this.src='browser/images/icon/10001.jpg'">
+        <h2 style="display: inline-block">{{org.name}}</h2>
     </div>
 
     <div id="act_nav" class="trade" style="flex-direction: column;">
-        <h3>{{activity.name}}</h3>
-        <div><h4>报名时间:{{activity.signTime}}--{{activity.endSignTime}}</h4></div>
-        <div><h4>活动时间:{{activity.startTime}}--{{activity.endTime}}</h4></div>
-        <div><h4>活动地址:{{activity.address}}</h4></div>
+        <h3>{{org.name}}</h3>
+        <div><h4>编号：{{org.id}}</h4></div>
+        <div><h4>电话：{{org.phone}}</h4></div>
+        <div><h4>邮箱：{{org.mail}}</h4></div>
+        <div><h4>地址：{{org.address}}</h4></div>
     </div>
 
     <div id="act_deltail" class="trade" style="flex-direction: column;">
-        <p>{{activity.detail}}</p>
+        <h4 style="display: inline">详情</h4><p>{{org.detail}}</p>
     </div>
     <div class="trade" style="justify-content: center">
-        <div data-ng-repeat="photo in activity.photo">
+        <div data-ng-repeat="photo in org.document">
+
             <img ng-src="{{photo}}" class="act_photo">
         </div>
     </div>

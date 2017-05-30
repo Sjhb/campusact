@@ -164,4 +164,24 @@ public class OrganizationController extends BaseController {
         }
         return model;
     }
+    //注销组织者账户
+    @RequestMapping(value = "deleteOrg")
+    @ResponseBody
+    public BaseModel<String> deleteOrg(){
+        BaseModel<String> model=new BaseModel<>();
+        if (!this.isPermmit(Field.ADMINISTOR)){
+            model.setStatus(Constants.FAIL_INVALID_AUTH);
+            model.setMessage("权限错误");
+            return model;
+        };
+        JSONObject jsonObject = this.convertRequestBody();
+        SqlOrganization deleteOrg= JSON.toJavaObject(jsonObject,SqlOrganization.class);
+        boolean re = organizationService.deleteOrg(deleteOrg);
+        if (!re){
+            model.setStatus(Constants.FAIL_BUSINESS_ERROR);
+            model.setMessage("组织者状态变更失败");
+        }
+        return model;
+    }
+
 }

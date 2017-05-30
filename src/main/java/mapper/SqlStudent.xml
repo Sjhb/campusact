@@ -6,7 +6,7 @@
 <!-- 查询学生  根据id-->
 	<select id="selectSqlStudent"  resultMap="resultListSqlStudent">
 		select
-		id,icon,name,sex,phone,major,class,college from
+		id,name,sex,phone,password,major,class,college from
 		student where id=#{id,jdbcType=BIGINT}
 	</select>
 
