@@ -113,7 +113,12 @@ public class UserController extends BaseController {
         }
         long sId=this.getUserInfo();
         SqlStudent restu=studentService.getStuById(sId);
-
+        if(restu==null){
+            model.setStatus(Constants.FAIL_BUSINESS_ERROR);
+            model.setMessage("未知错误");
+        }else {
+            model.setData(restu);
+        }
         return model;
     }
 

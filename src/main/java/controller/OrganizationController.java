@@ -60,6 +60,7 @@ public class OrganizationController extends BaseController {
         }else{
             model.setMessage("success");
             this.setApplicationInfo("orgId",org.getId());
+            model.setData(Long.toString(org.getId()));
         }
         return model;
     }

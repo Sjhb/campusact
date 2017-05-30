@@ -13,4 +13,5 @@ public interface SqlStudentOperation {
 	public int insertStu(SqlStudent sqlStudent);//插入学生
 	public int alterIcon(@Param("icon") String icon,@Param("id") long id);
 	public int resetPass(MiUser user); //重置密码
+	public int updateStu(SqlStudent sqlStudent);//更新学生信息
 }

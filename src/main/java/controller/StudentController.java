@@ -33,7 +33,20 @@ public class StudentController extends BaseController {
     IOService ioService;
     @Value("#{propertiesReader['STUDENT_ICON']}")
     private String STUDENT_ICON;
-
+//   修改个人心
+    @RequestMapping(value = "alterInfo", method= RequestMethod.POST)
+    @ResponseBody
+    public BaseModel<String> alterInfo(HttpServletRequest request){
+        BaseModel<String> model=new BaseModel<>();
+        Map<String,String[]> data=request.getParameterMap();
+        SqlStudent stu = new SqlStudent(Long.parseLong(data.get("id")[0]),"default.jpg",data.get("name")[0],data.get("password")[0],data.get("sex")[0],data.get("phone")[0],data.get("major")[0],data.get("classes")[0], data.get("college")[0]);
+        boolean re=studentService.updateStu(stu);
+        if(!re){
+            model.setStatus(Constants.FAIL_BUSINESS_ERROR);
+            model.setMessage("操作失败");
+        }
+        return model;
+    }
 //    注册接口
 //    接受Sqlstudent类型对象
     @RequestMapping(value = "register", method= RequestMethod.POST)

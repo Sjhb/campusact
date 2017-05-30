@@ -10,9 +10,10 @@
 		student where id=#{id,jdbcType=BIGINT}
 	</select>
 
-	<update id="alterStudent" parameterType="SqlStudent" >
-		update student 
-	</update>
+	<update id="updateStu" parameterType="SqlStudent"  >
+		update student SET name=#{name},sex=#{sex},phone=#{phone},password=#{password},major=#{major},class=#{classes},college=#{college}
+		WHERE  id=#{id}
+</update>
 	<resultMap type="SqlStudent" id="resultListSqlStudent">
 		<id column="id" property="id"   />
 		<result column="icon" property="icon" />

@@ -41,6 +41,13 @@ public class StudentService {
             return list.get(0);
         }
     }
+//    更新学生信息
+    public  boolean updateStu(SqlStudent sqlStudent){
+        int re=sqlStudentOperation.updateStu(sqlStudent);
+        if(re>0){
+            return true;
+        }else return false;
+    }
 //    变更头像
     public  boolean  alterIcon(String icon,long id){
         int result=sqlStudentOperation.alterIcon(icon,id);

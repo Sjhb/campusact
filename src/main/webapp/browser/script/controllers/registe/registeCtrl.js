@@ -98,12 +98,6 @@
         }
 
         up_icon.onCompleteAll = function () {
-            // $scope.reset();
-            // $scope.uploadStatus = true;
-            // $scope.state = '';
-            // if (uploadResult.length > 0) {
-            //     messageService('活动申请信息提交成功，图片' + uploadResult.toString()+"上传失败");
-            // }else messageService('活动申请信息提交成功');
         }
 
         //文件
@@ -151,7 +145,7 @@
                 $scope.limit_docu = true;
             }
         }
- // 重置
+        // 重置
         $scope.clearItems = function () {
             up_icon.clearQueue();
             up_docu.clearQueue();
@@ -179,6 +173,7 @@
         up_docu.onCompleteAll = function () {
             $scope.reset();
             $scope.uploadStatus = true;
+            messageService("请记下您的通行证："+$scope.id+"。");
         }
         $scope.clear=function () {
             $scope.clearIcon();
@@ -204,6 +199,7 @@
                         messageService(res.message);
                         $scope.reset();
                     } else {
+                        $scope.id=res.data;
                         $scope.uploadFile();
                     }
                 });
