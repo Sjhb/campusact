@@ -1,40 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="sqlInters.SqlStudentOperation">
-<!-- 查询学生  根据id-->
-	<select id="selectSqlStudent"  resultMap="resultListSqlStudent">
+    <!-- 查询学生  根据id-->
+    <select id="selectSqlStudent" resultMap="resultListSqlStudent">
 		select
 		id,name,sex,phone,password,major,class,college from
 		student where id=#{id,jdbcType=BIGINT}
 	</select>
 
-	<update id="updateStu" parameterType="SqlStudent"  >
+    <update id="updateStu" parameterType="SqlStudent">
 		update student SET name=#{name},sex=#{sex},phone=#{phone},password=#{password},major=#{major},class=#{classes},college=#{college}
 		WHERE  id=#{id}
 </update>
-	<resultMap type="SqlStudent" id="resultListSqlStudent">
-		<id column="id" property="id"   />
-		<result column="icon" property="icon" />
-		<result column="name" property="name" />
-		<result column="sex" property="sex" />
-		<result column="phone" property="phone" />
-		<result column="major" property="major" />
-		<result column="class" property="classes" />
-		<result column="college" property="college" />
-	</resultMap>
-	<!--插入学生-->
-	<insert id="insertStu" parameterType="SqlStudent">
+    <update id="resetpass" parameterType="MiUserInfo">
+		update student SET password=123456	WHERE  id=#{id}
+	</update>
+    <update id="requestResetPass" parameterType="MiUserInfo">
+		update student SET resetpass=1 WHERE  id=#{id}
+	</update>
+    <resultMap type="SqlStudent" id="resultListSqlStudent">
+        <id column="id" property="id"/>
+        <result column="icon" property="icon"/>
+        <result column="name" property="name"/>
+        <result column="sex" property="sex"/>
+        <result column="phone" property="phone"/>
+        <result column="major" property="major"/>
+        <result column="class" property="classes"/>
+        <result column="college" property="college"/>
+    </resultMap>
+    <!--插入学生-->
+    <insert id="insertStu" parameterType="SqlStudent">
 		INSERT INTO student(id,icon,name,password,sex,phone,major,class,college)
 		VALUES (#{id},#{icon},#{name},#{password},#{sex},#{phone},#{major},#{classes},#{college})
 	</insert>
-	<!--变更学生头像-->
-	<update id="alterIcon">
+    <!--变更学生头像-->
+    <update id="alterIcon">
 		UPDATE student SET icon=#{icon,jdbcType=VARCHAR} WHERE id=#{id,jdbcType=BIGINT}
 	</update>
-	<update id="resetPass">
+    <update id="resetPass">
 		UPDATE student SET password=123456 WHERE id=#{id}
 	</update>
-	</mapper>
+</mapper>
 

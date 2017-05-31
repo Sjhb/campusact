@@ -11,6 +11,7 @@ import model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -121,7 +122,22 @@ public class UserController extends BaseController {
         }
         return model;
     }
-
+    /*
+      * 获取单个用户
+      */
+    @RequestMapping("requestResetPass")
+    @ResponseBody
+    public BaseModel<SqlStudent> requestResetPass() {
+        BaseModel<SqlStudent> model = new BaseModel<>();
+        MiUserInfo miinfo= (MiUserInfo) this.getObject(new MiUserInfo());
+        int re=userservice.requestResetPass(miinfo);
+        if(re==0){model.setStatus(Constants.FAIL_BUSINESS_ERROR);
+            model.setMessage("操作失败，可能是未找到用户。");
+        }else {
+            model.setMessage("操作成功，管理员会在几个工作日内完成重置。");
+        }
+        return model;
+    }
     //修改用户信息
     @RequestMapping("alter")
     @ResponseBody

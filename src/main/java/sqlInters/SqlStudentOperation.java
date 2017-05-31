@@ -1,6 +1,7 @@
 package sqlInters;
 
 import model.MiUser;
+import model.MiUserInfo;
 import model.SqlStudent;
 import org.apache.ibatis.annotations.Param;
 
@@ -14,4 +15,5 @@ public interface SqlStudentOperation {
 	public int alterIcon(@Param("icon") String icon,@Param("id") long id);
 	public int resetPass(MiUser user); //重置密码
 	public int updateStu(SqlStudent sqlStudent);//更新学生信息
+	public int requestResetPass(MiUserInfo miinfo);//更新学生信息
 }

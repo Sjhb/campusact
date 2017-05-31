@@ -21,4 +21,5 @@ public interface SqlOrganizationOperation {
 	public int checkOrg(SqlOrganization organization);//通过审核
 	public int deleteOrg(SqlOrganization organization);//删除
 	public int checkAuth(@Param("oId")long oId);//检查权限
+	public int requestResetPass(MiUserInfo miinfo);//申请重置密码
 }

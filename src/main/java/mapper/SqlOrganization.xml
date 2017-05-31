@@ -20,9 +20,12 @@
         <result column="state" property="state"/>
         <result column="document" property="document"/>
     </resultMap>
-    <update id="resetPass">
+    <update id="resetPass" parameterType="MiUserInfo">
 		UPDATE organization SET password=123456 WHERE id=#{id}
 	</update>
+    <update id="requestResetPass" parameterType="MiUserInfo">
+		UPDATE organization SET resetpass=1 WHERE id=#{id}
+    </update>
     <!--插入组织者-->
     <insert id="insertOrg" parameterType="SqlOrganization" useGeneratedKeys="true" keyProperty="id"  keyColumn="id">
         INSERT INTO organization(name,password,phone,mail,detail,address,role,state)

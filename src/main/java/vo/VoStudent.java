@@ -8,6 +8,7 @@ import model.SqlRole;
  */
 public class VoStudent extends MiUserInfo {
     //| 学号   | 头像     | 姓名     | 密码         | 性别    | 电话      | 专业      | 班级      | 学院        | 角色     |
+    private long id;
     private String sex;
     private String phone;
     private String major;
