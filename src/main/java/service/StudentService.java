@@ -1,5 +1,6 @@
 package service;
 
+import com.github.pagehelper.PageHelper;
 import model.MiUser;
 import model.SqlStudent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,9 +58,17 @@ public class StudentService {
         return  false;
     }
     //重置密码
-    public  boolean resetPass(MiUser user){
-        int result=sqlStudentOperation.resetPass(user);
+    public  boolean resetPass(SqlStudent sqlStudent){
+        if(sqlStudent.getResetpass()==3){
+            int result=sqlStudentOperation.rejectResetPass(sqlStudent);
+        }
+        int result=sqlStudentOperation.resetPass(sqlStudent);
         if (result>0) return true;
         return  false;
+    }
+    public  List<SqlStudent> getRequestResetPass(SqlStudent student){
+        PageHelper.startPage(student.getPageNum(), 9);
+        List<SqlStudent> result=sqlStudentOperation.getRequestResetPass();
+        return  result;
     }
 }

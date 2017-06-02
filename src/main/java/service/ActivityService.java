@@ -48,10 +48,7 @@ public class ActivityService {
 	}
 	//判断学生是否已经参加了活动
 	public boolean isEngage(long actId,long stuId){
-		long column=activityOperation.isEngage(actId,stuId);
-//		if(column==null){
-//
-//		}
+		int column=activityOperation.isEngage(actId,stuId);
 		if(column>0){
 			return true;
 		}

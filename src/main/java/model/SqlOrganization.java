@@ -10,8 +10,8 @@ public class SqlOrganization {
 	private String phone;
 	private String mail;
 	private String address;
-
 	private String document;
+	private int resetpass;
 	private int state;
 	private int role;
 	private Integer pageNum;
@@ -86,6 +86,12 @@ public class SqlOrganization {
 	}
 	public void setState(int state) {
 		this.state = state;
+	}
+	public int getResetpass() {
+		return resetpass;
+	}
+	public void setResetpass(int resetpass) {
+		this.resetpass = resetpass;
 	}
 
 }

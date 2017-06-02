@@ -19,10 +19,14 @@
         <result column="address" property="address"/>
         <result column="state" property="state"/>
         <result column="document" property="document"/>
+        <result column="resetpass" property="resetpass"/>
     </resultMap>
-    <update id="resetPass" parameterType="MiUserInfo">
-		UPDATE organization SET password=123456 WHERE id=#{id}
+    <update id="resetPass" parameterType="SqlOrganization">
+		UPDATE organization SET password=123456 ,resetpass=2 WHERE id=#{id}
 	</update>
+    <update id="rejectResetPass" parameterType="SqlOrganization">
+        UPDATE organization SET resetpass=3 WHERE id=#{id}
+    </update>
     <update id="requestResetPass" parameterType="MiUserInfo">
 		UPDATE organization SET resetpass=1 WHERE id=#{id}
     </update>
@@ -62,5 +66,10 @@ UPDATE organization	SET document=#{docuName,jdbcType=VARCHAR}	WHERE id=#{orgId,j
     </delete>
     <select id="checkAuth" parameterType="long" resultType="int">
         SELECT state FROM organization WHERE id=#{oId}
+    </select>
+    <select id="getRequestResetPass" resultMap="resultListSqlOrganization">
+        SELECT
+         organization.id,organization.name
+         FROM organization  WHERE organization.resetpass=1
     </select>
 </mapper>

@@ -9,7 +9,8 @@ public class SqlStudent {
 			private String phone;
 			private String major;
 			private String classes;
-			private String college; 
+			private String college;
+			private int resetpass;
 			private int role;
 			private Integer pageNum;
 			public long getId() {
@@ -78,6 +79,13 @@ public class SqlStudent {
 			public void setPassword(String password) {
 		this.password = password;
 	}
+	        public int getResetpass() {
+		return resetpass;
+	}
+	        public void setResetpass(int resetpass) {
+		this.resetpass = resetpass;
+	}
+
 
 	public SqlStudent() {
 	}

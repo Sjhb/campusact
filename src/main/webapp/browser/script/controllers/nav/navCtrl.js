@@ -5,7 +5,7 @@
 (function() {
     angular.module('activities').controller('navCtrl',['permission','$scope','$uibModal',navCtrl])
         .controller('logoutCtrl',['$location','activitiesResource','permission','$scope','$uibModalInstance',logoutCtrl])
-        .controller('resetPassCtrl',['messageService','$location','activitiesResource','permission','$scope','$uibModalInstance',resetPassCtrl]);
+        .controller('resetPassRequestCtrl',['messageService','$location','activitiesResource','permission','$scope','$uibModalInstance',resetPassRequestCtrl]);
     function navCtrl(permission,$scope,$uibModal) {
        $scope.showModal=function () {//打开模态
            $uibModal.open({
@@ -21,7 +21,7 @@
            $scope.resetPass=function () {//打开模态
            $uibModal.open({
                    templateUrl : 'browser/views/user/requestResetPass.html',  //指向上面创建的视图
-                   controller : 'resetPassCtrl',// 初始化模态范围
+                   controller : 'resetPassRequestCtrl',// 初始化模态范围
                    resolve : {
                       scope : function(){
                            return $scope;
@@ -56,7 +56,7 @@
                 $uibModalInstance.dismiss('cancel');
             }
        }
-       function resetPassCtrl(messageService,$location,activitiesResource,permission,$scope,$uibModalInstance){
+       function resetPassRequestCtrl(messageService,$location,activitiesResource,permission,$scope,$uibModalInstance){
            $scope.user={id:''};
            $scope.submit=function(){
                 activitiesResource.user_requestResetPass.save($scope.user,function (res) {

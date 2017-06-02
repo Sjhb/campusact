@@ -39,8 +39,16 @@
     <update id="alterIcon">
 		UPDATE student SET icon=#{icon,jdbcType=VARCHAR} WHERE id=#{id,jdbcType=BIGINT}
 	</update>
-    <update id="resetPass">
-		UPDATE student SET password=123456 WHERE id=#{id}
+    <update id="resetPass" parameterType="SqlStudent">
+		UPDATE student SET password=123456 , resetpass=2 WHERE id=#{id}
 	</update>
+    <update id="rejectResetPass" parameterType="SqlStudent">
+		UPDATE student SET resetpass=3 WHERE id=#{id}
+	</update>
+    <select id="getRequestResetPass" resultMap="resultListSqlStudent">
+        SELECT
+        student.id,student.name
+        FROM student  WHERE student.resetpass=1
+    </select>
 </mapper>
 

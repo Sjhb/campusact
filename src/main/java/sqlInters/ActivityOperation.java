@@ -12,7 +12,7 @@ public interface ActivityOperation {
 	public List<Activity> getActivityByState(@Param("stateId") int stateId);//根据状态获取活动
 	public List<Activity> getActivityByOid(Activity activity,@Param("Oid") long Oid);//根据组织id查找活动
 	public List<Activity> getActivityByStuid(Activity activity,@Param("Stuid") long Stuid);//根据学生id查找活动
-	public long isEngage(@Param("actId") long actId,@Param("stuId") long stuId);//学生是否已经参加
+	public int isEngage(@Param("actId") long actId,@Param("stuId") long stuId);//学生是否已经参加
 	public int createActivity(SqlActivity activity);
 	public void changeActivity();
 	public int getActivityCloumn();
