@@ -30,6 +30,7 @@
 				activities_alterActPhoto:$resource(env.activities_api+'activity/alterActPhoto'),
 				activities_engage:$resource(env.activities_api+'activity/engage'),
 				activities_checkAuth:$resource(env.activities_api+'activity/checkAuth'),
+				activities_organize:$resource(env.activities_api+'activity/organize'),
 		};
 		return resource;
 	}]);

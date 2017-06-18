@@ -134,7 +134,7 @@ public class UserController extends BaseController {
         if(re==0){model.setStatus(Constants.FAIL_BUSINESS_ERROR);
             model.setMessage("操作失败，可能是未找到用户。");
         }else {
-            model.setMessage("操作成功，管理员会在几个工作日内完成重置。");
+            model.setMessage("操作成功，管理员会在几个工作日内完成重置，重置后的密码为123456。");
         }
         return model;
     }

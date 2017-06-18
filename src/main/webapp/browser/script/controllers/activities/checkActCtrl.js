@@ -76,7 +76,7 @@
                 if(res.status==200){
                     $scope.search();
                 }else{
-                   messageService(res.data.message);
+                   messageService(res.message);
                 }
             });
         }

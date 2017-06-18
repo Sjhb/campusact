@@ -22,6 +22,9 @@
 		organization.id o_id,
 		organization.name o_name,
 		organization.icon o_icon,
+		organization.phone o_phone,
+		organization.mail o_mail,
+		organization.detail o_detail,
 		activity.startTime,
 		activity.endTime,
 		activity.signTime,
@@ -35,7 +38,7 @@
 		from activity,organization,state
 		where	organization.id=activity.organizationId
 		and activity.stateId=state.state
-		and state.state=#{stateId,jdbcType=INTEGER} order by activity.startTime
+		and state.state=#{stateId,jdbcType=INTEGER} order by activity.endSignTime
     </select>
     <!--根据组织ID获取活动-->
     <select id="getActivityByOid" resultMap="resultListActivity">
@@ -53,6 +56,7 @@
         activity.detail,
         activity.sponsor,
         state.detail s_detail,
+         state.state,
         activity.signTime,
         activity.endSignTime,
         activity.engage
@@ -77,6 +81,7 @@
         activity.detail,
         activity.sponsor,
         state.detail s_detail,
+        state.state,
         activity.signTime,
         activity.endSignTime,
         activity.engage
@@ -124,6 +129,9 @@
         <id column="o_id" property="id"/>
         <result column="o_icon" property="icon"/>
         <result column="o_name" property="name"/>
+        <result column="o_phone" property="phone"/>
+        <result column="o_mail" property="mail"/>
+        <result column="o_detail" property="detail"/>
         <result column="password" property="password"/>
         <result column="phone" property="phone"/>
         <result column="mail" property="mail"/>

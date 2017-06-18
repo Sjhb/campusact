@@ -26,6 +26,8 @@
                     <div>
                         <button class="btn  btn-info spx" style="margin-right: 5px;" data-ng-click="showDetail(activity)">详情</button>
                         <button class="btn  btn-primary spx" ng-show='activity.state.detail=="审核不通过"' data-ng-click="reApply()">重新申请</button>
+                        <button class="btn  btn-primary spx" ng-show='activity.state.state==2000' data-ng-click="organize(activity.id,5000)">举办</button>
+                        <button class="btn  btn-primary spx" ng-show='activity.state.state==5000' data-ng-click="organize(activity.id,4000)">举办完成</button>
                     </div>
                 </td>
             </tr>

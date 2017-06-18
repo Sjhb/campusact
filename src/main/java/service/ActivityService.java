@@ -22,7 +22,7 @@ public class ActivityService {
 	protected SqlActivityOperation sqlactivityOperation;
 	//获得所有审核通过的活动
 	public List<Activity> getPassedActivity(Activity activity){
-		PageHelper.startPage(activity.getPageNum(), 9);
+		PageHelper.startPage(activity.getPageNum(), 6);
 		List<Activity> result= activityOperation.getActivityByState(2000);
 
 		return result;
@@ -107,5 +107,12 @@ public class ActivityService {
 		int i=sqlactivityOperation.deleteActivity(activity);
 		if(i==0) return false;
 		else return true;
+	}
+	//改变活动状态
+	public boolean changeState(SqlActivity activity){
+		int re=sqlactivityOperation.changeState(activity);
+		if (re>0){
+			return true;
+		}else return false;
 	}
 }

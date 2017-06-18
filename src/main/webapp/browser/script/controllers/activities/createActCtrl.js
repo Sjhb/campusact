@@ -116,7 +116,7 @@
             $scope.state = '';
             if (uploadResult.length > 0) {
                 messageService('活动申请信息提交成功，图片' + uploadResult.toString()+"上传失败");
-            }else messageService('活动申请信息提交成功');
+            }else messageService('活动申请信息提交成功,等待管理员审核！');
         }
         uploader.onSuccessItem = function (fileItem, response, status, headers) {
 

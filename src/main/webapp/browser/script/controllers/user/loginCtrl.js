@@ -2,8 +2,8 @@
  * Created by manlin on 2016/12/28.
  */
 (function() {
-    angular.module('activities').controller('loginCtrl',['permission','activitiesResource','$scope','$uibModalInstance',loginCtrl]);
-    function loginCtrl(permission,activitiesResource,$scope,$uibModalInstance) {
+    angular.module('activities').controller('loginCtrl',['$location','permission','activitiesResource','$scope','$uibModalInstance',loginCtrl]);
+    function loginCtrl($location,permission,activitiesResource,$scope,$uibModalInstance) {
 
         $scope.user={
             password:'',
@@ -32,6 +32,8 @@
                         permission.setPermission(res.data.role.detail);
                         permission.setUser(res.data);
                         $scope.cancel();
+                        $location.path('/allAct/allAct');
+
                     }
                 });
             };

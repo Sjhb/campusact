@@ -334,4 +334,22 @@ public class ActivityController extends BaseController {
         image = this.getPicture(ACTIVITY_IMG + File.separator + filename);
         response.getOutputStream().write(image);
     }
+    //改变状态
+    @RequestMapping(value = "organize", method = RequestMethod.POST)
+    @ResponseBody
+    public BaseModel<String> organize() throws IOException {
+        BaseModel<String> model=new BaseModel<>();
+        SqlActivity activity= (SqlActivity) this.getObject(new SqlActivity());
+        if(isPermmit(Field.ORGANIZATION)){
+            boolean re=activityService.changeState(activity);
+            if(!re){
+                model.setStatus(Constants.FAIL_BUSINESS_ERROR);
+                model.setMessage("操作失败");
+            }
+        }else {
+            model.setStatus(Constants.FAIL_INVALID_USER);
+            model.setMessage("权限错误");
+        }
+        return  model;
+    }
 }

@@ -2,8 +2,8 @@
  * Created by Manlin on 2017/4/30.
  */
 (function () {
-    angular.module('activities').controller('orgActCtrl', ['$location','activitiesResource', '$scope', '$uibModal', 'actOperateService', orgActCtrl]);
-    function orgActCtrl($location,activitiesResource, $scope, $uibModal, actOperateService) {
+    angular.module('activities').controller('orgActCtrl', ['messageService','$location','activitiesResource', '$scope', '$uibModal', 'actOperateService', orgActCtrl]);
+    function orgActCtrl(messageService,$location,activitiesResource, $scope, $uibModal, actOperateService) {
         $scope.showDetail = function (activity) {
             $uibModal.open({
                 templateUrl: 'browser/views/org-act/orgActDetail.html',
@@ -58,8 +58,17 @@
 
             }
         };
+        // 重新申请
         $scope.reApply=function () {
             $location.path('/createAct/create');
+        }
+        // 举办
+        $scope.organize=function(aid,astate){
+            var activity={id:aid,stateId:astate}
+            activitiesResource.activities_organize.save(activity,function(res){
+                    messageService(res.message);
+                    $scope.search();
+            })
         }
     }
 })();

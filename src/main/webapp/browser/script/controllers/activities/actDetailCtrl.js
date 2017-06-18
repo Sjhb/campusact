@@ -2,7 +2,7 @@
  * Created by manlin on 2016/12/28.
  */
 (function () {
-    angular.module('activities').controller('actDetailCtrl', function (permission, messageService, activitiesResource, $scope, $uibModalInstance, activity) {
+    angular.module('activities').controller('actDetailCtrl', function ($uibModal,permission, messageService, activitiesResource, $scope, $uibModalInstance, activity) {
         $scope.activity = activity;
         $scope.ok = function () {
             $uibModalInstance.dismiss('cancel');
@@ -23,6 +23,18 @@
                         messageService(res.message)
                     }
                 });
+        }
+        $scope.showOrg=function(org) {
+            $uibModal.open({
+                templateUrl:'browser/views/org/orgDetail.html',
+                controller:'OrgDetailCtrl',
+                size:'lg',
+                resolve:{
+                    org:function () {
+                        return org;
+                    }
+                }
+            });
         }
     });
 })();
